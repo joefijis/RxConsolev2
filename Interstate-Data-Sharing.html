@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : Interstate Data-sharing</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Interstate Data-sharing &rsaquo; <strong>Interstate Data-sharing</strong>
+</div>
+<h1>Interstate Data-sharing</h1>
+
+<p>The Interstate Data-Sharing feature enables State PDMP Administrators to designate which states are authorized to send prescription data requests to their PDMP and to restrict access from unauthorized states.</p>
+<p>Only states that have executed a formal Memorandum of Understanding (MOU) can establish a secure digital connection via the RxCheck platform. These states must be designated as "Selected States" within the Interstate Data-Sharing portal by the State Administrator to enable bidirectional data-sharing.</p>
+<p>States that have not finalized a formal agreement cannot participate in interstate data exchange through RxCheck. If such a state attempts to send a request, it will receive a system-generated message stating: "Access denied by disclosing state".</p>
+
+<p>Within the Interstate Data Sharing interface, two lists are displayed:</p>
+<ul>
+  <li><strong>Available Sites (left)</strong> — PDMP sites that have not yet been authorized to connect with the host state. Sites in this list cannot submit data requests.</li>
+  <li><strong>Selected Sites (right)</strong> — States that have been authorized to establish a bilateral connection. These sites are permitted to send data requests and receive responses.</li>
+</ul>
+
+<h2>10.1 Select States for Interstate Data-sharing</h2>
+<ol class="steps-list">
+  <li>Click on the <em>Interstate Data Sharing</em> button, located on the left-hand side of the screen.</li>
+  <li>Scroll through the <em>Available Sites</em> list and locate the site you would like to add.</li>
+  <li>Click on the blue arrow button aligned with the desired site.</li>
+  <li>Verify that the site has moved from the <em>Available Sites</em> list to the <em>Selected Sites</em> list. <em>Note: Recently moved sites are not listed alphabetically and will appear at the bottom of the Selected Sites list.</em></li>
+  <li>Click the <em>Save</em> button on the right corner of the screen to confirm and record your changes.</li>
+</ol>
+<div class="note"><strong>Note:</strong> If the change was implemented successfully, an alert will momentarily appear with the message, "Alert – Selected Sites Saved".</div>
+
+<h2>10.2 Deselect States for Interstate Data-sharing</h2>
+<ol class="steps-list">
+  <li>Click on the <em>Interstate Data Sharing</em> button, located on the left-hand side of the screen.</li>
+  <li>Scroll through the <em>Selected Sites</em> list and locate the site you would like to remove.</li>
+  <li>Click on the orange arrow button aligned with the desired site.</li>
+  <li>Verify that the site has moved from the <em>Selected Sites</em> list to the <em>Available Sites</em> list.</li>
+  <li>Click the <em>Save</em> button to confirm and record your changes.</li>
+</ol>
+
+<h2>10.3 MOU Worksheet(s)</h2>
+<p>The RxConsole supports a Memorandum of Understanding (MOU) worksheet that states can populate and submit to potential partnering states.</p>
+<div class="note"><strong>Note:</strong> This is an MOU worksheet, not a contract.</div>
+
+<h3>10.3.1 Populate and Submit the MOU Worksheet</h3>
+<ol class="steps-list">
+  <li>Click on the <em>Interstate Data Sharing</em> button, followed by the <em>MOU Worksheet(s)</em> option.</li>
+  <li>The <em>MOU Worksheet(s)</em> page is displayed.</li>
+  <li>Click on the <em>Fill New Worksheet</em> button (if you have not completed a worksheet yet) or <em>View Saved Worksheet</em> (if you have previously completed a worksheet).</li>
+  <li>Populate the following sections: State Administration's Information, User Validation Procedures, Data Access and Security, Data Elements for Request Submissions, Query Response, and Miscellaneous. <em>Note: Fields with a red asterisk (*) are required.</em></li>
+  <li>Click the <em>Save</em> button to confirm and record your changes.</li>
+  <li>After saving, click on <em>View Saved Worksheet</em> button to view the saved MOU Worksheet.</li>
+  <li>To edit the worksheet, click on the <em>Update</em> button.</li>
+  <li>To share the worksheet with another state, click on the <em>Share</em> button.</li>
+  <li>Select a state from the dropdown menu and click the <em>Share Form</em> button to send the form to the selected state.</li>
+</ol>
+
+<h3>10.3.2 Review and Respond to an MOU Worksheet Submitted to Your State</h3>
+<ol class="steps-list">
+  <li>Click on the <em>Interstate Data Sharing</em> button, followed by the <em>MOU Worksheet(s)</em> option.</li>
+  <li>The MOU Worksheet(s) page displays records submitted by other PDMP States.</li>
+  <li>Click on the <em>View Details</em> button to display the MOU Worksheet data submitted by the other state.</li>
+  <li>Click the <em>Cancel</em> button to discard the MOU worksheet data.</li>
+  <li>Click the <em>Print</em> button to print or save a copy of the MOU Worksheet.</li>
+  <li>To agree to the MOU Worksheet, click on the <em>Finalize</em> button.</li>
+</ol>
+<p>The MOU Worksheet record will be displayed with a status of "Finalized" for both PDMP States.</p>
+
+<div class="doc-footer-nav">
+  <a class="nav-btn" href="Healthcare-Entities.html">← Healthcare Entities</a>
+  <a class="nav-btn" href="Interstate-Role-Management.html">Interstate Data-sharing – Role Management →</a>
+</div>
+</body>
+</html>

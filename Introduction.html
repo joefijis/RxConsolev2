@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : Introduction</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Introduction &rsaquo; <strong>Introduction</strong>
+</div>
+<h1>Introduction</h1>
+
+<p>This guide is designed to assist state Prescription Drug Monitoring Program (PDMP) administrators in effectively using the RxConsole application to manage their state's settings within the RxCheck Hub. It provides comprehensive, sectioned instructions covering each feature and function of the RxConsole application. Each section includes step-by-step procedures and visual documentation to support accurate and efficient use of the application.</p>
+
+<h2>1.1 Purpose of the RxConsole User Guide</h2>
+<p>This guide is designed to assist state Prescription Drug Monitoring Program (PDMP) administrators in effectively using the RxConsole application to manage their state's settings within the RxCheck Hub. It provides comprehensive, sectioned instructions covering each feature and function of the RxConsole application. Each section includes step-by-step procedures and visual documentation to support accurate and efficient use of the application.</p>
+
+<h2>1.2 Who is the User Guide Intended For?</h2>
+<p>This user guide is intended for all stakeholders using version 3.2 of the RxConsole application on Windows and Mac platforms. Its primary audience includes state PDMP administrators and authorized staff members who have access to the RxCheck interstate network. It is also a valuable resource for personnel assigned to use RxCheck for the first time.</p>
+<p>The guide is structured to support both new and experienced PDMP administrators, offering clear instructions to ensure effective use of RxConsole's features and functionalities.</p>
+
+<h2>1.3 RxConsole Access, Registration, and Authorization</h2>
+<p>The Integrated Justice Information Systems (IJIS) Institute is the designated administrator of the RxCheck hub and the RxConsole application.</p>
+<p>The Prescription Drug Monitoring Program Training and Technical Assistance Center (PDMP TTAC) maintains official records of each state's PDMP profile, including administrative contact information such as the designated PDMP Administrator, Director, or Manager. These individuals, as identified by PDMP TTAC, hold primary authority to request, assign, delegate, or authorize access to the RxConsole application.</p>
+<p>Only those designated by PDMP TTAC may be granted the PDMP Admin user role. This role provides administrative-level access to RxConsole and is created by the RxCheck administrator upon authorization. Only the PDMP TTAC-identified primary PDMP Administrator(s) are permitted to add, modify, activate, or deactivate PDMP Admin user accounts. If you are a PDMP administrator and do not have access to the RxConsole application, please contact the RxCheck Team as described in the <a href="Contact-the-RxCheck-Team.html">Contact the RxCheck Team</a> section.</p>
+
+<div class="doc-footer-nav">
+  <span class="nav-btn disabled">← Previous</span>
+  <a class="nav-btn" href="History-and-Overview.html">History and Overview of the RxConsole Application →</a>
+</div>
+</body>
+</html>

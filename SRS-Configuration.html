@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : State Routing Service (SRS) Configuration</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; State Routing Service &rsaquo; <strong>State Routing Service (SRS) Configuration</strong>
+</div>
+<h1>State Routing Service (SRS) Configuration</h1>
+
+<p>Every state PDMP officially onboarded into the RxCheck system will have a routing service installed that allows it to send and receive messages from other states. Message content between states is encrypted for privacy and security purposes and can only be accessed and decrypted by the state intended to receive the message.</p>
+
+<div class="note"><strong>Note:</strong> If your state does not have an SRS currently installed, one will need to be installed before connecting to the RxCheck Hub. While you can log into the RxConsole application, some functionality will not work without the PDMP connected. The latest SRS installation files can be found here: <a href="https://rx-check.org/Hub/ConnectionTools">https://rx-check.org/Hub/ConnectionTools</a>.</div>
+
+<p>One of the initial responsibilities assigned to a State PDMP Admin is the configuration of their State Routing Service (SRS). The State Routing Service is software that facilitates the successful transmission of messages between Health Care Entities and PDMP states. Configuring the SRS is a six-step process:</p>
+
+<ol>
+  <li>Site Unique Identifier / Description</li>
+  <li>SRS Outbound Sender Endpoint</li>
+  <li>RxCheck Hub Service Host Endpoint</li>
+  <li>SRS Inbound Sender Endpoint</li>
+  <li>Site PDMP Application Endpoint</li>
+  <li>SRS Certificate</li>
+</ol>
+
+<h2>7.1 Site Unique Identifier / Description</h2>
+<p>This section covers general information about the site for which the SRS is to be configured. All data fields in this section are auto-populated based on the data that was entered by the Super Administrator when the site was initially created. The State Admin users can review the auto-populated data in this section and contact the RxCheck technical team if there are any questions or concerns.</p>
+
+<table>
+<thead><tr><th>Data Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>Name</strong></td><td>The official two-letter state abbreviation code assigned to each state. (e.g., NJ, CA) <em>Auto-populated.</em></td></tr>
+<tr><td><strong>Type</strong></td><td>The Site Type assigned to each state is PDMP (Prescription Drug Monitoring Program). <em>Auto-populated.</em></td></tr>
+<tr><td><strong>Description</strong></td><td>A brief description of the site. <em>Auto-populated.</em></td></tr>
+<tr><td><strong>API Key</strong></td><td>A unique identifier for the site generated when the site is created. The first two letters always represent the Name of the site. It is a security key validated for SRS connections. <em>Auto-populated.</em></td></tr>
+</tbody>
+</table>
+
+<h2>7.2 SRS Outbound Sender Endpoint</h2>
+<p>This section enlists the standards and interfaces supported by the RxCheck application for all request and response transactions. Currently, RxConsole supports the following interfaces:</p>
+<ul>
+  <li><strong>PMIX/NIEM</strong> — National Information Exchange Model</li>
+  <li><strong>NCPDP 2017</strong> — National Council for Prescription Drug Programs</li>
+  <li><strong>HL7 FHIR</strong> — Health Level Seven International Fast Healthcare Interoperability Resources</li>
+  <li><strong>HTML5</strong> — Hypertext Markup Language 5</li>
+</ul>
+
+<table>
+<thead><tr><th>Heading</th><th>Data Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td></td><td><strong>Protocol</strong></td><td>Select HTTP or HTTPS. HTTPS is recommended for transmitting PDMP data.</td></tr>
+<tr><td></td><td><strong>Domain</strong></td><td>The domain name of the server on which the SRS is running. Optional — if not provided, system uses the IP Address.</td></tr>
+<tr><td></td><td><strong>Port Number</strong></td><td>The dedicated port that will be used by the SRS software for communication purposes.</td></tr>
+<tr><td></td><td><strong>IP Address</strong></td><td>The IP Address of the SRS server. Populated as "localhost" by default.</td></tr>
+<tr><td><strong>NIEM</strong></td><td><strong>PMIX Outbound URL</strong></td><td>A fully qualified URL for the NIEM Service on Outbound SRS. <em>Auto-populated.</em></td></tr>
+<tr><td><strong>NCPDP-2017</strong></td><td><strong>NCPDP-2017 Outbound URL</strong></td><td>A fully qualified URL for the NCPDP 2017 Service on Outbound SRS. <em>Auto-populated.</em></td></tr>
+<tr><td><strong>HL7 FHIR</strong></td><td><strong>FHIR Outbound URL</strong></td><td>A fully qualified URL for the FHIR Service on Outbound SRS. <em>Auto-populated.</em></td></tr>
+<tr><td><strong>HTML</strong></td><td><strong>HTML Outbound URL</strong></td><td>A fully qualified URL for the HTML Service on Outbound SRS. <em>Auto-populated.</em></td></tr>
+<tr><td><strong>Security Credentials</strong></td><td><strong>Outbound Username</strong></td><td>A username to authenticate the SRS connection on the RxCheck network.</td></tr>
+<tr><td></td><td><strong>Outbound Password</strong></td><td>A password to authenticate the SRS connection on the RxCheck network.</td></tr>
+</tbody>
+</table>
+
+<h2>7.3 RxCheck Hub Service Host Endpoint</h2>
+<p>The RxCheck Hub Service Host Endpoint section is a critical part of configuring the hub connection with the RxConsole application. All data fields in this section are auto-populated by the system, based on the information originally entered by the Super Administrator during site creation.</p>
+
+<table>
+<thead><tr><th>Data Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>Protocol</strong></td><td>Cannot be changed. Set to "HTTPS".</td></tr>
+<tr><td><strong>Domain</strong></td><td>Cannot be changed. Automatically set to the hub domain name.</td></tr>
+<tr><td><strong>Port Number</strong></td><td>Cannot be changed. Automatically set to the port on which the Hub is running.</td></tr>
+<tr><td><strong>IP Address</strong></td><td>Cannot be changed. Automatically set to the IP address for the Hub.</td></tr>
+<tr><td><strong>PMIX2 Hub Endpoint URL</strong></td><td>Auto-populated. A fully qualified URL for the PMIX2 NIEM4 service on the RxCheck Hub.</td></tr>
+</tbody>
+</table>
+
+<h2>7.4 SRS Inbound Sender Endpoint</h2>
+<p>The SRS Inbound Sender Endpoint configuration enables the State PDMP system to receive incoming queries initiated by other states.</p>
+
+<table>
+<thead><tr><th>Heading</th><th>Data Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td></td><td><strong>Protocol</strong></td><td>Can be set to "HTTP" or "HTTPS".</td></tr>
+<tr><td></td><td><strong>Domain</strong></td><td>The official website address of the PDMP's Inbound Service instance. Optional.</td></tr>
+<tr><td></td><td><strong>Port Number</strong></td><td>Port number where the Inbound Service is configured.</td></tr>
+<tr><td></td><td><strong>IP Address</strong></td><td>IP address where the Inbound SRS is hosted.</td></tr>
+<tr><td></td><td><strong>PMIX2 Inbound URL</strong></td><td>Auto-populated based on Protocol, Domain, IP address, and Port number fields.</td></tr>
+<tr><td></td><td><strong>IEPD</strong></td><td>Auto-populated based on IEPD option selected by Super Administrator at the time of PDMP Site creation. Indicates the PMIX version supported by PDMP.</td></tr>
+<tr><td><strong>Rate Limiting</strong></td><td><strong>Rate Limit</strong></td><td>The number of requests to the inbound with respect to the defined time unit.</td></tr>
+<tr><td><strong>Rate Limiting</strong></td><td><strong>Time Unit</strong></td><td>Defines the unit for the Rate Limit value. Can be set to Second, Minute, Hour, Day, or Month.</td></tr>
+<tr><td><strong>Enable Loopback</strong></td><td><strong>Enable Loopback</strong></td><td>When enabled (blue), indicates that users in the PDMP state can make Prescription Data requests to the same PDMP State.</td></tr>
+<tr><td><strong>Security Credentials</strong></td><td><strong>Inbound Username</strong></td><td>A username to authenticate the SRS connection in the RxCheck network.</td></tr>
+<tr><td></td><td><strong>Inbound Password</strong></td><td>A password to authenticate the SRS connection in the RxCheck network.</td></tr>
+</tbody>
+</table>
+
+<h2>7.5 Site PDMP Application Endpoint</h2>
+<p>This section defines the technical parameters of the state's PDMP application necessary for message routing and integration.</p>
+
+<table>
+<thead><tr><th>Data Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>Protocol</strong></td><td>Can be set to "HTTP" or "HTTPS".</td></tr>
+<tr><td><strong>Domain</strong></td><td>The website address of the PDMP state. Optional.</td></tr>
+<tr><td><strong>Port Number</strong></td><td>Port number where the website is hosted.</td></tr>
+<tr><td><strong>IP Address</strong></td><td>IP address of the state PDMP server where the website is hosted.</td></tr>
+<tr><td><strong>URL Path</strong></td><td>The base URL or path for the PDMP Application endpoint for all requests.</td></tr>
+<tr><td><strong>PDMP URL</strong></td><td>Auto-populated based on Protocol, Domain/IP Address, and Port Number.</td></tr>
+<tr><td><strong>Inbound Username</strong></td><td>Optional parameter which enables basic authentication on PDMP Site.</td></tr>
+<tr><td><strong>Inbound Password</strong></td><td>Optional parameter which enables basic authentication on PDMP Site.</td></tr>
+</tbody>
+</table>
+
+<h2>7.6 SRS Certificate</h2>
+<p>Each state is responsible for generating its own digital certificate using Microsoft PowerShell. Detailed instructions for this process are provided in the SRS Installation Guide for PDMP.</p>
+<p>The SRS certificate uses a public key/private key infrastructure:</p>
+<ul>
+  <li>The <strong>public key</strong> (contained in the certificate) is used to encrypt outgoing messages.</li>
+  <li>The <strong>private key</strong> is used by the receiving system to decrypt the message.</li>
+</ul>
+<div class="warning-box"><strong>Important:</strong>
+<ul>
+  <li><strong>Private Key</strong> — Must be kept confidential and never shared, including within the RxCheck Network.</li>
+  <li><strong>Public Key</strong> — Uploaded to the RxConsole and shared with other participating states.</li>
+</ul>
+</div>
+
+<table>
+<thead><tr><th>Data Field</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>Private Key Subject</strong></td><td>The key generated at the time of Site Certificate creation. The private key is in .pfx format and must be kept confidential by the PDMP State.</td></tr>
+<tr><td><strong>Public Key (DER Format)</strong></td><td>The key generated at the time of Site Certificate creation in .der format. Shared with other PDMP States in the RxConsole Application.</td></tr>
+<tr><td><strong>Certificate Expiry Date</strong></td><td>The date when the uploaded certificate expires.</td></tr>
+</tbody>
+</table>
+
+<h2>7.7 Configure the SRS</h2>
+<p>Once the previous sections have been populated on the State Routing Service Configuration page, the State PDMP Administrator can save the details and complete the configuration process.</p>
+<ol class="steps-list">
+  <li>Click on the <em>State Routing Service Configuration</em> button, located on the left-hand side of the screen.</li>
+  <li>Enter all required information. Mandatory fields are designated by a red asterisk (*) and need to be populated for the form to be saved successfully. You may need to click on the box for each step to expand that section and reveal the fields.</li>
+  <li>Click the <em>Save</em> button.</li>
+</ol>
+
+<h2>7.8 Configuring the Required Fields</h2>
+<p>Each State PDMP Administrator can configure the PMIX fields required in the request message to search for a patient in the PDMP system. The name-matching algorithm implemented within the PDMP system determines these required fields.</p>
+<p>A PDMP administrator can configure these fields by navigating to the SRS Configuration page and clicking on the <em>Patient Required Fields</em> button.</p>
+<p>Set the required fields for the patient prescription drug history (PPDH) and the patient prescription picklist (PPPL) queries.</p>
+<p>When processing an integration request involving a federated query, you can choose to enforce your state's data requirements by enabling the <em>Home State Priority</em> option. This will reject the entire request if it does not meet the required fields defined by your state.</p>
+
+<h2>7.9 Heartbeat and Health Monitoring</h2>
+<p>RxConsole includes the functionality to monitor the SRS when one is connected. Monitoring is important to gain a better understanding of how the SRS and RxCheck are functioning and if there are any issues with integrations.</p>
+
+<h3>7.9.1 Current Site Monitoring</h3>
+<ol class="steps-list">
+  <li>Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat &amp; Health Monitoring</em> option, located on the left-hand side of the screen.</li>
+  <li>By default, you will be at the current site <em>SRS: Heartbeat and Health Monitoring</em> screen.</li>
+  <li>This screen includes various graphs to show the current status of the SRS.</li>
+  <li>Click the <em>Refresh</em> button to get the most up-to-date information regarding their SRS.</li>
+  <li>Click the <em>Show last 10 Pings</em> button to view a table of the last 10 pings to the SRS.</li>
+</ol>
+
+<table>
+<thead><tr><th>Header</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>DeviceID</strong></td><td>An identification code that references the device that pinged the SRS.</td></tr>
+<tr><td><strong>Host</strong></td><td>A reference code to identify the RxConsole state and version that pinged the SRS.</td></tr>
+<tr><td><strong>InstanceID</strong></td><td>Identification of the instance of the SRS that was pinged.</td></tr>
+<tr><td><strong>IP#</strong></td><td>The IP address of the instance of the SRS that was pinged.</td></tr>
+<tr><td><strong>Site Code</strong></td><td>The two letter code that references the state.</td></tr>
+<tr><td><strong>Time Stamp</strong></td><td>The date and time the ping occurred.</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead><tr><th>Graph Title</th><th>X-Axis</th><th>Y-Axis</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>Status over a period of time with Timeline Bar</strong></td><td>Time</td><td>Status — Up/Down</td><td>The status of the SRS over a period of time.</td></tr>
+<tr><td><strong>Instance Status</strong></td><td>Time</td><td>Status — Up/Down</td><td>The status of the SRS over a period of time; allows using a dropdown to switch the instance.</td></tr>
+<tr><td><strong>JVM Threads</strong></td><td>Time</td><td>Number of JVM Threads</td><td>Displays the number of active Java Virtual Machine (JVM) threads. Rising lines may indicate increased load; falling lines suggest stable or reduced activity.</td></tr>
+<tr><td><strong>Garbage Collectors</strong></td><td>Time</td><td>Time spent collecting memory</td><td>Indicates how much time garbage collection took. Helps identify memory issues.</td></tr>
+<tr><td><strong>CPU</strong></td><td>Time</td><td>Percent usage</td><td>The amount of processing power used over time.</td></tr>
+<tr><td><strong>JVM Memory</strong></td><td>Time</td><td>Size of JVM memory</td><td>Helps detect memory growth, potential leaks, or inefficient usage patterns.</td></tr>
+<tr><td><strong>Disk Space Used</strong></td><td>Time</td><td>Size of disk space</td><td>Helps identify storage trends, which may signal the need for cleanup or capacity planning.</td></tr>
+</tbody>
+</table>
+
+<h3>7.9.2 All Sites Monitoring</h3>
+<ol class="steps-list">
+  <li>Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat &amp; Health Monitoring</em> option.</li>
+  <li>Click on the <em>All Sites</em> button in the top right corner of the screen.</li>
+  <li>The next screen includes a United States Map.</li>
+  <li>Hover your cursor over a state to get the current status of their SRS server. States are color-coordinated based on SRS status.</li>
+  <li>Scroll down to see a list of States and their connection status in a table.</li>
+  <li>Search for a specific site by finding the state on the list using page buttons, or searching in the search box above the table.</li>
+  <li>Scroll down further to see a list of connected healthcare entities and the last time a query was received from them.</li>
+</ol>
+
+<table>
+<thead><tr><th>Status</th><th>Color</th></tr></thead>
+<tbody>
+<tr><td><strong>Up</strong></td><td>Green</td></tr>
+<tr><td><strong>Down</strong></td><td>Yellow</td></tr>
+<tr><td><strong>N/A</strong></td><td>Gray</td></tr>
+<tr><td><strong>Currently Hovering</strong></td><td>Blue</td></tr>
+</tbody>
+</table>
+
+<h2>7.10 Heartbeat Notifications</h2>
+<p>Using the Heartbeat Notifications feature, the PDMP Administrator can subscribe to receive email notifications and text messages about the PDMP and HCE connections.</p>
+<ol class="steps-list">
+  <li>Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat Notifications</em> option, located on the left-hand side of the screen.</li>
+  <li>Select the desired boxes to subscribe to that notification.
+    <ul>
+      <li>If the <em>Email</em> option is checked, the user will receive emails to the mailbox associated with their RxConsole login.</li>
+      <li>If the <em>SMS</em> option is checked, the user will receive text messages on the mobile phone number in their profile. <em>Note: You will need to email the RxCheck admin to add a phone number to enable SMS notifications.</em></li>
+    </ul>
+  </li>
+  <li>Press the <em>Save</em> button to process any changes made to notifications.</li>
+</ol>
+
+<table>
+<thead><tr><th>Heading</th><th>Subscription Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>PDMP Connection</strong></td><td>Your PDMP SRS</td><td>Receive alerts for connection disruptions that affect your state connection to the Hub.</td></tr>
+<tr><td></td><td>Performance</td><td>Receive alerts for performance degradation in SRS instances affecting your state connection.</td></tr>
+<tr><td></td><td>Partnering PDMP SRS</td><td>Receive alerts for connection disruptions for partnering states connected to yours.</td></tr>
+<tr><td><strong>HCE Connection</strong></td><td>Integration SRS</td><td>Receive alerts for connection disruptions that affect integration connection to the Hub.</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Note:</strong> Notifications are not immediate. A subscribed user will receive an email or SMS notification approximately 15 minutes after the first missed heartbeat is detected.</div>
+
+<div class="doc-footer-nav">
+  <a class="nav-btn" href="Analytical-Insights.html">← Analytical Insights</a>
+  <a class="nav-btn" href="Hub-Audit-Logs.html">Hub Audit Logs →</a>
+</div>
+</body>
+</html>

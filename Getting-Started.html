@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : Getting Started with the RxConsole Application</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Getting Started &rsaquo; <strong>Getting Started with the RxConsole Application</strong>
+</div>
+<h1>Getting Started with the RxConsole Application</h1>
+
+<p>This section provides step-by-step instructions for accessing the RxConsole application. Each step is supported by visual aids, such as screenshots, to ensure clarity and accuracy throughout the process.</p>
+<div class="info-box">
+<strong>Note:</strong> RxCheck operates two distinct environments: <strong>Production</strong> and <strong>Test (UAT)</strong>.<br>
+Access to each environment is determined by the specific URL used. The URL will indicate if you are connected to the test or production site, and the login page displays the current application version at the bottom right of the page.
+</div>
+
+<h2>4.1 Open the RxConsole Application (Production)</h2>
+<p>Navigate to the following URL in your internet browser:</p>
+<p><a href="https://console.rxcheck.org/rxconsole/#/login">https://console.rxcheck.org/rxconsole/#/login</a></p>
+<div class="note"><strong>Note:</strong> At the bottom of the page, there is text indicating the site type is production <strong>(PROD)</strong>, along with the RxConsole version number.</div>
+
+<h2>4.2 Open the RxConsole Test Site (UAT)</h2>
+<p>Navigate to the following URL in your internet browser to load the RxConsole Login page:</p>
+<p><a href="https://test.rxcheck.org:18803/tetrus-rxcheck/#/login">https://test.rxcheck.org:18803/tetrus-rxcheck/#/login</a></p>
+<div class="note"><strong>Note:</strong> At the bottom of the page, there is text indicating the site type is Test <strong>(UAT)</strong>, along with the RxConsole version number.</div>
+
+<h2>4.3 Sign In to the RxConsole Application</h2>
+<p>Personal login credentials are required to log into the RxConsole application. Login credentials will be provided to the state PDMP administrators during the onboarding process. <strong>For further inquiries regarding your login credentials, please contact the RxCheck help desk</strong> as described in the <a href="Contact-the-RxCheck-Team.html">Contact the RxCheck Team</a> section.</p>
+<ol class="steps-list">
+  <li>Enter your RxCheck username in the first text box.</li>
+  <li>Enter your RxCheck Password in the second text box.</li>
+  <li>Click on the <em>Sign In</em> button.</li>
+  <li>Users can receive the one-time password (OTP) two ways:
+    <ul>
+      <li>Click <em>Email OTP Code</em> on the login screen to have the code sent to their login email.</li>
+      <li>Use one of the three approved authenticator apps to generate the OTP on their mobile device.</li>
+    </ul>
+  </li>
+  <li>To view the OTP code on a mobile device, install <strong>Google, Microsoft, or Duo Authenticator</strong> from:
+    <ul>
+      <li>The <strong>Play Store</strong> (Android)</li>
+      <li>The <strong>App Store</strong> (iPhone)</li>
+    </ul>
+  </li>
+  <li>Enter the OTP code from the email or authenticator app and click on the <em>Submit</em> button.</li>
+</ol>
+
+<h2>4.4 Reset Your Mobile Authenticator App</h2>
+<ol class="steps-list">
+  <li>Users can set up or reset their authenticator app by:
+    <ul>
+      <li>Scanning the QR code from their RxConsole account creation email, or</li>
+      <li>Clicking <em>Reset QR Code</em> on the authenticator code screen.</li>
+    </ul>
+  </li>
+  <li>If you clicked the <em>Reset QR Code</em> link, press the <em>Email QR Code</em> button on the following screen.</li>
+  <li>A <em>Reset QR Code – Email Sent</em> pop-up will display.</li>
+  <li>Press the <em>Ok</em> button.</li>
+  <li>Users will receive an email from "prod-notif" with the subject <strong>Reset QR Code</strong>.</li>
+  <li>Open the email and scan the QR Code.</li>
+</ol>
+<div class="note"><strong>Note:</strong> If the user previously set up authentication in a mobile authenticator app, they should delete the existing RxConsole account entry in that authenticator app before scanning the new QR code to avoid duplicate entries.</div>
+
+<h3>Set up using Google Authenticator</h3>
+<ol>
+  <li>Launch the Google Authenticator app on your mobile device.</li>
+  <li>Press the <strong>+</strong> button.</li>
+  <li>Press the camera icon to scan a QR code.</li>
+  <li>Scan the QR code in the RxConsole email.</li>
+</ol>
+
+<h3>Set up using Duo Mobile Authenticator</h3>
+<ol>
+  <li>Launch the Duo Mobile Authenticator app on your mobile device.</li>
+  <li>Press the <strong>+ Add</strong> button.</li>
+  <li>Press the <strong>Use QR Code</strong> button.</li>
+  <li>Scan the QR code in the RxConsole email.</li>
+</ol>
+
+<h3>Set up using Microsoft Authenticator</h3>
+<ol>
+  <li>Launch the Microsoft Authenticator app on your mobile device.</li>
+  <li>Press the <strong>+</strong> icon.</li>
+  <li>Select <em>Work or school account</em>.</li>
+  <li>Press the <em>Scan QR Code</em> option.</li>
+  <li>Scan the QR code in the RxConsole email.</li>
+</ol>
+
+<h2>4.5 Retrieve a Forgotten Password</h2>
+<ol class="steps-list">
+  <li>Click on the <em>Forgot Password</em> button.</li>
+  <li>An <em>Alert</em> pop-up will display: "Please contact your system administrator."</li>
+</ol>
+<div class="note"><strong>Note:</strong> Users must send the password update request <strong>from the email address they use to log into the RxConsole application</strong> to the RxConsole support team.</div>
+
+<h2>4.6 Account Timeout and Lockout</h2>
+<p>The RxConsole application includes security features designed to assist with account security and may be triggered during routine use of the system.</p>
+<ul>
+  <li><strong>Timeout</strong> — All RxConsole roles will experience a 15-minute period in which they will not be able to access the RxConsole application after five (5) failed password attempts. After the 15-minute timeout period, the password attempts will reset.</li>
+  <li><strong>Lockout</strong> — All RxConsole roles should automatically inactivate after a user has been inactive for 180 consecutive days. To reactivate the account, the user will need to reach out to the RxCheck Support Team.</li>
+</ul>
+
+<h2>4.7 Reset the Password for Your RxConsole Account</h2>
+<p>Users can change their password for security purposes or other reasons by following the instructions below. It is recommended that your password be updated every 30 days for increased account security.</p>
+<ol class="steps-list">
+  <li>Click on your username on the top right-hand corner of the screen.</li>
+  <li>Select the <em>Change Password</em> dropdown option.</li>
+  <li>Enter your current password in the "Current Password" box.</li>
+  <li>Enter your new password in the "New Password" box.</li>
+  <li>Re-enter your new password in the "Confirm Password" box. <em>Note: This ensures the user enters the new password as intended.</em></li>
+  <li>Click on the <em>Save</em> button to implement the password change.</li>
+</ol>
+
+<div class="doc-footer-nav">
+  <a class="nav-btn" href="Functionality.html">← Functionality of the RxConsole Application</a>
+  <a class="nav-btn" href="RxCheck-Dashboard.html">RxCheck Dashboard →</a>
+</div>
+</body>
+</html>

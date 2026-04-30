@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : Provider Validation</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Provider Validation &rsaquo; <strong>Provider Validation</strong>
+</div>
+<h1>Provider Validation</h1>
+
+<p>The term "Provider" refers to a licensed healthcare professional or organization legally authorized to deliver medical services to the public. Most providers in the US are uniquely identified by a 10-digit National Provider Identifier (NPI), issued by the Centers for Medicare and Medicaid Services (CMS). Additionally, the Drug Enforcement Agency (DEA) assigns practitioners a DEA Registration Number, authorizing them to prescribe controlled substances. Providers must also hold a valid state license, evidenced by a State License Number (SL#).</p>
+<p>The Provider Validation feature in RxConsole allows State PDMP Administrators to configure whether the validation of the NPI, DEA, SL# and/or OTHER# is required, optional, or not validated prior to processing a request.</p>
+
+<h2>15.1 View and Add a Datasource for Provider Validation</h2>
+<ol class="steps-list">
+  <li>Click on the <em>Provider Management</em> button, followed by the <em>Provider Datasource</em> option, located on the left-hand side of the screen.</li>
+  <li>The Datasources screen allows you to view previously uploaded datasources.</li>
+  <li>To add a new provider datasource, press the <em>Add Datasource</em> button.</li>
+  <li>To view a previously entered datasource, click on a datasource name in the <em>List of Datasources</em>.</li>
+</ol>
+
+<table>
+<thead><tr><th>Header</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>Datasource Name</strong></td><td>The name entered by the PDMP administrator referencing this unique datasource.</td></tr>
+<tr><td><strong>Datasource Type</strong></td><td>Identifies the datasource type as a File or API.</td></tr>
+<tr><td><strong>API URL</strong></td><td>The URL for the API to call for provider identification.</td></tr>
+<tr><td><strong>Auth Type</strong></td><td>The authorization method for calling the API.</td></tr>
+<tr><td><strong>Records</strong></td><td>The number of records on the datasource in this row.</td></tr>
+<tr><td><strong>Created Date</strong></td><td>The date and time the datasource was added into the RxConsole.</td></tr>
+</tbody>
+</table>
+
+<h2>15.2 View, Delete, and Search an Existing Datasource</h2>
+<p>Follow steps 1, 2, and 4 under the section "View and add a datasource for provider validation" to view an existing datasource. The new screen will look similar to the <em>Add Datasource</em> screen, but includes a <em>Search Provider</em> section.</p>
+<p>To check if an existing datasource contains a provider, enter the DEA#, NPI#, SL# or OTHER# in the <em>Search Provider</em> section. If the provider is on the list, their information will be returned. If not, you will see "No Provider found."</p>
+<div class="note"><strong>Note:</strong> The datasource search feature is only available for datasource files and cannot be used on a datasource API.</div>
+
+<h3>15.2.1 Create a Datasource File</h3>
+<ol class="steps-list">
+  <li>Open Microsoft Excel on your computer.</li>
+  <li>Create a new blank workbook.</li>
+  <li>Add your desired headers in any order you prefer. The possible headers are: First Name, Last Name, NPI#, DEA#, SL#, OTHER#. <em>Note: Not all header names are required — any combination can be used.</em></li>
+  <li>Populate the relevant information under the corresponding column.</li>
+  <li>When finished, save the file as either a .csv (Comma Separated Values) or .xlsx (Excel workbook).</li>
+</ol>
+
+<h3>15.2.2 Add a New Datasource File</h3>
+<ol class="steps-list">
+  <li>Follow steps 1–3 under "View and add a datasource for provider validation."</li>
+  <li>Select the "File" option under the <em>Datasource Type</em> dropdown.</li>
+  <li>Enter a name for your datasource file in the field labeled <em>Datasource Name</em>. <em>Note: The name can be up to 15 alphanumeric characters (spaces and special characters are not allowed).</em></li>
+  <li>Press the <em>Select File</em> button under the <em>Data Upload</em> section and find your datasource file.</li>
+  <li>Select your import type: <strong>Full</strong> (imports the entire datasource file) or <strong>Delta</strong> (only available when viewing a previous datasource).</li>
+  <li>Check the fields that are present in your datasource file. After checking a box, set the sequence (Column A = "0", Column B = "1", etc.).</li>
+  <li>Press the <em>Save</em> button to add your datasource file to the RxConsole.</li>
+  <li>Verify your datasource file was successfully added by looking for the alert: "Provider Data is Uploaded".</li>
+</ol>
+
+<h3>15.2.3 Add a Datasource API</h3>
+<ol class="steps-list">
+  <li>Follow steps 1–3 under "View and add a datasource for provider validation."</li>
+  <li>Select the "API" option under the <em>Datasource Type</em> dropdown.</li>
+  <li>Enter the API URL into the field labeled <em>API URL</em>.</li>
+  <li>Select the appropriate authorization type using the <em>Auth Type</em> dropdown.</li>
+  <li>For BASIC authorization, enter the username and password. For OAUTH2 authorization, enter the Client ID, Client Secret, and Auth URL.</li>
+  <li>Press the <em>Save</em> button to add your datasource API.</li>
+  <li>Verify the datasource API was successfully added by looking for the alert: "Datasource Created".</li>
+</ol>
+
+<h2>15.3 Configure Provider Validation Options</h2>
+
+<h3>15.3.1 Modify an Existing Provider Validation</h3>
+<ol class="steps-list">
+  <li>Click on the <em>Provider Management</em> button, followed by the <em>Provider Validation</em> option.</li>
+  <li>To view and/or modify an existing validation, click on the name of a validation.</li>
+  <li>The screen allows you to change settings including:
+    <ul>
+      <li><strong>Name</strong> — Change the name of the validation settings.</li>
+      <li><strong>Select Roles</strong> — Change the roles that are subject to validation.</li>
+      <li><strong>Validation Type</strong> — If <em>Mandatory</em> is chosen, a query will fail if the fields are not present. If <em>Validate</em> is chosen, the query stops if the validation check fails.</li>
+      <li><strong>Datasource</strong> — Select a datasource to reference for the validation check (only present if <em>Validate</em> is chosen).</li>
+      <li><strong>Selection</strong> — <em>All</em> checks all selected validation fields; <em>Any</em> requires only one to pass.</li>
+      <li><strong>Validation Field(s)</strong> — Choose which ID numbers are subject to validation.</li>
+    </ul>
+  </li>
+  <li>Press the <em>Save</em> button to record your changes.</li>
+  <li>Verify the update by looking for the alert: "Provider Validation Updated".</li>
+</ol>
+
+<h3>15.3.2 Add a New Provider Validation</h3>
+<ol class="steps-list">
+  <li>Click on the <em>Provider Management</em> button, followed by the <em>Provider Validation</em> option.</li>
+  <li>Click on the <em>Add Provider Validation</em> button.</li>
+  <li>Enter the settings for the new validation rules (Name, Select Roles, Validation Type, Datasource, Selection, and Validation Fields).</li>
+  <li>Press the <em>Save</em> button to add your new provider validation rules.</li>
+  <li>Verify the creation by looking for the alert: "Provider Validation Created".</li>
+</ol>
+
+<div class="doc-footer-nav">
+  <a class="nav-btn" href="User-Management.html">← User Management</a>
+  <a class="nav-btn" href="PDMP-Maintenance-Schedule.html">PDMP Maintenance Schedule →</a>
+</div>
+</body>
+</html>

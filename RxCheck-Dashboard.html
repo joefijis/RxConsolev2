@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : RxCheck Dashboard</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; RxCheck Dashboard &rsaquo; <strong>RxCheck Dashboard</strong>
+</div>
+<h1>RxCheck Dashboard</h1>
+
+<p>The RxCheck Dashboard provides a location for PDMP administrators and other authorized users to view metrics on their state's RxCheck usage.</p>
+<div class="note"><strong>Note:</strong> The RxCheck Dashboard will only work after the PDMP SRS is configured. Information regarding the SRS (State Routing Service) including where to download the software can be found in the <a href="SRS-Configuration.html">State Routing Service (SRS) Configuration</a> section.</div>
+
+<h2>5.1 Apply Filters to the RxCheck Dashboard</h2>
+<ol class="steps-list">
+  <li>Click the pie graph icon on the left-hand side of the screen to access the RxCheck Dashboard.</li>
+  <li>Click on the downward-facing arrow for the filter titled "During" to reveal options to filter by.</li>
+  <li>Select the period to match the historical timeframe you would like to populate the RxCheck dashboard. <em>Note: This filter is set to last 7 days by default.</em></li>
+  <li>Click on the downward-facing arrow for the filter titled "Healthcare Entities (PDMP-Site Code)" to reveal a list of healthcare entities.</li>
+  <li>Select the desired healthcare entity(ies) by:
+    <ul>
+      <li>Scrolling through the dropdown and checking the box next to each desired entity, or</li>
+      <li>Typing in the <strong>Search Bar</strong> to filter the entities.</li>
+    </ul>
+    <em>Note: By default, all options are selected. To clear your selections, click the checkbox next to the search bar before choosing your desired options.</em>
+  </li>
+  <li>Click on the downward-facing arrow for the filter titled "PDMP Sites" to reveal a list of states.</li>
+  <li>Select the desired PDMP Site(s) by scrolling through the dropdown or typing in the Search Bar. <em>Note: By default, all options are selected.</em></li>
+  <li>Uncheck the "Include Integrations" box to exclude transaction counts from out-of-state healthcare entities. <em>Note: This option is selected by default.</em></li>
+  <li>Click on the downward-facing arrow for the filter titled "Status Types" to reveal a list of status options.</li>
+  <li>Select the desired Status Type(s). <em>Note: By default, all options are selected.</em></li>
+  <li>Click on the <em>Apply Filter</em> button to apply your selected filters on the dashboard.</li>
+</ol>
+
+<h2>5.2 View Incoming and Outgoing Requests</h2>
+<ol class="steps-list">
+  <li>Click on either the <em>Incoming</em> or <em>Outgoing</em> button located below the filters on the RxCheck Dashboard screen. <em>Note: The Incoming option is selected and displayed by default.</em></li>
+  <li>Perform the steps from the "Apply filters to the RxCheck Dashboard" section of this guide.</li>
+  <li>Select the <em>View by Status</em> button to view a graphical representation of the data, based on the status.</li>
+  <li>Select the <em>View by Role</em> button to view the total count of requests made by professionals in a certain role.</li>
+</ol>
+<div class="note"><strong>Note:</strong> The steps are the same between incoming and outgoing requests.</div>
+
+<h2>5.3 Graphical Analysis</h2>
+<p>The following bar graph depicts the distribution of requests over time, matching your selected dashboard filters.</p>
+<p>The Y-axis represents the number of requests, while the X-axis represents the time frame. The blue bars represent the request volume over time.</p>
+<p>The following horizontal bar graph depicts the number of requests from site(s) over time, matching your selected dashboard filters.</p>
+<p>The Y-axis represents the site(s) in the PDMP user's state, while the X-axis represents the volume of requests. The blue bars represent the distribution of request volume per site in the time period selected in the dashboard filters.</p>
+
+<div class="doc-footer-nav">
+  <a class="nav-btn" href="Getting-Started.html">← Getting Started with the RxConsole Application</a>
+  <a class="nav-btn" href="Analytical-Insights.html">Analytical Insights →</a>
+</div>
+</body>
+</html>

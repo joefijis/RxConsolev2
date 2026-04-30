@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxConsole User Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Layout */
+            --sidebar-width: 320px;
+            --header-height: 64px;
+
+            /* Light theme — refined palette */
+            --primary: #0052cc;
+            --primary-hover: #0747a6;
+            --primary-soft: #e7f0fe;
+            --bg-app: #fafbfc;
+            --bg-sidebar: #ffffff;
+            --bg-main: #ffffff;
+            --bg-elevated: #ffffff;
+            --text-primary: #0a2540;
+            --text-secondary: #5e6c84;
+            --text-muted: #8a94a6;
+            --border-subtle: #ebecf0;
+            --border-default: #dfe1e6;
+            --hover-bg: #f4f5f7;
+            --active-bg: #e7f0fe;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+            --shadow-header: 0 1px 0 rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --primary: #4c9aff;
+            --primary-hover: #79b3ff;
+            --primary-soft: #1a2b4d;
+            --bg-app: #0a0e14;
+            --bg-sidebar: #0f141b;
+            --bg-main: #0d1117;
+            --bg-elevated: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #9ba8b8;
+            --text-muted: #6e7681;
+            --border-subtle: #1f2630;
+            --border-default: #2a313c;
+            --hover-bg: #1a2029;
+            --active-bg: #1c2d4a;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --shadow-header: 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        * { box-sizing: border-box; }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-app);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        /* ============ HEADER ============ */
+        header {
+            height: var(--header-height);
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-header);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        #menu-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        #menu-toggle:hover {
+            background: var(--hover-bg);
+            color: var(--text-primary);
+        }
+
+        .header-logo {
+            height: 36px;
+            width: auto;
+            border-radius: 6px;
+            display: block;
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .header-title h1 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        .header-title .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Contact Us button */
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .contact-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        .contact-btn svg { flex-shrink: 0; }
+
+        /* ============ THEME TOGGLE SWITCH ============ */
+        .theme-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .theme-switch input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .theme-switch-track {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            background: var(--border-default);
+            border-radius: 999px;
+            transition: background 0.25s ease;
+            display: flex;
+            align-items: center;
+            padding: 0 6px;
+            justify-content: space-between;
+        }
+        .theme-switch-track::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+        .theme-switch input:checked + .theme-switch-track {
+            background: var(--primary);
+        }
+        .theme-switch input:checked + .theme-switch-track::before {
+            transform: translateX(24px);
+            background: #0d1117;
+        }
+        .theme-switch-icon {
+            width: 14px;
+            height: 14px;
+            color: rgba(255,255,255,0.95);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-switch-icon.sun { color: #f0b429; }
+        .theme-switch-icon.moon { color: #c9d1d9; }
+        [data-theme="light"] .theme-switch-icon.moon { opacity: 0.4; }
+        [data-theme="dark"] .theme-switch-icon.sun { opacity: 0.4; }
+
+        /* ============ LAYOUT ============ */
+        .container {
+            display: flex;
+            margin-top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+        }
+
+        nav {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-subtle);
+            overflow-y: auto;
+            padding: 20px 16px;
+            flex-shrink: 0;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease;
+        }
+        .sidebar-collapsed nav { margin-left: calc(var(--sidebar-width) * -1); }
+
+        /* Custom scrollbar */
+        nav::-webkit-scrollbar { width: 8px; }
+        nav::-webkit-scrollbar-track { background: transparent; }
+        nav::-webkit-scrollbar-thumb {
+            background: var(--border-default);
+            border-radius: 4px;
+        }
+        nav::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ============ SEARCH ============ */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .search-box {
+            width: 100%;
+            padding: 9px 12px 9px 38px;
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            background: var(--bg-app);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+        .search-box::placeholder { color: var(--text-muted); }
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+            background: var(--bg-elevated);
+        }
+
+        /* ============ NAV ITEMS ============ */
+        .nav-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0 12px;
+            margin: 8px 0 6px;
+        }
+
+        .folder {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 6px;
+            color: var(--text-primary);
+            transition: background 0.15s ease;
+            margin-bottom: 1px;
+        }
+        .folder:hover { background: var(--hover-bg); }
+        .folder-icon {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .folder.active .folder-icon { transform: rotate(90deg); }
+        .folder-emoji { font-size: 15px; flex-shrink: 0; }
+        .folder-text { flex: 1; }
+
+        .file-list {
+            display: none;
+            list-style: none;
+            padding-left: 0;
+            margin: 0 0 6px 0;
+        }
+        .file-list.open { display: block; }
+
+        .file-list li a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: block;
+            padding: 7px 12px 7px 38px;
+            font-size: 13px;
+            border-radius: 6px;
+            margin: 1px 0;
+            position: relative;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .file-list li a::before {
+            content: '';
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--border-default);
+            transform: translateY(-50%);
+            transition: background 0.15s ease;
+        }
+        .file-list li a:hover {
+            background: var(--hover-bg);
+            color: var(--text-primary);
+        }
+        .file-list li a:hover::before { background: var(--text-secondary); }
+        .file-list li a.current {
+            background: var(--active-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .file-list li a.current::before { background: var(--primary); }
+
+        /* ============ MAIN ============ */
+        main {
+            flex-grow: 1;
+            background: var(--bg-main);
+            transition: background-color 0.25s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ============ WELCOME PANEL ============ */
+        .welcome-panel {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+            background: var(--bg-main);
+            overflow-y: auto;
+        }
+        .welcome-content {
+            max-width: 720px;
+        }
+        .welcome-eyebrow {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+        }
+        .welcome-content h2 {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 0 0 16px;
+            color: var(--text-primary);
+            line-height: 1.15;
+        }
+        .welcome-content p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0 0 36px;
+        }
+        .quick-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .quick-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+            display: block;
+        }
+        .quick-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        .quick-card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .quick-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 0 4px;
+        }
+        .quick-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* ============ MOBILE ============ */
+        @media (max-width: 768px) {
+            :root { --sidebar-width: 280px; }
+            nav {
+                position: fixed;
+                top: var(--header-height);
+                bottom: 0;
+                left: 0;
+                z-index: 50;
+                box-shadow: var(--shadow-lg);
+            }
+            .header-title h1 { font-size: 14px; }
+            .header-title .subtitle { display: none; }
+            .contact-btn span { display: none; }
+            .contact-btn { padding: 8px; }
+            .welcome-content h2 { font-size: 26px; }
+            .welcome-content p { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <button id="menu-toggle" onclick="toggleSidebar()" title="Toggle Sidebar" aria-label="Toggle navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <img src="rxcheck1_20200520.PNG" alt="RxCheck Logo" class="header-logo" onerror="this.style.display='none'">
+        <div class="header-title">
+            <h1>RxConsole User Guide</h1>
+            <span class="subtitle">Version 3.2 · State PDMP Administrator</span>
+        </div>
+    </div>
+
+    <div class="header-right">
+        <a href="https://www.pdmpassist.org/ContactUs" target="_blank" rel="noopener" class="contact-btn" title="Contact Us">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>Contact Us</span>
+        </a>
+
+        <label class="theme-switch" title="Toggle dark mode">
+            <input type="checkbox" id="theme-toggle-input" onchange="toggleTheme()">
+            <span class="theme-switch-track">
+                <span class="theme-switch-icon sun">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" fill="none"/>
+                    </svg>
+                </span>
+                <span class="theme-switch-icon moon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </span>
+            </span>
+        </label>
+    </div>
+</header>
+
+<div class="container">
+    <nav>
+        <div class="search-container">
+            <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="search-box" id="docSearch" placeholder="Search documentation..." onkeyup="filterDocs()">
+        </div>
+
+        <div class="nav-section-label">Documentation</div>
+
+        <div id="nav-content">
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">📘</span>
+                <span class="folder-text">Introduction & Overview</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Introduction.html" target="content-frame">Introduction</a></li>
+                <li><a href="History-and-Overview.html" target="content-frame">History and Overview</a></li>
+                <li><a href="Functionality.html" target="content-frame">Functionality & User Roles</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">🚀</span>
+                <span class="folder-text">Getting Started</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Getting-Started.html" target="content-frame">Login, Authentication & Password</a></li>
+                <li><a href="Exit-the-RxConsole.html" target="content-frame">Exit the RxConsole</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">📊</span>
+                <span class="folder-text">Dashboard & Analytics</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="RxCheck-Dashboard.html" target="content-frame">RxCheck Dashboard</a></li>
+                <li><a href="Analytical-Insights.html" target="content-frame">Analytical Insights</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">🔌</span>
+                <span class="folder-text">State Routing Service</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="SRS-Configuration.html" target="content-frame">SRS Configuration</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">📋</span>
+                <span class="folder-text">Hub Audit Logs</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Hub-Audit-Logs.html" target="content-frame">Hub Audit Logs</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">🏥</span>
+                <span class="folder-text">Healthcare Entities</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Healthcare-Entities.html" target="content-frame">Healthcare Entities</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">🌐</span>
+                <span class="folder-text">Interstate Data-Sharing</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Interstate-Data-Sharing.html" target="content-frame">Interstate Data-Sharing</a></li>
+                <li><a href="Interstate-Role-Management.html" target="content-frame">Role Management</a></li>
+                <li><a href="Approving-Interstate-Data-Sharing.html" target="content-frame">Approve Data-Sharing for HCEs</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">🔗</span>
+                <span class="folder-text">Integration Requests</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Integration-Requests.html" target="content-frame">Integration Requests</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">👥</span>
+                <span class="folder-text">User Management</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="User-Management.html" target="content-frame">User Management</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">✅</span>
+                <span class="folder-text">Provider Validation</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Provider-Validation.html" target="content-frame">Provider Validation</a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">⚙️</span>
+                <span class="folder-text">System & Maintenance</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="PDMP-Maintenance-Schedule.html" target="content-frame">PDMP Maintenance Schedule</a></li>
+                <li><a href="NCPDP-Taxonomy-Code-Mapping.html" target="content-frame">NCPDP Taxonomy Code Mapping</a></li>
+                <li><a href="System-Information.html" target="content-frame">System Information</a></li>
+                <li><a href="System-Notifications.html" target="content-frame">System Notifications</a></li>
+            </ul>
+
+            <div class="nav-section-label" style="margin-top: 16px;">Reference</div>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </span>
+                <span class="folder-emoji">📚</span>
+                <span class="folder-text">Resources</span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Contact-the-RxCheck-Team.html" target="content-frame">Contact the RxCheck Team</a></li>
+                <li><a href="Version-History.html" target="content-frame">Version History Log</a></li>
+                <li><a href="Appendix.html" target="content-frame">Appendix</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <iframe name="content-frame" id="docFrame" title="RxConsole Documentation Content" srcdoc='<!DOCTYPE html><html><head><style>body{margin:0;padding:0;font-family:Inter,-apple-system,sans-serif;background:transparent;color:inherit;}</style></head><body><div id="welcome"></div></body></html>' onload="syncIframeTheme(); maybeShowWelcome();"></iframe>
+    </main>
+</div>
+
+<!-- Welcome panel template (rendered into the iframe on first load) -->
+<template id="welcome-template">
+    <div class="welcome-panel">
+        <div class="welcome-content">
+            <span class="welcome-eyebrow">Version 3.2 Documentation</span>
+            <h2>Welcome to the RxConsole User Guide</h2>
+            <p>Comprehensive guidance for state PDMP administrators using the RxConsole application to manage interstate prescription data sharing within the RxCheck Hub.</p>
+
+            <div class="quick-cards">
+                <a class="quick-card" href="#" data-target="Getting-Started.html">
+                    <div class="quick-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                    <h3>Get Started</h3>
+                    <p>Sign in, set up authentication, and access the application.</p>
+                </a>
+                <a class="quick-card" href="#" data-target="SRS-Configuration.html">
+                    <div class="quick-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
+                    <h3>Configure SRS</h3>
+                    <p>Set up the State Routing Service for hub connectivity.</p>
+                </a>
+                <a class="quick-card" href="#" data-target="Healthcare-Entities.html">
+                    <div class="quick-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9h.01M9 12h.01M9 15h.01M9 18h.01"/></svg>
+                    </div>
+                    <h3>Manage Entities</h3>
+                    <p>Onboard and manage healthcare entities in your network.</p>
+                </a>
+                <a class="quick-card" href="#" data-target="Interstate-Data-Sharing.html">
+                    <div class="quick-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3>Data-Sharing</h3>
+                    <p>Authorize states and roles for interstate data exchange.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    const frame = document.getElementById('docFrame');
+    const themeInput = document.getElementById('theme-toggle-input');
+
+    /* ============ THEME ============ */
+    function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        themeInput.checked = (theme === "dark");
+        syncIframeTheme();
+    }
+
+    function toggleTheme() {
+        const newTheme = themeInput.checked ? "dark" : "light";
+        localStorage.setItem("theme", newTheme);
+        applyTheme(newTheme);
+    }
+
+    function syncIframeTheme() {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        try {
+            const frameDoc = frame.contentDocument || frame.contentWindow.document;
+            if (frameDoc && frameDoc.documentElement) {
+                frameDoc.documentElement.setAttribute("data-theme", currentTheme);
+                /* Also update body bg for the welcome panel */
+                if (frameDoc.body) {
+                    frameDoc.body.style.background = currentTheme === "dark" ? "#0d1117" : "#ffffff";
+                    frameDoc.body.style.color = currentTheme === "dark" ? "#e6edf3" : "#0a2540";
+                }
+            }
+        } catch (e) {
+            /* iframe origin restrictions — silent fallback */
+        }
+    }
+
+    /* Load saved theme on startup, defaulting to system preference */
+    (function initTheme() {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? "dark" : "light");
+        applyTheme(theme);
+    })();
+
+    /* ============ WELCOME PANEL ============ */
+    function maybeShowWelcome() {
+        try {
+            const frameDoc = frame.contentDocument || frame.contentWindow.document;
+            const welcomeMount = frameDoc.getElementById('welcome');
+            if (!welcomeMount) return;
+
+            /* Inject styles + content */
+            const css = document.querySelector('style').textContent;
+            const tmpl = document.getElementById('welcome-template').innerHTML;
+            const styleTag = frameDoc.createElement('style');
+            styleTag.textContent = css;
+            frameDoc.head.appendChild(styleTag);
+            welcomeMount.innerHTML = tmpl;
+
+            /* Wire up quick cards to navigate parent iframe */
+            frameDoc.querySelectorAll('.quick-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = card.getAttribute('data-target');
+                    if (target) navigateTo(target);
+                });
+            });
+        } catch (e) { /* ignore */ }
+    }
+
+    function navigateTo(href) {
+        frame.src = href;
+        document.querySelectorAll('.file-list a').forEach(l => {
+            l.classList.toggle('current', l.getAttribute('href') === href);
+        });
+        /* Open the parent folder of the active link */
+        const activeLink = document.querySelector('.file-list a.current');
+        if (activeLink) {
+            const list = activeLink.closest('.file-list');
+            if (list && !list.classList.contains('open')) {
+                list.classList.add('open');
+                const folder = list.previousElementSibling;
+                if (folder && folder.classList.contains('folder')) folder.classList.add('active');
+            }
+        }
+    }
+
+    /* ============ SIDEBAR / FOLDERS ============ */
+    function toggleFolder(element) {
+        element.classList.toggle('active');
+        const list = element.nextElementSibling;
+        list.classList.toggle('open');
+    }
+
+    function toggleSidebar() {
+        document.body.classList.toggle('sidebar-collapsed');
+    }
+
+    /* Open the first folder by default */
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstFolder = document.querySelector('.folder');
+        if (firstFolder) firstFolder.click();
+    });
+
+    /* ============ NAVIGATION & ACTIVE LINKS ============ */
+    document.querySelectorAll('.file-list a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            document.querySelectorAll('.file-list a').forEach(l => l.classList.remove('current'));
+            this.classList.add('current');
+            /* On mobile, close the sidebar after clicking */
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('sidebar-collapsed');
+            }
+        });
+    });
+
+    /* ============ SEARCH FILTER ============ */
+    function filterDocs() {
+        const input = document.getElementById('docSearch').value.toLowerCase().trim();
+        const folders = document.querySelectorAll('.folder');
+        const lists = document.querySelectorAll('.file-list');
+        const labels = document.querySelectorAll('.nav-section-label');
+
+        folders.forEach((folder, i) => {
+            const links = lists[i].querySelectorAll('li');
+            let matchFound = false;
+
+            links.forEach(li => {
+                const text = li.innerText.toLowerCase();
+                const folderText = folder.innerText.toLowerCase();
+                if (!input || text.includes(input) || folderText.includes(input)) {
+                    li.style.display = "block";
+                    matchFound = true;
+                } else {
+                    li.style.display = "none";
+                }
+            });
+
+            folder.style.display = (matchFound || !input) ? "flex" : "none";
+            if (input && matchFound) {
+                lists[i].classList.add('open');
+                folder.classList.add('active');
+            } else if (!input) {
+                /* Restore default — only first folder open */
+            }
+        });
+
+        /* Hide section labels if no folders below them are visible */
+        labels.forEach(label => {
+            label.style.display = input ? 'none' : 'block';
+        });
+    }
+
+    /* Listen for theme changes and re-sync iframe whenever the iframe navigates */
+    frame.addEventListener('load', syncIframeTheme);
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxCheck : Functionality of the RxConsole Application</title>
+
+<style>
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #172b4d;
+        --panel-bg: #f4f5f7;
+        --note-bg: #fffae6;
+        --note-border: #f0b429;
+        --important-bg: #fff0f0;
+        --important-border: #e53e3e;
+        --info-bg: #eaf4ff;
+        --info-border: #0052cc;
+        --breadcrumb-color: #5e6c84;
+        --border-color: #d1d5db;
+        --primary-blue: #0052cc;
+        --table-header-bg: #dde8f8;
+        --table-alt-bg: #f7f8fa;
+        --code-bg: #f4f5f7;
+        --step-bg: #eaf4ff;
+        --step-border: #0052cc;
+    }
+    [data-theme="dark"] {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --panel-bg: #1c2128;
+        --note-bg: #2d2a1e;
+        --note-border: #c09a2e;
+        --important-bg: #2d1414;
+        --important-border: #c53030;
+        --info-bg: #0f1f35;
+        --info-border: #3d7fe8;
+        --breadcrumb-color: #8b949e;
+        --border-color: #30363d;
+        --primary-blue: #58a6ff;
+        --table-header-bg: #1c2d4a;
+        --table-alt-bg: #161b22;
+        --code-bg: #1c2128;
+        --step-bg: #0f1f35;
+        --step-border: #3d7fe8;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        padding: 30px 40px;
+        max-width: 960px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 15px;
+    }
+    .breadcrumbs {
+        font-size: 13px;
+        color: var(--breadcrumb-color);
+        margin-bottom: 28px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    h1 {
+        font-size: 26px;
+        color: var(--primary-blue);
+        border-bottom: 2px solid var(--primary-blue);
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+    h2 {
+        font-size: 20px;
+        color: var(--text-color);
+        margin-top: 36px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+    h3 {
+        font-size: 17px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    h4 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    p { margin: 0 0 14px 0; }
+    a { color: var(--primary-blue); }
+    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
+    li { margin-bottom: 6px; }
+    .note, .info-box, .warning-box {
+        padding: 14px 18px;
+        margin: 20px 0;
+        border-radius: 6px;
+        border-left: 4px solid;
+    }
+    .note {
+        background-color: var(--note-bg);
+        border-color: var(--note-border);
+    }
+    .info-box {
+        background-color: var(--info-bg);
+        border-color: var(--info-border);
+    }
+    .warning-box {
+        background-color: var(--important-bg);
+        border-color: var(--important-border);
+    }
+    .note strong, .info-box strong, .warning-box strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    th {
+        background-color: var(--table-header-bg);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+    td {
+        padding: 9px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
+    .steps-list li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        background: var(--step-bg);
+        border-left: 4px solid var(--step-border);
+        border-radius: 0 6px 6px 0;
+        align-items: flex-start;
+    }
+    .steps-list li::before {
+        content: counter(steps);
+        background: var(--primary-blue);
+        color: white;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    code {
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        border: 1px solid var(--border-color);
+    }
+    pre {
+        background: var(--code-bg);
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    pre code { background: none; border: none; padding: 0; }
+    .doc-footer-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border-color);
+    }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--primary-blue);
+        padding: 10px 20px;
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+    .nav-btn:hover {
+        background: var(--primary-blue);
+        color: white;
+    }
+    .nav-btn.disabled {
+        color: var(--breadcrumb-color);
+        border-color: var(--border-color);
+        cursor: default;
+        pointer-events: none;
+    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+</style>
+
+</head>
+<body>
+<div class="breadcrumbs">
+  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Overview &rsaquo; <strong>Functionality of the RxConsole Application</strong>
+</div>
+<h1>Functionality of the RxConsole Application</h1>
+
+<p>RxConsole provides PDMP administrators and authorized users with a comprehensive set of tools to manage and monitor prescription data sharing activities within the RxCheck interstate network. The following high-level functionalities are available through the RxConsole interface:</p>
+
+<table>
+<thead><tr><th>Module</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>RxCheck Dashboard Monitoring</strong></td><td>View a summary of all incoming and outgoing prescription requests associated with your PDMP on the RxCheck Dashboard.</td></tr>
+<tr><td><strong>Analytical Insights</strong></td><td>Generate and view anonymized prescription analytics by patient or prescriber, with filtering options by county and ZIP code.</td></tr>
+<tr><td><strong>State Routing Service (SRS) Configuration</strong></td><td>Set up and manage State Routing Service parameters for data transmission and routing. Establish heartbeat and health monitoring and notifications for site connectivity and IT diagnostics.</td></tr>
+<tr><td><strong>Hub Audit Logs</strong></td><td>Access, filter, and export comprehensive Hub Audit Logs detailing data transaction activities.</td></tr>
+<tr><td><strong>Health Care Entity (HCE) Management</strong></td><td>Create and manage HCE site profiles. Define and manage user roles associated with each HCE. Configure and manage HIE subsite facilities under each HCE.</td></tr>
+<tr><td><strong>Interstate Data Sharing Control</strong></td><td>Grant or revoke access to HCE sites for interstate data exchange. Manage roles and permissions for interstate sharing.</td></tr>
+<tr><td><strong>Interstate Data Sharing Role Management</strong></td><td>Manage roles and permissions for interstate sharing.</td></tr>
+<tr><td><strong>Integration Request Management</strong></td><td>Review and approve or deny integration requests submitted by HCEs seeking connectivity.</td></tr>
+<tr><td><strong>Interstate Data Sharing Request Management</strong></td><td>Review and approve or deny requests from HCEs to share data across state lines.</td></tr>
+<tr><td><strong>PDMP User Management</strong></td><td>Administer PDMP user accounts and manage user-specific settings.</td></tr>
+<tr><td><strong>Provider Validation Management</strong></td><td>Configure validation settings for providers using DEA numbers, National Provider Identifiers (NPI), and state license numbers.</td></tr>
+<tr><td><strong>Maintenance Scheduling</strong></td><td>Create, monitor, and track system maintenance events.</td></tr>
+<tr><td><strong>Taxonomy Code Search</strong></td><td>Search and view mappings related to the NCPDP Taxonomy Code.</td></tr>
+<tr><td><strong>System Status Monitoring</strong></td><td>View system information and connectivity status for all integrated PDMP sites.</td></tr>
+</tbody>
+</table>
+
+<h2>3.2 User Roles and Privileges</h2>
+<p>The RxConsole provides the minimum necessary privileges needed to perform their work to the individuals accessing the application. Within RxConsole, there are 4 main user roles:</p>
+<ul>
+  <li><strong>SUPER_ADMIN</strong> — Only available to the developers of the RxCheck system.</li>
+  <li><strong>ADMIN</strong></li>
+  <li><strong>VENDOR_USER</strong></li>
+  <li><strong>SUB_ADMIN</strong></li>
+  <li><strong>USER</strong></li>
+</ul>
+<div class="note"><strong>Note:</strong> SUPER_ADMIN information is included for informational purposes only.</div>
+<p>The ADMIN role can be further broken down into 2 sub-roles:</p>
+<ul>
+  <li><strong>State</strong> — State employees or contractors with a state email address.</li>
+  <li><strong>Vendor</strong> — Company responsible for overseeing the management of the PDMP software.</li>
+</ul>
+
+<table>
+<thead><tr><th>Module</th><th>ADMIN - State</th><th>ADMIN - Vendor</th><th>VENDOR_USER</th><th>SUB_ADMIN</th><th>USER</th></tr></thead>
+<tbody>
+<tr><td><strong>RxCheck Dashboard</strong></td><td>✔</td><td>✔</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Analytical Insights</strong></td><td>✔</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>State Routing Service</strong></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>—</td></tr>
+<tr><td><strong>Hub Audit Logs</strong></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+<tr><td><strong>Healthcare Entities</strong></td><td>✔</td><td>✔ (view-only)</td><td>✔ (view-only)</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Interstate Data Sharing</strong></td><td>✔</td><td>✔</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Interstate Data Sharing – Role Management</strong></td><td>✔</td><td>✔</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Integration Requests</strong></td><td>✔</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Approve Interstate Data Sharing for HCEs</strong></td><td>✔</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>User Management</strong></td><td>✔</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>Provider Management</strong></td><td>✔</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>PDMP Maintenance Schedule</strong></td><td>✔</td><td>✔</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>NCPDP Taxonomy Code Mapping</strong></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+<tr><td><strong>System Information</strong></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+</tbody>
+</table>
+
+<div class="doc-footer-nav">
+  <a class="nav-btn" href="History-and-Overview.html">← History and Overview of the RxConsole Application</a>
+  <a class="nav-btn" href="Getting-Started.html">Getting Started with the RxConsole Application →</a>
+</div>
+</body>
+</html>
