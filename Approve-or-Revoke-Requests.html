@@ -1,14 +1,304 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Approve or Revoke Interstate Data-Sharing Requests · RxConsole User Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve or Revoke Interstate Data-Sharing Requests · RxConsole User Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        :root {
+            --sidebar-width: 340px;
+            --header-height: 64px;
+            --primary: #0052cc;
+            --primary-hover: #0747a6;
+            --primary-soft: #e7f0fe;
+            --bg-app: #fafbfc;
+            --bg-sidebar: #ffffff;
+            --bg-main: #ffffff;
+            --bg-elevated: #ffffff;
+            --text-primary: #0a2540;
+            --text-secondary: #5e6c84;
+            --text-muted: #8a94a6;
+            --border-subtle: #ebecf0;
+            --border-default: #dfe1e6;
+            --hover-bg: #f4f5f7;
+            --active-bg: #e7f0fe;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+        }
+        [data-theme="dark"] {
+            --primary: #4c9aff;
+            --primary-hover: #79b3ff;
+            --primary-soft: #1a2b4d;
+            --bg-app: #0a0e14;
+            --bg-sidebar: #0f141b;
+            --bg-main: #0d1117;
+            --bg-elevated: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #9ba8b8;
+            --text-muted: #6e7681;
+            --border-subtle: #1f2630;
+            --border-default: #2a313c;
+            --hover-bg: #1a2029;
+            --active-bg: #1c2d4a;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-app);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+        header {
+            height: var(--header-height);
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px;
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        #menu-toggle {
+            background: transparent; border: none;
+            color: var(--text-secondary);
+            padding: 8px; border-radius: 6px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        #menu-toggle:hover { background: var(--hover-bg); color: var(--text-primary); }
+        .header-title { display: flex; flex-direction: column; line-height: 1.2; }
+        .header-title h1 {
+            font-size: 16px; margin: 0;
+            font-weight: 600; letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        .header-title .subtitle {
+            font-size: 12px; color: var(--text-muted); font-weight: 500;
+        }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .contact-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px;
+            background: var(--primary); color: white !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+            transition: all 0.15s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .contact-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        .theme-toggle-wrap {
+            display: flex; align-items: center; gap: 10px;
+            padding: 6px 12px 6px 14px;
+            border: 1px solid var(--border-default);
+            border-radius: 999px;
+            background: var(--bg-app);
+            cursor: pointer; user-select: none;
+            transition: all 0.15s ease;
+        }
+        .theme-toggle-wrap:hover {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+        }
+        .theme-toggle-icon {
+            display: flex; align-items: center;
+            color: var(--text-secondary);
+        }
+        .theme-toggle-label {
+            font-size: 13px; font-weight: 500;
+            color: var(--text-primary);
+            min-width: 36px;
+        }
+        .theme-toggle-wrap input { display: none; }
+        .theme-toggle-track {
+            position: relative;
+            width: 38px; height: 22px;
+            background: var(--border-default);
+            border-radius: 999px;
+            transition: background 0.25s ease;
+        }
+        .theme-toggle-track::before {
+            content: ''; position: absolute;
+            top: 2px; left: 2px;
+            width: 18px; height: 18px;
+            background: white; border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .theme-toggle-wrap input:checked ~ .theme-toggle-track {
+            background: var(--primary);
+        }
+        .theme-toggle-wrap input:checked ~ .theme-toggle-track::before {
+            transform: translateX(16px);
+        }
+        .container {
+            display: flex;
+            margin-top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+        }
+        nav {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-subtle);
+            overflow-y: auto;
+            padding: 18px 14px 30px;
+            flex-shrink: 0;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease;
+        }
+        .sidebar-collapsed nav { margin-left: calc(var(--sidebar-width) * -1); }
+        nav::-webkit-scrollbar { width: 8px; }
+        nav::-webkit-scrollbar-track { background: transparent; }
+        nav::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 4px; }
+        nav::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        .search-container { position: relative; margin-bottom: 18px; }
+        .search-icon {
+            position: absolute; left: 12px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted); pointer-events: none;
+        }
+        .search-box {
+            width: 100%;
+            padding: 9px 12px 9px 38px;
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            background: var(--bg-app);
+            color: var(--text-primary);
+            font-size: 13px; font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        .search-box::placeholder { color: var(--text-muted); }
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+            background: var(--bg-elevated);
+        }
+        .folder {
+            cursor: pointer;
+            font-size: 13.5px; font-weight: 500;
+            padding: 8px 10px;
+            display: flex; align-items: center; gap: 8px;
+            border-radius: 6px;
+            color: var(--text-primary);
+            transition: background 0.15s ease;
+            margin: 1px 0;
+        }
+        .folder:hover { background: var(--hover-bg); }
+        .folder-num {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            min-width: 22px;
+            font-variant-numeric: tabular-nums;
+        }
+        .folder-icon {
+            color: var(--text-muted);
+            display: flex; align-items: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+        .folder.active .folder-icon { transform: rotate(90deg); color: var(--primary); }
+        .folder.active { color: var(--primary); }
+        .folder-text { flex: 1; }
+        .file-list {
+            display: none; list-style: none;
+            padding-left: 0;
+            margin: 2px 0 6px 0;
+        }
+        .file-list.open { display: block; }
+        .file-list li a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex; align-items: flex-start; gap: 8px;
+            padding: 6px 10px 6px 32px;
+            font-size: 13px;
+            border-radius: 6px;
+            margin: 1px 0;
+            transition: background 0.15s ease, color 0.15s ease;
+            line-height: 1.4;
+        }
+        .file-list li a .sub-num {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            min-width: 36px;
+            flex-shrink: 0;
+        }
+        .file-list li a:hover {
+            background: var(--hover-bg);
+            color: var(--text-primary);
+        }
+        .file-list li a.current {
+            background: var(--active-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .file-list li a.current .sub-num { color: var(--primary); }
+        .file-list li a.lvl-3 { padding-left: 50px; font-size: 12.5px; }
+        .file-list li a.lvl-4 { padding-left: 68px; font-size: 12.5px; }
+        a.folder-link {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 13.5px; font-weight: 500;
+            margin: 1px 0;
+            transition: background 0.15s ease;
+        }
+        a.folder-link:hover { background: var(--hover-bg); }
+        a.folder-link.current {
+            background: var(--active-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        main {
+            flex-grow: 1;
+            background: var(--bg-main);
+            transition: background-color 0.25s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        iframe {
+            width: 100%; height: 100%;
+            border: none; display: block;
+        }
+        @media (max-width: 768px) {
+            :root { --sidebar-width: 300px; }
+            nav {
+                position: fixed;
+                top: var(--header-height); bottom: 0; left: 0;
+                z-index: 50;
+                box-shadow: var(--shadow-lg);
+            }
+            .header-title h1 { font-size: 14px; }
+            .header-title .subtitle { display: none; }
+            .contact-btn span { display: none; }
+            .contact-btn { padding: 8px; }
+            .theme-toggle-label { display: none; }
+            .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
+        }
+    
+        /* PAGE SPECIFIC STYLES BELOW */
+        
 :root {
     --bg-color: #ffffff;
     --bg-app: #fafbfc;
@@ -62,7 +352,7 @@
     --step-circle: #4c9aff;
 }
 * { box-sizing: border-box; }
-body {
+#main-content {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     line-height: 1.65;
     padding: 32px 44px 60px;
@@ -365,7 +655,7 @@ pre code { background: none; border: none; padding: 0; }
 
 /* ============ MOBILE ============ */
 @media (max-width: 720px) {
-    body { padding: 20px 16px 50px; font-size: 14px; }
+    #main-content { padding: 20px 16px 50px; font-size: 14px; }
     h1 { font-size: 24px; }
     h2 { font-size: 19px; }
     h3 { font-size: 16px; }
@@ -376,10 +666,309 @@ pre code { background: none; border: none; padding: 0; }
     .doc-footer-nav { flex-direction: column; }
     .nav-btn-next { margin-left: 0; }
 }
-</style>
 
+        
+        /* Layout overrides to prevent massive margins and squished content */
+        body {
+            margin: 0 !important; 
+            padding: 0 !important;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden; 
+        }
+        
+        .container {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #main-content {
+            flex-grow: 1;
+            background: var(--bg-main, #ffffff);
+            overflow-y: auto; 
+            padding: 40px 60px !important; 
+            box-sizing: border-box;
+            max-width: 100% !important;
+        }
+        
+        /* Ensure links hover effects in breadcrumbs */
+        .breadcrumbs a:hover { text-decoration: underline !important; }
+        
+        .page, .wiki-content, #content {
+            margin: 0 !important;
+            max-width: 1200px !important;
+        }
+    </style>
 </head>
 <body>
+    <header>
+    <div class="header-left">
+        <button id="menu-toggle" onclick="toggleSidebar()" title="Toggle Sidebar" aria-label="Toggle navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <div class="header-title">
+            <h1>RxConsole User Guide</h1>
+            <span class="subtitle">Version 3.2 · State PDMP Administrator</span>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://www.pdmpassist.org/ContactUs" target="_blank" rel="noopener" class="contact-btn" title="Contact Us">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>Contact Us</span>
+        </a>
+        <label class="theme-toggle-wrap" title="Toggle dark mode">
+            <span class="theme-toggle-icon" id="theme-icon"></span>
+            <span class="theme-toggle-label" id="theme-label">Light</span>
+            <input type="checkbox" id="theme-toggle-input" onchange="toggleTheme()">
+            <span class="theme-toggle-track"></span>
+        </label>
+    </div>
+</header>
+    <div class="container">
+        <nav>
+        <div class="search-container">
+            <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="search-box" id="docSearch" placeholder="Search documentation..." onkeyup="filterDocs()">
+        </div>
+
+        <div id="nav-content">
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">1</span><span class="folder-text">Introduction</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Introduction.html" target="content-frame"><span class="sub-num">1.0</span><span>Introduction</span></a></li>
+                <li><a href="Purpose-of-the-User-Guide.html" target="content-frame"><span class="sub-num">1.1</span><span>Purpose of the User Guide</span></a></li>
+                <li><a href="Who-is-the-User-Guide-Intended-For.html" target="content-frame"><span class="sub-num">1.2</span><span>Who is the User Guide Intended For?</span></a></li>
+                <li><a href="Access-Registration-and-Authorization.html" target="content-frame"><span class="sub-num">1.3</span><span>Access, Registration, and Authorization</span></a></li>
+            </ul>
+
+            <a class="folder-link" href="History-and-Overview.html" target="content-frame"><span class="folder-num">2</span><span class="folder-text">History and Overview</span></a>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">3</span><span class="folder-text">Functionality</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Functionality.html" target="content-frame"><span class="sub-num">3.0</span><span>Functionality of the RxConsole</span></a></li>
+                <li><a href="RxConsole-Home-Page.html" target="content-frame"><span class="sub-num">3.1</span><span>RxConsole Home Page</span></a></li>
+                <li><a href="User-Roles-and-Privileges.html" target="content-frame"><span class="sub-num">3.2</span><span>User Roles and Privileges</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">4</span><span class="folder-text">Getting Started</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Getting-Started.html" target="content-frame"><span class="sub-num">4.0</span><span>Getting Started Overview</span></a></li>
+                <li><a href="Open-the-RxConsole-Application.html" target="content-frame"><span class="sub-num">4.1</span><span>Open the RxConsole Application</span></a></li>
+                <li><a href="Open-the-UAT-Application.html" target="content-frame"><span class="sub-num">4.2</span><span>Open the UAT Test Site</span></a></li>
+                <li><a href="Sign-in-to-the-RxConsole.html" target="content-frame"><span class="sub-num">4.3</span><span>Sign in to the RxConsole</span></a></li>
+                <li><a href="Reset-Mobile-Authenticator-App.html" target="content-frame"><span class="sub-num">4.4</span><span>Reset Mobile Authenticator</span></a></li>
+                <li><a href="Retrieve-a-Forgotten-Password.html" target="content-frame"><span class="sub-num">4.5</span><span>Retrieve a Forgotten Password</span></a></li>
+                <li><a href="Account-Timeout-and-Lockout.html" target="content-frame" class="lvl-3"><span class="sub-num">4.6</span><span>Account Timeout and Lockout</span></a></li>
+                <li><a href="Reset-Password.html" target="content-frame"><span class="sub-num">4.7</span><span>Reset Password</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">5</span><span class="folder-text">RxCheck Dashboard</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="RxCheck-Dashboard.html" target="content-frame"><span class="sub-num">5.0</span><span>Dashboard Overview</span></a></li>
+                <li><a href="Apply-Dashboard-Filters.html" target="content-frame"><span class="sub-num">5.1</span><span>Apply Dashboard Filters</span></a></li>
+                <li><a href="View-Incoming-and-Outgoing-Requests.html" target="content-frame"><span class="sub-num">5.2</span><span>View Incoming &amp; Outgoing Requests</span></a></li>
+                <li><a href="Graphical-Analysis.html" target="content-frame"><span class="sub-num">5.3</span><span>Graphical Analysis</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">6</span><span class="folder-text">Analytical Insights</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Analytical-Insights.html" target="content-frame"><span class="sub-num">6.0</span><span>Analytical Insights Overview</span></a></li>
+                <li><a href="View-Patient-and-Provider-Data.html" target="content-frame"><span class="sub-num">6.1</span><span>View Patient &amp; Provider Data</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">7</span><span class="folder-text">SRS Configuration</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="SRS-Configuration.html" target="content-frame"><span class="sub-num">7.0</span><span>SRS Configuration Overview</span></a></li>
+                <li><a href="Site-Unique-Identifier.html" target="content-frame"><span class="sub-num">7.1</span><span>Site Unique Identifier</span></a></li>
+                <li><a href="SRS-Outbound-Sender-Endpoint.html" target="content-frame"><span class="sub-num">7.2</span><span>SRS Outbound Sender Endpoint</span></a></li>
+                <li><a href="RxCheck-Hub-Service-Host-Endpoint.html" target="content-frame"><span class="sub-num">7.3</span><span>RxCheck Hub Service Host Endpoint</span></a></li>
+                <li><a href="SRS-Inbound-Sender-Endpoint.html" target="content-frame"><span class="sub-num">7.4</span><span>SRS Inbound Sender Endpoint</span></a></li>
+                <li><a href="Site-PDMP-Application-Endpoint.html" target="content-frame"><span class="sub-num">7.5</span><span>Site PDMP Application Endpoint</span></a></li>
+                <li><a href="SRS-Certificate.html" target="content-frame"><span class="sub-num">7.6</span><span>SRS Certificate</span></a></li>
+                <li><a href="Configure-the-SRS.html" target="content-frame"><span class="sub-num">7.7</span><span>Configure the SRS</span></a></li>
+                <li><a href="Configuring-Required-Fields.html" target="content-frame"><span class="sub-num">7.8</span><span>Configuring Required Fields</span></a></li>
+                <li><a href="Heartbeat-and-Health-Monitoring.html" target="content-frame"><span class="sub-num">7.9</span><span>Heartbeat &amp; Health Monitoring</span></a></li>
+                <li><a href="Current-Site-Monitoring.html" target="content-frame" class="lvl-3"><span class="sub-num">7.9.1</span><span>Current Site Monitoring</span></a></li>
+                <li><a href="All-Sites-Monitoring.html" target="content-frame" class="lvl-3"><span class="sub-num">7.9.2</span><span>All Sites Monitoring</span></a></li>
+                <li><a href="Heartbeat-Notifications.html" target="content-frame"><span class="sub-num">7.10</span><span>Heartbeat Notifications</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">8</span><span class="folder-text">Hub Audit Logs</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Hub-Audit-Logs.html" target="content-frame"><span class="sub-num">8.0</span><span>Hub Audit Logs Overview</span></a></li>
+                <li><a href="Read-the-Hub-Audit-Logs.html" target="content-frame"><span class="sub-num">8.1</span><span>Read the Audit Logs</span></a></li>
+                <li><a href="Filter-the-Hub-Audit-Logs.html" target="content-frame"><span class="sub-num">8.2</span><span>Filter the Audit Logs</span></a></li>
+                <li><a href="Download-the-Hub-Audit-Logs.html" target="content-frame"><span class="sub-num">8.3</span><span>Download the Audit Logs</span></a></li>
+                <li><a href="Exporting-Logs-to-sFTP.html" target="content-frame"><span class="sub-num">8.4</span><span>Export Logs to sFTP</span></a></li>
+                <li><a href="Using-an-API-for-Logs.html" target="content-frame"><span class="sub-num">8.5</span><span>Using an API to Download Logs</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">9</span><span class="folder-text">Healthcare Entities</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Healthcare-Entities.html" target="content-frame"><span class="sub-num">9.0</span><span>Healthcare Entities Overview</span></a></li>
+                <li><a href="Add-a-New-Healthcare-Entity-Site.html" target="content-frame"><span class="sub-num">9.1</span><span>Add a New HCE Site</span></a></li>
+                <li><a href="Breakdown-of-HCE-Site-Details.html" target="content-frame"><span class="sub-num">9.2</span><span>Breakdown of HCE Site Details</span></a></li>
+                <li><a href="Site-Details.html" target="content-frame" class="lvl-3"><span class="sub-num">9.2.1</span><span>Site Details</span></a></li>
+                <li><a href="Contact-Details.html" target="content-frame" class="lvl-3"><span class="sub-num">9.2.2</span><span>Contact Details</span></a></li>
+                <li><a href="Vendor-Details.html" target="content-frame" class="lvl-3"><span class="sub-num">9.2.3</span><span>Vendor Details</span></a></li>
+                <li><a href="Manage-Roles.html" target="content-frame" class="lvl-3"><span class="sub-num">9.2.4</span><span>Manage Roles</span></a></li>
+                <li><a href="Manage-Facilities.html" target="content-frame" class="lvl-3"><span class="sub-num">9.2.5</span><span>Manage Facilities</span></a></li>
+                <li><a href="Add-a-Single-Facility.html" target="content-frame" class="lvl-4"><span class="sub-num">9.2.5.1</span><span>Add a Single Facility</span></a></li>
+                <li><a href="Add-Multiple-Facilities.html" target="content-frame" class="lvl-4"><span class="sub-num">9.2.5.2</span><span>Add Multiple Facilities</span></a></li>
+                <li><a href="User-Administration.html" target="content-frame" class="lvl-3"><span class="sub-num">9.2.6</span><span>User Administration</span></a></li>
+                <li><a href="Open-an-HCE-Record.html" target="content-frame"><span class="sub-num">9.3</span><span>Open an HCE Record</span></a></li>
+                <li><a href="Export-HCEs-and-Facilities.html" target="content-frame"><span class="sub-num">9.4</span><span>Export HCEs &amp; Facilities</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">10</span><span class="folder-text">Interstate Data-Sharing</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Interstate-Data-Sharing.html" target="content-frame"><span class="sub-num">10.0</span><span>Interstate Data-Sharing Overview</span></a></li>
+                <li><a href="Select-States-for-Data-Sharing.html" target="content-frame"><span class="sub-num">10.1</span><span>Select States for Data-Sharing</span></a></li>
+                <li><a href="Deselect-States-for-Data-Sharing.html" target="content-frame"><span class="sub-num">10.2</span><span>Deselect States for Data-Sharing</span></a></li>
+                <li><a href="MOU-Worksheets.html" target="content-frame"><span class="sub-num">10.3</span><span>MOU Worksheets</span></a></li>
+                <li><a href="Populate-and-Submit-MOU.html" target="content-frame" class="lvl-3"><span class="sub-num">10.3.1</span><span>Populate and Submit MOU</span></a></li>
+                <li><a href="Review-and-Respond-to-MOU.html" target="content-frame" class="lvl-3"><span class="sub-num">10.3.2</span><span>Review and Respond to MOU</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">11</span><span class="folder-text">Interstate Role Management</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Interstate-Role-Management.html" target="content-frame"><span class="sub-num">11.0</span><span>Role Management Overview</span></a></li>
+                <li><a href="Select-Roles-for-Data-Sharing.html" target="content-frame"><span class="sub-num">11.1</span><span>Select Roles for Data-Sharing</span></a></li>
+                <li><a href="Deselect-Roles-for-Data-Sharing.html" target="content-frame"><span class="sub-num">11.2</span><span>Deselect Roles for Data-Sharing</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">12</span><span class="folder-text">Integration Requests</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Integration-Requests.html" target="content-frame"><span class="sub-num">12.0</span><span>Integration Requests Overview</span></a></li>
+                <li><a href="Search-for-Integration-Requests.html" target="content-frame"><span class="sub-num">12.1</span><span>Search for Integration Requests</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">13</span><span class="folder-text">Approving Interstate Data-Sharing</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Approving-Interstate-Data-Sharing.html" target="content-frame"><span class="sub-num">13.0</span><span>Approving Data-Sharing for HCEs</span></a></li>
+                <li><a href="Approve-or-Revoke-Requests.html" target="content-frame"><span class="sub-num">13.1</span><span>Approve or Revoke Requests</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">14</span><span class="folder-text">User Management</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="User-Management.html" target="content-frame"><span class="sub-num">14.0</span><span>User Management Overview</span></a></li>
+                <li><a href="Search-and-Update-User-Info.html" target="content-frame"><span class="sub-num">14.1</span><span>Search &amp; Update User Info</span></a></li>
+                <li><a href="Adding-Users.html" target="content-frame"><span class="sub-num">14.2</span><span>Adding Users</span></a></li>
+                <li><a href="Unlocking-a-User-Account.html" target="content-frame"><span class="sub-num">14.3</span><span>Unlocking a User Account</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">15</span><span class="folder-text">Provider Validation</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="Provider-Validation.html" target="content-frame"><span class="sub-num">15.0</span><span>Provider Validation Overview</span></a></li>
+                <li><a href="View-and-Add-Datasource.html" target="content-frame"><span class="sub-num">15.1</span><span>View &amp; Add a Datasource</span></a></li>
+                <li><a href="View-Delete-Search-Datasource.html" target="content-frame" class="lvl-3"><span class="sub-num">15.2</span><span>View, Delete, Search Datasource</span></a></li>
+                <li><a href="Create-a-Datasource-File.html" target="content-frame" class="lvl-3"><span class="sub-num">15.2.1</span><span>Create a Datasource File</span></a></li>
+                <li><a href="Add-a-New-Datasource-File.html" target="content-frame" class="lvl-3"><span class="sub-num">15.2.2</span><span>Add a New Datasource File</span></a></li>
+                <li><a href="Add-a-Datasource-API.html" target="content-frame" class="lvl-3"><span class="sub-num">15.2.3</span><span>Add a Datasource API</span></a></li>
+                <li><a href="Configure-Provider-Validation.html" target="content-frame"><span class="sub-num">15.3</span><span>Configure Provider Validation</span></a></li>
+                <li><a href="Modify-Existing-Validation.html" target="content-frame" class="lvl-3"><span class="sub-num">15.3.1</span><span>Modify Existing Validation</span></a></li>
+                <li><a href="Add-a-New-Validation.html" target="content-frame" class="lvl-3"><span class="sub-num">15.3.2</span><span>Add a New Validation</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">16</span><span class="folder-text">PDMP Maintenance Schedule</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="PDMP-Maintenance-Schedule.html" target="content-frame"><span class="sub-num">16.0</span><span>Maintenance Schedule Overview</span></a></li>
+                <li><a href="Create-and-Modify-Maintenance-Event.html" target="content-frame"><span class="sub-num">16.1</span><span>Create &amp; Modify Maintenance Event</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">17</span><span class="folder-text">NCPDP Taxonomy Code Mapping</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="NCPDP-Taxonomy-Code-Mapping.html" target="content-frame"><span class="sub-num">17.0</span><span>Taxonomy Code Mapping Overview</span></a></li>
+                <li><a href="Search-for-an-NCPDP-Code.html" target="content-frame"><span class="sub-num">17.1</span><span>Search for an NCPDP Code</span></a></li>
+            </ul>
+
+            <div class="folder" onclick="toggleFolder(this)">
+                <span class="folder-num">18</span><span class="folder-text">System Information</span>
+                <span class="folder-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+            <ul class="file-list">
+                <li><a href="System-Information.html" target="content-frame"><span class="sub-num">18.0</span><span>System Information Overview</span></a></li>
+                <li><a href="Connected-PDMP-Sites.html" target="content-frame"><span class="sub-num">18.1</span><span>Connected PDMP Sites</span></a></li>
+            </ul>
+
+            <a class="folder-link" href="System-Notifications.html" target="content-frame"><span class="folder-num">19</span><span class="folder-text">System Notifications</span></a>
+            <a class="folder-link" href="Exit-the-RxConsole.html" target="content-frame"><span class="folder-num">20</span><span class="folder-text">Exit the RxConsole</span></a>
+            <a class="folder-link" href="Contact-the-RxCheck-Team.html" target="content-frame"><span class="folder-num">21</span><span class="folder-text">Contact the RxCheck Team</span></a>
+            <a class="folder-link" href="Version-History-Log.html" target="content-frame"><span class="folder-num">22</span><span class="folder-text">Version History Log</span></a>
+            <a class="folder-link" href="Appendix.html" target="content-frame"><span class="folder-num">23</span><span class="folder-text">Appendix</span></a>
+        </div>
+    </nav>
+        <main id="main-content">
+            
+                <div class="breadcrumbs" style="margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 14px;">
+                    <a href="Introduction.html" style="color: #0052cc; text-decoration: none;">Home</a> 
+                    <span style="margin: 0 8px; color: #888;">›</span> 
+                    <span style="color: var(--text-main, #333); font-weight: 500;">Approve or Revoke Interstate Data-Sharing Requests · RxConsole User Guide</span>
+                </div>
+                
+            
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="Approving-Interstate-Data-Sharing.html">Approving Interstate Data-Sharing for Healthcare Entities</a> <span class="crumb-sep">›</span> <span>Approve or Revoke Interstate Data-Sharing Requests</span></div>
 <h1>Approve or Revoke Interstate Data-Sharing Requests</h1>
 <ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Approve</em> <em>Interstate Date Sharing for Health Entities</em> button, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image218.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Select a PDMP site from the list of PDMP sites, located on the left side of the screen.</p><div class="note"><strong><em>Note:</em></strong> QQ has been selected for demonstration purposes.</div></div><div class="step-image"><img src="images/image219.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Review the list of HCE&#x27;s associated with the selected site, as displayed on the right-side of the screen.</p></div></li><li><div class="step-content"><img src="images/image220.png" alt=""></div></li><li><div class="step-content"><p>Click on a healthcare entity to view expanded details relating to its site configuration and facilities data.</p></div></li><li><div class="step-content"><img src="images/image221.png" alt=""></div></li><li><div class="step-content"><p>Grant or revoke data-sharing access to a healthcare entity by:</p><ol type="a"><li>Pressing the orange <em>Grant Access </em>button to enable interstate data-sharing for that site, or</li><li>Pressing the blue <em>Deny Access</em> button to disable interstate data-sharing access for that site.</li></ol></div><div class="step-image"><img src="images/image217.png" alt="" loading="lazy"><img src="images/image216.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Verify that your action has been successfully implemented by looking for the following alerts:</p><ol type="a"><li>If access was granted, an alert that states &quot;Site Unblocked Successfully&quot;, or</li><li>If access was revoked, an alert that states &quot;Site Blocked Successfully&quot;</li></ol></div><div class="step-image"><img src="images/image222.png" alt="" loading="lazy"><img src="images/image223.png" alt="" loading="lazy"></div></li></ol>
@@ -387,21 +976,113 @@ pre code { background: none; border: none; padding: 0; }
   <a class="nav-btn nav-btn-prev" href="Approving-Interstate-Data-Sharing.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Approving Interstate Data-Sharing for Healthcare Entities</span></span></a>
   <a class="nav-btn nav-btn-next" href="User-Management.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">User Management</span></span> <span class="nav-btn-arrow">→</span></a>
 </div>
+
+
+        </main>
+    </div>
+    
 <script>
-(function() {
-    function syncFromParent() {
-        try {
-            const t = parent.document.documentElement.getAttribute('data-theme') || 'light';
-            document.documentElement.setAttribute('data-theme', t);
-        } catch (e) {}
+    const themeInput = document.getElementById('theme-toggle-input');
+    const themeLabel = document.getElementById('theme-label');
+    const themeIcon = document.getElementById('theme-icon');
+
+    const SUN_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/></svg>';
+    const MOON_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        if(themeInput) themeInput.checked = (theme === "dark");
+        if(themeLabel) themeLabel.textContent = theme === "dark" ? "Dark" : "Light";
+        if(themeIcon) themeIcon.innerHTML = theme === "dark" ? MOON_SVG : SUN_SVG;
     }
-    syncFromParent();
-    window.addEventListener('message', (e) => {
-        if (e.data && e.data.theme) {
-            document.documentElement.setAttribute('data-theme', e.data.theme);
+
+    function toggleTheme() {
+        const newTheme = themeInput.checked ? "dark" : "light";
+        try { localStorage.setItem("theme", newTheme); } catch(e) {}
+        applyTheme(newTheme);
+    }
+
+    (function initTheme() {
+        let saved;
+        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(saved || (prefersDark ? "dark" : "light"));
+    })();
+
+    function toggleFolder(element) {
+        element.classList.toggle('active');
+        const list = element.nextElementSibling;
+        if (list && list.classList.contains('file-list')) {
+            list.classList.toggle('open');
+        }
+    }
+    function toggleSidebar() {
+        document.body.classList.toggle('sidebar-collapsed');
+    }
+
+    function highlightCurrent() {
+        let src = window.location.pathname.split('/').pop() || 'Introduction.html';
+        if (src === '' || src === 'index.html') src = 'Introduction.html';
+        
+        document.querySelectorAll('.file-list a, a.folder-link').forEach(a => {
+            const href = (a.getAttribute('href') || '').split('/').pop();
+            a.classList.toggle('current', href === src);
+        });
+        const active = document.querySelector('.file-list a.current');
+        if (active) {
+            const list = active.closest('.file-list');
+            if (list && !list.classList.contains('open')) {
+                list.classList.add('open');
+                const folder = list.previousElementSibling;
+                if (folder && folder.classList.contains('folder')) folder.classList.add('active');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        highlightCurrent();
+        if(!document.querySelector('.file-list a.current')) {
+             const firstFolder = document.querySelector('.folder');
+             if (firstFolder) toggleFolder(firstFolder);
         }
     });
-})();
+
+    function filterDocs() {
+        const input = document.getElementById('docSearch').value.toLowerCase().trim();
+        const folders = document.querySelectorAll('.folder');
+        const lists = document.querySelectorAll('.file-list');
+        const folderLinks = document.querySelectorAll('a.folder-link');
+
+        if (!input) {
+            document.querySelectorAll('.file-list li').forEach(li => li.style.display = '');
+            folders.forEach(f => f.style.display = '');
+            highlightCurrent();
+            folderLinks.forEach(a => a.style.display = '');
+            return;
+        }
+
+        folders.forEach((folder, i) => {
+            const list = lists[i];
+            const links = list.querySelectorAll('li');
+            let any = false;
+            links.forEach(li => {
+                const txt = li.innerText.toLowerCase();
+                const folderText = folder.innerText.toLowerCase();
+                const match = txt.includes(input) || folderText.includes(input);
+                li.style.display = match ? '' : 'none';
+                if (match) any = true;
+            });
+            folder.style.display = any ? '' : 'none';
+            list.classList.toggle('open', any);
+            folder.classList.toggle('active', any);
+        });
+
+        folderLinks.forEach(a => {
+            const txt = a.innerText.toLowerCase();
+            a.style.display = txt.includes(input) ? '' : 'none';
+        });
+    }
 </script>
+
 </body>
 </html>
