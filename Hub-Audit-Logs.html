@@ -3,345 +3,410 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RxCheck : Hub Audit Logs</title>
+<title>Hub Audit Logs · RxConsole User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-    :root {
-        --bg-color: #ffffff;
-        --text-color: #172b4d;
-        --panel-bg: #f4f5f7;
-        --note-bg: #fffae6;
-        --note-border: #f0b429;
-        --important-bg: #fff0f0;
-        --important-border: #e53e3e;
-        --info-bg: #eaf4ff;
-        --info-border: #0052cc;
-        --breadcrumb-color: #5e6c84;
-        --border-color: #d1d5db;
-        --primary-blue: #0052cc;
-        --table-header-bg: #dde8f8;
-        --table-alt-bg: #f7f8fa;
-        --code-bg: #f4f5f7;
-        --step-bg: #eaf4ff;
-        --step-border: #0052cc;
-    }
-    [data-theme="dark"] {
-        --bg-color: #0d1117;
-        --text-color: #c9d1d9;
-        --panel-bg: #1c2128;
-        --note-bg: #2d2a1e;
-        --note-border: #c09a2e;
-        --important-bg: #2d1414;
-        --important-border: #c53030;
-        --info-bg: #0f1f35;
-        --info-border: #3d7fe8;
-        --breadcrumb-color: #8b949e;
-        --border-color: #30363d;
-        --primary-blue: #58a6ff;
-        --table-header-bg: #1c2d4a;
-        --table-alt-bg: #161b22;
-        --code-bg: #1c2128;
-        --step-bg: #0f1f35;
-        --step-border: #3d7fe8;
-    }
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        line-height: 1.7;
-        padding: 30px 40px;
-        max-width: 960px;
-        margin: auto;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-size: 15px;
-    }
-    .breadcrumbs {
-        font-size: 13px;
-        color: var(--breadcrumb-color);
-        margin-bottom: 28px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--border-color);
-    }
-    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
-    .breadcrumbs a:hover { text-decoration: underline; }
-    h1 {
-        font-size: 26px;
-        color: var(--primary-blue);
-        border-bottom: 2px solid var(--primary-blue);
-        padding-bottom: 10px;
-        margin-bottom: 24px;
-        font-weight: 700;
-    }
-    h2 {
-        font-size: 20px;
-        color: var(--text-color);
-        margin-top: 36px;
-        margin-bottom: 14px;
-        font-weight: 600;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 6px;
-    }
-    h3 {
-        font-size: 17px;
-        margin-top: 28px;
-        margin-bottom: 10px;
-        font-weight: 600;
-        color: var(--text-color);
-    }
-    h4 {
-        font-size: 15px;
-        margin-top: 20px;
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
-    p { margin: 0 0 14px 0; }
-    a { color: var(--primary-blue); }
-    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
-    li { margin-bottom: 6px; }
-    .note, .info-box, .warning-box {
-        padding: 14px 18px;
-        margin: 20px 0;
-        border-radius: 6px;
-        border-left: 4px solid;
-    }
-    .note {
-        background-color: var(--note-bg);
-        border-color: var(--note-border);
-    }
-    .info-box {
-        background-color: var(--info-bg);
-        border-color: var(--info-border);
-    }
-    .warning-box {
-        background-color: var(--important-bg);
-        border-color: var(--important-border);
-    }
-    .note strong, .info-box strong, .warning-box strong {
-        display: block;
-        margin-bottom: 4px;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 14px;
-    }
-    th {
-        background-color: var(--table-header-bg);
-        color: var(--text-color);
-        font-weight: 600;
-        padding: 10px 14px;
-        text-align: left;
-        border: 1px solid var(--border-color);
-    }
-    td {
-        padding: 9px 14px;
-        border: 1px solid var(--border-color);
-        vertical-align: top;
-    }
-    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
-    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
-    .steps-list li {
-        counter-increment: steps;
-        display: flex;
-        gap: 14px;
-        padding: 12px 16px;
-        margin-bottom: 10px;
-        background: var(--step-bg);
-        border-left: 4px solid var(--step-border);
-        border-radius: 0 6px 6px 0;
-        align-items: flex-start;
-    }
-    .steps-list li::before {
-        content: counter(steps);
-        background: var(--primary-blue);
-        color: white;
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 13px;
-        flex-shrink: 0;
-        margin-top: 1px;
-    }
-    code {
-        background: var(--code-bg);
-        padding: 2px 6px;
-        border-radius: 3px;
-        font-family: "SFMono-Regular", Consolas, monospace;
-        font-size: 13px;
-        border: 1px solid var(--border-color);
-    }
-    pre {
-        background: var(--code-bg);
-        padding: 16px;
-        border-radius: 6px;
-        overflow-x: auto;
-        border: 1px solid var(--border-color);
-        font-size: 13px;
-        line-height: 1.5;
-    }
-    pre code { background: none; border: none; padding: 0; }
-    .doc-footer-nav {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 50px;
-        padding-top: 20px;
-        border-top: 2px solid var(--border-color);
-    }
-    .nav-btn {
-        text-decoration: none;
-        color: var(--primary-blue);
-        padding: 10px 20px;
-        border: 1px solid var(--primary-blue);
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: 0.2s;
-    }
-    .nav-btn:hover {
-        background: var(--primary-blue);
-        color: white;
-    }
-    .nav-btn.disabled {
-        color: var(--breadcrumb-color);
-        border-color: var(--border-color);
-        cursor: default;
-        pointer-events: none;
-    }
-    em { font-style: italic; }
-    strong { font-weight: 600; }
+:root {
+    --bg-color: #ffffff;
+    --bg-app: #fafbfc;
+    --text-primary: #0a2540;
+    --text-secondary: #5e6c84;
+    --text-muted: #8a94a6;
+    --border-subtle: #ebecf0;
+    --border-default: #dfe1e6;
+    --primary: #0052cc;
+    --primary-hover: #0747a6;
+    --primary-soft: #e7f0fe;
+    --note-bg: #fffbe6;
+    --note-border: #f0b429;
+    --note-text: #5d4500;
+    --warning-bg: #ffeae6;
+    --warning-border: #de350b;
+    --warning-text: #5d1a0d;
+    --info-bg: #e7f0fe;
+    --info-border: #0052cc;
+    --table-header-bg: #f4f6fa;
+    --table-alt-bg: #fafbfc;
+    --code-bg: #f4f5f7;
+    --step-bg: #f0f6ff;
+    --step-border: #0052cc;
+    --step-circle: #0052cc;
+}
+[data-theme="dark"] {
+    --bg-color: #0d1117;
+    --bg-app: #0a0e14;
+    --text-primary: #e6edf3;
+    --text-secondary: #9ba8b8;
+    --text-muted: #6e7681;
+    --border-subtle: #1f2630;
+    --border-default: #2a313c;
+    --primary: #4c9aff;
+    --primary-hover: #79b3ff;
+    --primary-soft: #1a2b4d;
+    --note-bg: #2d2a1e;
+    --note-border: #c09a2e;
+    --note-text: #f0e3a8;
+    --warning-bg: #3d1f17;
+    --warning-border: #ff6b47;
+    --warning-text: #ffb39e;
+    --info-bg: #1a2b4d;
+    --info-border: #4c9aff;
+    --table-header-bg: #1c2128;
+    --table-alt-bg: #161b22;
+    --code-bg: #1c2128;
+    --step-bg: #0f1f35;
+    --step-border: #4c9aff;
+    --step-circle: #4c9aff;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    padding: 32px 44px 60px;
+    max-width: 980px;
+    margin: 0 auto;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+.breadcrumbs {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+.breadcrumbs a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+.breadcrumbs a:hover { color: var(--primary); }
+.breadcrumbs span:last-child {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.crumb-sep { color: var(--text-muted); margin: 0 2px; }
+h1 {
+    font-size: 30px;
+    color: var(--text-primary);
+    margin: 0 0 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+h2 {
+    font-size: 22px;
+    margin: 36px 0 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+h3 {
+    font-size: 18px;
+    margin: 28px 0 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+h4 {
+    font-size: 15px;
+    margin: 22px 0 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+p { margin: 0 0 14px; color: var(--text-primary); }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul, ol { margin: 0 0 16px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    margin: 8px 0;
+    display: block;
+}
+strong, b { font-weight: 600; }
+em, i { font-style: italic; }
+
+/* ============ NOTES & CALLOUTS ============ */
+.note, .info-box, .warning-box {
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 8px;
+    border-left: 4px solid;
+    font-size: 14px;
+    line-height: 1.55;
+}
+.note {
+    background-color: var(--note-bg);
+    border-left-color: var(--note-border);
+    color: var(--note-text);
+}
+.info-box {
+    background-color: var(--info-bg);
+    border-left-color: var(--info-border);
+    color: var(--text-primary);
+}
+.warning-box {
+    background-color: var(--warning-bg);
+    border-left-color: var(--warning-border);
+    color: var(--warning-text);
+}
+.note p, .info-box p, .warning-box p { margin: 0; color: inherit; }
+.note p + p, .info-box p + p, .warning-box p + p { margin-top: 8px; }
+.note strong, .warning-box strong, .info-box strong { color: inherit; }
+
+/* ============ TABLES ============ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border-subtle);
+}
+th {
+    background-color: var(--table-header-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-default);
+    vertical-align: top;
+}
+td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    color: var(--text-primary);
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+table img { max-width: 200px; }
+
+/* ============ STEPS LIST ============ */
+ol.steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0;
+    counter-reset: steps;
+}
+ol.steps-list > li {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: var(--step-bg);
+    border-left: 4px solid var(--step-border);
+    border-radius: 0 8px 8px 0;
+    align-items: flex-start;
+    position: relative;
+}
+ol.steps-list > li::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+ol.steps-list .step-content {
+    flex: 1;
+    min-width: 0;
+}
+ol.steps-list .step-content p { margin: 0 0 8px; color: var(--text-primary); }
+ol.steps-list .step-content p:last-child { margin-bottom: 0; }
+ol.steps-list .step-image {
+    flex-shrink: 0;
+    max-width: 280px;
+    margin-left: auto;
+}
+ol.steps-list .step-image img {
+    margin: 0;
+    max-width: 100%;
+    max-height: 280px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--border-default);
+    border-radius: 6px;
+    background: var(--bg-color);
+    display: block;
+}
+/* When multiple images stack in one step (e.g., 3 authenticator icons),
+   show them side by side and smaller */
+ol.steps-list .step-image img + img { margin-top: 8px; }
+ol.steps-list .step-image:has(img + img) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 280px;
+}
+ol.steps-list .step-image:has(img + img) img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-top: 0;
+}
+ol.steps-list ul {
+    list-style: disc;
+    padding-left: 22px;
+    margin: 6px 0;
+}
+ol.steps-list ul li {
+    margin-bottom: 4px;
+    background: none;
+    border: none;
+    padding: 0;
+    display: list-item;
+}
+ol.steps-list ul li::before { display: none; }
+
+/* ============ CODE ============ */
+code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", "Menlo", Consolas, monospace;
+    font-size: 13px;
+    border: 1px solid var(--border-subtle);
+}
+pre {
+    background: var(--code-bg);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid var(--border-subtle);
+    font-size: 13px;
+    line-height: 1.55;
+}
+pre code { background: none; border: none; padding: 0; }
+
+/* ============ FOOTER NAV ============ */
+.doc-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+}
+.nav-btn {
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: 14px 18px;
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    background: var(--bg-color);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    flex: 1;
+    max-width: 320px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+}
+.nav-btn-prev { justify-content: flex-start; text-align: left; }
+.nav-btn-next { justify-content: flex-end; text-align: right; margin-left: auto; }
+.nav-btn:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 82, 204, 0.1);
+    transform: translateY(-1px);
+}
+.nav-btn-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    min-width: 0;
+}
+.nav-btn-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+.nav-btn-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.nav-btn-arrow {
+    color: var(--primary);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* ============ MOBILE ============ */
+@media (max-width: 720px) {
+    body { padding: 20px 16px 50px; font-size: 14px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 19px; }
+    h3 { font-size: 16px; }
+    ol.steps-list > li { flex-direction: column; }
+    ol.steps-list .step-image { max-width: 100%; margin-left: 0; }
+    table { font-size: 13px; }
+    th, td { padding: 8px 10px; }
+    .doc-footer-nav { flex-direction: column; }
+    .nav-btn-next { margin-left: 0; }
+}
 </style>
 
 </head>
 <body>
-<div class="breadcrumbs">
-  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Hub Audit Logs &rsaquo; <strong>Hub Audit Logs</strong>
-</div>
+<div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <span>Hub Audit Logs</span></div>
 <h1>Hub Audit Logs</h1>
-
 <p>The Hub Audit Log captures detailed records of all incoming and outgoing transactions processed through the RxCheck Hub. This feature provides State PDMP Administrators with visibility into:</p>
-<ul>
-  <li>The number of requests received by their state</li>
-  <li>The number of requests sent to other states</li>
-  <li>The status of each transaction (e.g., Successful, Access Denied, Deferred, Failed due to Connection Error, etc.)</li>
-</ul>
+<ul><li>The number of requests received by their state,</li><li>The number of requests sent to other states, and</li><li>The status of each transaction (e.g., Successful, Access Denied, Deferred, Failed due to Connection Error, etc.)</li></ul>
 <p>An Audit ID is automatically generated for each transaction that reaches the RxCheck Hub. These records are summarized and displayed in the Hub Audit Log section of the RxConsole application.</p>
-<p>By clicking on an Audit ID, administrators can view a detailed summary of the associated transaction, including both request and response details. The Hub Audit Logs are also a valuable tool for diagnosing failed transactions and identifying the root cause of communication issues.</p>
-
-<h2>8.1 Read the Hub Audit Logs</h2>
-<p>Clicking on the blue hyperlink text will display additional information about its column. For example, clicking on <em>View</em> will display a Log Summary pop-up page containing additional information about the respective transaction, including potential insights in the "Message" section as to why a transaction was not successful.</p>
-
-<table>
-<thead><tr><th>Title</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Summary</strong></td><td>Provides details about the transaction and any errors.</td></tr>
-<tr><td><strong>Request ID</strong></td><td>The ID provided in a request transaction made to obtain prescription data of an individual patient.</td></tr>
-<tr><td><strong>Requesting Site</strong></td><td>The state code of the State that initiated the data request.</td></tr>
-<tr><td><strong>Disclosing Site</strong></td><td>The state code of the State to which the data request is being sent.</td></tr>
-<tr><td><strong>Requestor</strong></td><td>The name of the healthcare professional who submitted the request.</td></tr>
-<tr><td><strong>Role</strong></td><td>The role of the healthcare professional who submitted the request.</td></tr>
-<tr><td><strong>DEA</strong></td><td>The Drug Enforcement Administration number of the healthcare professional who submitted the request.</td></tr>
-<tr><td><strong>NPI</strong></td><td>The National Provider Identification number of the healthcare professional.</td></tr>
-<tr><td><strong>SLN</strong></td><td>The State License number of the healthcare professional.</td></tr>
-<tr><td><strong>Request DateTime</strong></td><td>The date and time the request was initiated.</td></tr>
-<tr><td><strong>Response DateTime</strong></td><td>The date and time the response was sent.</td></tr>
-<tr><td><strong>Response Status</strong></td><td>The status of the transaction.</td></tr>
-</tbody>
-</table>
-
-<h3>Request Status Descriptions</h3>
-<table>
-<thead><tr><th>Status</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Provided</strong></td><td>A query was received, and a result was returned without issue.</td></tr>
-<tr><td><strong>Deferred</strong></td><td>Internal only — for debugging purposes.</td></tr>
-<tr><td><strong>Not Found</strong></td><td>A query was received, but a patient match was not found. May also occur when too many patients were found and a guaranteed match could not be established.</td></tr>
-<tr><td><strong>Disallowed</strong></td><td>Internal only — for debugging purposes.</td></tr>
-<tr><td><strong>Invalid Document</strong></td><td>Internal only — for debugging purposes.</td></tr>
-<tr><td><strong>Invalid Response</strong></td><td>Internal only — for debugging purposes.</td></tr>
-<tr><td><strong>No Route Found</strong></td><td>There is no message route found to forward the request to a PDMP.</td></tr>
-<tr><td><strong>Access Denied</strong></td><td>A query was received, but the disclosing state denied the request (often due to not allowing the requestor's role access to data).</td></tr>
-<tr><td><strong>Outbound Certificate Expired</strong></td><td>The sending state's certificate has expired.</td></tr>
-<tr><td><strong>Inbound Certificate Expired</strong></td><td>The receiving state's certificate has expired.</td></tr>
-<tr><td><strong>Invalid Site Code</strong></td><td>An invalid site code was sent in the message.</td></tr>
-<tr><td><strong>Max Limit Reached</strong></td><td>When the number of messages reaches the threshold the PDMP Administrator sets in the hub.</td></tr>
-<tr><td><strong>Timeout</strong></td><td>The request timed out while waiting for the response.</td></tr>
-<tr><td><strong>Connection Error</strong></td><td>There was an error connecting the requesting entity to the SRS.</td></tr>
-<tr><td><strong>Validation Failed</strong></td><td>A query was received, but the requestor did not pass validation rules set up in the RxConsole for the state.</td></tr>
-<tr><td><strong>Version Mismatch</strong></td><td>Internal only — for debugging purposes.</td></tr>
-<tr><td><strong>Error</strong></td><td>Internal only — for debugging purposes.</td></tr>
-<tr><td><strong>Connection Reset</strong></td><td>A TCP/IP connection reset that occurred.</td></tr>
-<tr><td><strong>Service Not Available</strong></td><td>Displays when any of the internal services are not available to process the message.</td></tr>
-<tr><td><strong>Site not found</strong></td><td>An invalid site code was sent in the message.</td></tr>
-</tbody>
-</table>
-
-<h2>8.2 Filter the Hub Audit Logs</h2>
-<ol class="steps-list">
-  <li>Click on the <em>Hub Audit Logs</em> button, located on the left-hand side of the screen.</li>
-  <li>Select the appropriate <em>Site Selector</em> option:
-    <ul>
-      <li><strong>All Site</strong> — Lists all incoming and outgoing requests to/from your state.</li>
-      <li><strong>Requesting Site</strong> — A state that sent a request to your state.</li>
-      <li><strong>Disclosing Site</strong> — A state that received a request from your state.</li>
-    </ul>
-    <em>Note: This is a required field and is set to All Site by default.</em>
-  </li>
-  <li>Select the <em>Site Code</em> by clicking the down arrow and scrolling or typing in the search bar. <em>Note: This filter is only active when Disclosing Site or Requesting Site is selected in step 2.</em></li>
-  <li>Select the date and time range to filter the audit log:
-    <ul>
-      <li>From DateTime — Start date and time</li>
-      <li>To DateTime — End date and time</li>
-      <li>Click the blue calendar icon to choose a date. Use left/right arrows to switch months. Adjust the time using up/down arrows (24-hour format: HH:MM).</li>
-    </ul>
-  </li>
-  <li>Click the <em>More&gt;&gt;&gt;</em> link below the Site Selector filter for additional filtering options: Message ID, Request ID, Requestor, Roles, DEA#, NPI#, SL#, Other#, and Status Types.</li>
-  <li>Click on the <em>Filter</em> button to apply the selected criteria.</li>
-</ol>
-
-<h2>8.3 Download the Hub Audit Logs</h2>
-<p>When downloaded, the audit logs are packaged as a zipped file. The extracted file is in Comma-Separated Values (.csv) format and can be opened using Microsoft Excel or any other software that supports CSV files.</p>
-<ol class="steps-list">
-  <li>Perform any filtering desired using the steps in the previous section.</li>
-  <li>Click on the download button on the right-hand side of the screen.</li>
-  <li>The hub audit logs will be saved to your computer in a zipped folder.</li>
-  <li>Right-click on the zipped folder to view options.</li>
-  <li>Select the "Extract All…" option.</li>
-</ol>
-
-<h2>8.4 Exporting the Logs to an sFTP Server</h2>
-<p>RxConsole enables PDMP Administrators to export RxCheck Hub audit logs to their state's sFTP server by providing the required sFTP configuration via the "Log Extract" section on the Hub Audit Logs page.</p>
-
-<table>
-<thead><tr><th>Field</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Host Name</strong></td><td>The domain name or IP address of the remote SFTP server. (e.g., sftp.example.com or 192.168.1.100)</td></tr>
-<tr><td><strong>Port</strong></td><td>The port number used for the sFTP connection. Default is "22".</td></tr>
-<tr><td><strong>File Path</strong></td><td>The directory path on the remote server where files will be uploaded. (e.g., /home/sftp_user/uploads)</td></tr>
-<tr><td><strong>Username</strong></td><td>The login name used to authenticate the user with the SFTP server.</td></tr>
-<tr><td><strong>Password</strong></td><td>The secret key or password corresponding to the username. Can be omitted if key-based authentication is used.</td></tr>
-<tr><td><strong>Active</strong></td><td>Enables and disables the log extract function. Green = enabled; Red = disabled.</td></tr>
-</tbody>
-</table>
-<p>After the sFTP configuration is saved, the system will activate the <em>Export Logs (sFTP)</em> button. Click this button to initiate the log export. The system will process the request and send an email notification once the export is complete.</p>
-
-<h2>8.5 Using an API to Download the Logs</h2>
-<p>RxConsole also allows a PDMP Administrator to enable an API endpoint to download audit logs from the RxCheck Hub. To access this API, an API key is required.</p>
-<ol class="steps-list">
-  <li>From the log extract window, select the <em>API Key</em> tab.</li>
-  <li>Press the <em>Key</em> button to generate an API key.</li>
-  <li>To copy the API Key, press the <em>copy</em> button.</li>
-  <li>To create a new unique API key, press the <em>ReGenerateAPIKey</em> button.</li>
-  <li>To remove your API, press the <em>Delete</em> key.</li>
-</ol>
-<div class="note"><strong>Note:</strong> The system generates a sample API request to be used as a reference for developing a module to download Hub audit logs.</div>
-
+<p>By clicking on an Audit ID, administrators can view a detailed summary of the associated transaction, including both request and response details involving the PDMP state. The Hub Audit Logs are also a valuable tool for diagnosing failed transactions and identifying the root cause of communication issues.</p>
+<p>The following subsection provides step-by-step instructions for viewing the Hub Audit Logs within the RxConsole interface. Each step is accompanied by a screenshot to assist with navigation and understanding.</p>
+<img src="images/image109.png" alt="" loading="lazy">
 <div class="doc-footer-nav">
-  <a class="nav-btn" href="SRS-Configuration.html">← State Routing Service (SRS) Configuration</a>
-  <a class="nav-btn" href="Healthcare-Entities.html">Healthcare Entities →</a>
+  <a class="nav-btn nav-btn-prev" href="Heartbeat-Notifications.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Heartbeat Notifications</span></span></a>
+  <a class="nav-btn nav-btn-next" href="Read-the-Hub-Audit-Logs.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Read the Hub Audit Logs</span></span> <span class="nav-btn-arrow">→</span></a>
 </div>
+<script>
+(function() {
+    function syncFromParent() {
+        try {
+            const t = parent.document.documentElement.getAttribute('data-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+    }
+    syncFromParent();
+    window.addEventListener('message', (e) => {
+        if (e.data && e.data.theme) {
+            document.documentElement.setAttribute('data-theme', e.data.theme);
+        }
+    });
+})();
+</script>
 </body>
 </html>

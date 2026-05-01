@@ -3,410 +3,412 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RxCheck : Healthcare Entities</title>
+<title>Healthcare Entities · RxConsole User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-    :root {
-        --bg-color: #ffffff;
-        --text-color: #172b4d;
-        --panel-bg: #f4f5f7;
-        --note-bg: #fffae6;
-        --note-border: #f0b429;
-        --important-bg: #fff0f0;
-        --important-border: #e53e3e;
-        --info-bg: #eaf4ff;
-        --info-border: #0052cc;
-        --breadcrumb-color: #5e6c84;
-        --border-color: #d1d5db;
-        --primary-blue: #0052cc;
-        --table-header-bg: #dde8f8;
-        --table-alt-bg: #f7f8fa;
-        --code-bg: #f4f5f7;
-        --step-bg: #eaf4ff;
-        --step-border: #0052cc;
-    }
-    [data-theme="dark"] {
-        --bg-color: #0d1117;
-        --text-color: #c9d1d9;
-        --panel-bg: #1c2128;
-        --note-bg: #2d2a1e;
-        --note-border: #c09a2e;
-        --important-bg: #2d1414;
-        --important-border: #c53030;
-        --info-bg: #0f1f35;
-        --info-border: #3d7fe8;
-        --breadcrumb-color: #8b949e;
-        --border-color: #30363d;
-        --primary-blue: #58a6ff;
-        --table-header-bg: #1c2d4a;
-        --table-alt-bg: #161b22;
-        --code-bg: #1c2128;
-        --step-bg: #0f1f35;
-        --step-border: #3d7fe8;
-    }
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        line-height: 1.7;
-        padding: 30px 40px;
-        max-width: 960px;
-        margin: auto;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-size: 15px;
-    }
-    .breadcrumbs {
-        font-size: 13px;
-        color: var(--breadcrumb-color);
-        margin-bottom: 28px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--border-color);
-    }
-    .breadcrumbs a { color: var(--primary-blue); text-decoration: none; }
-    .breadcrumbs a:hover { text-decoration: underline; }
-    h1 {
-        font-size: 26px;
-        color: var(--primary-blue);
-        border-bottom: 2px solid var(--primary-blue);
-        padding-bottom: 10px;
-        margin-bottom: 24px;
-        font-weight: 700;
-    }
-    h2 {
-        font-size: 20px;
-        color: var(--text-color);
-        margin-top: 36px;
-        margin-bottom: 14px;
-        font-weight: 600;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 6px;
-    }
-    h3 {
-        font-size: 17px;
-        margin-top: 28px;
-        margin-bottom: 10px;
-        font-weight: 600;
-        color: var(--text-color);
-    }
-    h4 {
-        font-size: 15px;
-        margin-top: 20px;
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
-    p { margin: 0 0 14px 0; }
-    a { color: var(--primary-blue); }
-    ul, ol { margin: 0 0 14px 0; padding-left: 28px; }
-    li { margin-bottom: 6px; }
-    .note, .info-box, .warning-box {
-        padding: 14px 18px;
-        margin: 20px 0;
-        border-radius: 6px;
-        border-left: 4px solid;
-    }
-    .note {
-        background-color: var(--note-bg);
-        border-color: var(--note-border);
-    }
-    .info-box {
-        background-color: var(--info-bg);
-        border-color: var(--info-border);
-    }
-    .warning-box {
-        background-color: var(--important-bg);
-        border-color: var(--important-border);
-    }
-    .note strong, .info-box strong, .warning-box strong {
-        display: block;
-        margin-bottom: 4px;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 14px;
-    }
-    th {
-        background-color: var(--table-header-bg);
-        color: var(--text-color);
-        font-weight: 600;
-        padding: 10px 14px;
-        text-align: left;
-        border: 1px solid var(--border-color);
-    }
-    td {
-        padding: 9px 14px;
-        border: 1px solid var(--border-color);
-        vertical-align: top;
-    }
-    tr:nth-child(even) td { background-color: var(--table-alt-bg); }
-    .steps-list { list-style: none; padding: 0; margin: 0 0 20px 0; counter-reset: steps; }
-    .steps-list li {
-        counter-increment: steps;
-        display: flex;
-        gap: 14px;
-        padding: 12px 16px;
-        margin-bottom: 10px;
-        background: var(--step-bg);
-        border-left: 4px solid var(--step-border);
-        border-radius: 0 6px 6px 0;
-        align-items: flex-start;
-    }
-    .steps-list li::before {
-        content: counter(steps);
-        background: var(--primary-blue);
-        color: white;
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 13px;
-        flex-shrink: 0;
-        margin-top: 1px;
-    }
-    code {
-        background: var(--code-bg);
-        padding: 2px 6px;
-        border-radius: 3px;
-        font-family: "SFMono-Regular", Consolas, monospace;
-        font-size: 13px;
-        border: 1px solid var(--border-color);
-    }
-    pre {
-        background: var(--code-bg);
-        padding: 16px;
-        border-radius: 6px;
-        overflow-x: auto;
-        border: 1px solid var(--border-color);
-        font-size: 13px;
-        line-height: 1.5;
-    }
-    pre code { background: none; border: none; padding: 0; }
-    .doc-footer-nav {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 50px;
-        padding-top: 20px;
-        border-top: 2px solid var(--border-color);
-    }
-    .nav-btn {
-        text-decoration: none;
-        color: var(--primary-blue);
-        padding: 10px 20px;
-        border: 1px solid var(--primary-blue);
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: 0.2s;
-    }
-    .nav-btn:hover {
-        background: var(--primary-blue);
-        color: white;
-    }
-    .nav-btn.disabled {
-        color: var(--breadcrumb-color);
-        border-color: var(--border-color);
-        cursor: default;
-        pointer-events: none;
-    }
-    em { font-style: italic; }
-    strong { font-weight: 600; }
+:root {
+    --bg-color: #ffffff;
+    --bg-app: #fafbfc;
+    --text-primary: #0a2540;
+    --text-secondary: #5e6c84;
+    --text-muted: #8a94a6;
+    --border-subtle: #ebecf0;
+    --border-default: #dfe1e6;
+    --primary: #0052cc;
+    --primary-hover: #0747a6;
+    --primary-soft: #e7f0fe;
+    --note-bg: #fffbe6;
+    --note-border: #f0b429;
+    --note-text: #5d4500;
+    --warning-bg: #ffeae6;
+    --warning-border: #de350b;
+    --warning-text: #5d1a0d;
+    --info-bg: #e7f0fe;
+    --info-border: #0052cc;
+    --table-header-bg: #f4f6fa;
+    --table-alt-bg: #fafbfc;
+    --code-bg: #f4f5f7;
+    --step-bg: #f0f6ff;
+    --step-border: #0052cc;
+    --step-circle: #0052cc;
+}
+[data-theme="dark"] {
+    --bg-color: #0d1117;
+    --bg-app: #0a0e14;
+    --text-primary: #e6edf3;
+    --text-secondary: #9ba8b8;
+    --text-muted: #6e7681;
+    --border-subtle: #1f2630;
+    --border-default: #2a313c;
+    --primary: #4c9aff;
+    --primary-hover: #79b3ff;
+    --primary-soft: #1a2b4d;
+    --note-bg: #2d2a1e;
+    --note-border: #c09a2e;
+    --note-text: #f0e3a8;
+    --warning-bg: #3d1f17;
+    --warning-border: #ff6b47;
+    --warning-text: #ffb39e;
+    --info-bg: #1a2b4d;
+    --info-border: #4c9aff;
+    --table-header-bg: #1c2128;
+    --table-alt-bg: #161b22;
+    --code-bg: #1c2128;
+    --step-bg: #0f1f35;
+    --step-border: #4c9aff;
+    --step-circle: #4c9aff;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    padding: 32px 44px 60px;
+    max-width: 980px;
+    margin: 0 auto;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+.breadcrumbs {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+.breadcrumbs a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+.breadcrumbs a:hover { color: var(--primary); }
+.breadcrumbs span:last-child {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.crumb-sep { color: var(--text-muted); margin: 0 2px; }
+h1 {
+    font-size: 30px;
+    color: var(--text-primary);
+    margin: 0 0 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+h2 {
+    font-size: 22px;
+    margin: 36px 0 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+h3 {
+    font-size: 18px;
+    margin: 28px 0 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+h4 {
+    font-size: 15px;
+    margin: 22px 0 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+p { margin: 0 0 14px; color: var(--text-primary); }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul, ol { margin: 0 0 16px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    margin: 8px 0;
+    display: block;
+}
+strong, b { font-weight: 600; }
+em, i { font-style: italic; }
+
+/* ============ NOTES & CALLOUTS ============ */
+.note, .info-box, .warning-box {
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 8px;
+    border-left: 4px solid;
+    font-size: 14px;
+    line-height: 1.55;
+}
+.note {
+    background-color: var(--note-bg);
+    border-left-color: var(--note-border);
+    color: var(--note-text);
+}
+.info-box {
+    background-color: var(--info-bg);
+    border-left-color: var(--info-border);
+    color: var(--text-primary);
+}
+.warning-box {
+    background-color: var(--warning-bg);
+    border-left-color: var(--warning-border);
+    color: var(--warning-text);
+}
+.note p, .info-box p, .warning-box p { margin: 0; color: inherit; }
+.note p + p, .info-box p + p, .warning-box p + p { margin-top: 8px; }
+.note strong, .warning-box strong, .info-box strong { color: inherit; }
+
+/* ============ TABLES ============ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border-subtle);
+}
+th {
+    background-color: var(--table-header-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-default);
+    vertical-align: top;
+}
+td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    color: var(--text-primary);
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background-color: var(--table-alt-bg); }
+table img { max-width: 200px; }
+
+/* ============ STEPS LIST ============ */
+ol.steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0;
+    counter-reset: steps;
+}
+ol.steps-list > li {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: var(--step-bg);
+    border-left: 4px solid var(--step-border);
+    border-radius: 0 8px 8px 0;
+    align-items: flex-start;
+    position: relative;
+}
+ol.steps-list > li::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+ol.steps-list .step-content {
+    flex: 1;
+    min-width: 0;
+}
+ol.steps-list .step-content p { margin: 0 0 8px; color: var(--text-primary); }
+ol.steps-list .step-content p:last-child { margin-bottom: 0; }
+ol.steps-list .step-image {
+    flex-shrink: 0;
+    max-width: 280px;
+    margin-left: auto;
+}
+ol.steps-list .step-image img {
+    margin: 0;
+    max-width: 100%;
+    max-height: 280px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--border-default);
+    border-radius: 6px;
+    background: var(--bg-color);
+    display: block;
+}
+/* When multiple images stack in one step (e.g., 3 authenticator icons),
+   show them side by side and smaller */
+ol.steps-list .step-image img + img { margin-top: 8px; }
+ol.steps-list .step-image:has(img + img) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 280px;
+}
+ol.steps-list .step-image:has(img + img) img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-top: 0;
+}
+ol.steps-list ul {
+    list-style: disc;
+    padding-left: 22px;
+    margin: 6px 0;
+}
+ol.steps-list ul li {
+    margin-bottom: 4px;
+    background: none;
+    border: none;
+    padding: 0;
+    display: list-item;
+}
+ol.steps-list ul li::before { display: none; }
+
+/* ============ CODE ============ */
+code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", "Menlo", Consolas, monospace;
+    font-size: 13px;
+    border: 1px solid var(--border-subtle);
+}
+pre {
+    background: var(--code-bg);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid var(--border-subtle);
+    font-size: 13px;
+    line-height: 1.55;
+}
+pre code { background: none; border: none; padding: 0; }
+
+/* ============ FOOTER NAV ============ */
+.doc-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+}
+.nav-btn {
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: 14px 18px;
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    background: var(--bg-color);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    flex: 1;
+    max-width: 320px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+}
+.nav-btn-prev { justify-content: flex-start; text-align: left; }
+.nav-btn-next { justify-content: flex-end; text-align: right; margin-left: auto; }
+.nav-btn:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 82, 204, 0.1);
+    transform: translateY(-1px);
+}
+.nav-btn-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    min-width: 0;
+}
+.nav-btn-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+.nav-btn-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.nav-btn-arrow {
+    color: var(--primary);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* ============ MOBILE ============ */
+@media (max-width: 720px) {
+    body { padding: 20px 16px 50px; font-size: 14px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 19px; }
+    h3 { font-size: 16px; }
+    ol.steps-list > li { flex-direction: column; }
+    ol.steps-list .step-image { max-width: 100%; margin-left: 0; }
+    table { font-size: 13px; }
+    th, td { padding: 8px 10px; }
+    .doc-footer-nav { flex-direction: column; }
+    .nav-btn-next { margin-left: 0; }
+}
 </style>
 
 </head>
 <body>
-<div class="breadcrumbs">
-  <a href="RxConsole-Documentation.html">RxConsole Documentation</a> &rsaquo; Healthcare Entities &rsaquo; <strong>Healthcare Entities</strong>
-</div>
+<div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <span>Healthcare Entities</span></div>
 <h1>Healthcare Entities</h1>
-
 <p>A Healthcare Entity (HCE) refers to any licensed healthcare provider or organization that is authorized by its respective state to deliver professional healthcare services. This includes:</p>
-<ul>
-  <li>Individual providers licensed to practice healthcare</li>
-  <li>Healthcare organizations employing licensed professionals</li>
-  <li>eHealth Exchange organizations recognized by the state for providing licensed healthcare services</li>
-</ul>
-<p>A healthcare entity can only submit patient data requests and receive responses through RxCheck after it has been officially onboarded into the state's RxCheck system.</p>
-
-<table>
-<thead><tr><th>Heading</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Name</strong></td><td>The name of the healthcare entity (HCE).</td></tr>
-<tr><td><strong>Code</strong></td><td>A six-character code: two letters for the state code, an underscore (_), and three letters for the HCE site.</td></tr>
-<tr><td><strong>Status</strong></td><td>Indicates the current status: Active, Inactive, or Firewall Pending.</td></tr>
-<tr><td><strong>Integration Type</strong></td><td>EHR, EMR, HIE, or PDS (Pharmacy Dispensing System).</td></tr>
-<tr><td><strong>Vendor</strong></td><td>The integration vendor for the healthcare entity.</td></tr>
-<tr><td><strong>Site Added</strong></td><td>Date and time when the HCE site was created.</td></tr>
-</tbody>
-</table>
-
-<h2>9.1 Add a New Healthcare Entity Site</h2>
-<ol class="steps-list">
-  <li>Click on the <em>Healthcare Entities</em> button, located on the left-hand side of the screen.</li>
-  <li>Click on the <em>+ Add Site</em> button.</li>
-  <li>Populate the Site Configuration Details for the new healthcare entity. Refer to the "Breakdown of Healthcare entity site details" section below for field-specific guidance.</li>
-  <li>To populate the "Select Vendor" field, you must first click on the small lock symbol within the field.</li>
-  <li>To exit without saving, click the <em>Cancel</em> button.</li>
-  <li>To save the populated site information, press the <em>Save</em> button.</li>
-  <li>Wait patiently as your site is being created.</li>
-  <li>Populate additional details as requested in the corresponding data fields for each section.</li>
-</ol>
-
-<h2>9.2 Breakdown of Healthcare Entity Site Details</h2>
-
-<h3>9.2.1 Site Details</h3>
-<table>
-<thead><tr><th>Heading</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Healthcare Entity Name</strong></td><td>The name of the Healthcare Entity.</td></tr>
-<tr><td><strong>Site Code</strong></td><td>A six-character code: two letters for the state code (auto-populated), an underscore, and three letters entered by the PDMP administrator. Think of the initials for the company. (e.g., Walmart: WLT or WAL; Walgreens: WGN)</td></tr>
-<tr><td><strong>Site Type</strong></td><td>EHR, EMR, HIE, or PDS.</td></tr>
-<tr><td><strong>Description</strong></td><td>A simple description of the HCE site.</td></tr>
-<tr><td><strong>Status</strong></td><td>Active or Inactive.</td></tr>
-<tr><td><strong>Interstate Query</strong></td><td>When checked, the HCE will be able to send interstate data requests.</td></tr>
-<tr><td><strong>Select Vendor</strong></td><td>The integration vendor providing services to this healthcare entity.</td></tr>
-<tr><td><strong>Number of Prescribers with DEA numbers</strong></td><td>A count of prescribers with DEA numbers at that HCE.</td></tr>
-<tr><td><strong>Number of Pharmacists</strong></td><td>A count of pharmacists at that HCE.</td></tr>
-<tr><td><strong>Number of Prescribers (all providers with prescriptive authority)</strong></td><td>A count of all prescribers at that HCE.</td></tr>
-<tr><td><strong>Select Interfaces</strong></td><td>The type of connection the HCE is using to connect to RxCheck. Options: NCPDP2017, HTML, FHIR3, FHIR4, PMIX2, JSON.</td></tr>
-</tbody>
-</table>
-
-<h3>9.2.2 Contact Details</h3>
-<table>
-<thead><tr><th>Heading</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>First Name</strong></td><td>Individual contact person's first name.</td></tr>
-<tr><td><strong>Last Name</strong></td><td>Individual contact person's last name.</td></tr>
-<tr><td><strong>Phone Number</strong></td><td>Individual contact person's phone number.</td></tr>
-<tr><td><strong>Extension</strong></td><td>Individual contact person's phone number extension, if any.</td></tr>
-<tr><td><strong>Email Address</strong></td><td>Individual contact person's email address.</td></tr>
-</tbody>
-</table>
-
-<h3>9.2.3 Vendor Details</h3>
-<p>This section contains the SRS hosting details and indicates if the healthcare entity's integration is managed by the HCE IT team, the state, or by a vendor.</p>
-<ul>
-  <li><strong>HCE IT</strong> — The IT team of the HCE oversees the SRS hosting and managing responsibilities.</li>
-  <li><strong>State</strong> — The IT team of the state oversees the SRS hosting and managing responsibilities.</li>
-  <li><strong>Vendor</strong> — A third-party vendor oversees the SRS hosting and managing responsibilities.</li>
-</ul>
-<div class="note"><strong>Note:</strong> If the Vendor option is chosen, additional fields need to be populated.</div>
-
-<table>
-<thead><tr><th>Heading</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Where is it Hosted</strong></td><td>HCE IT INFRA, Vendor IT INFRA, Private Cloud, or Government Cloud.</td></tr>
-<tr><td><strong>Vendor Name</strong></td><td>The name of the vendor hosting the SRS.</td></tr>
-<tr><td><strong>Vendor Address</strong></td><td>The address of the vendor hosting the SRS.</td></tr>
-<tr><td><strong>Vendor Contact</strong></td><td>The name of the contact responsible for managing the SRS.</td></tr>
-<tr><td><strong>Are the servers being accessed outside the US?</strong></td><td>A Yes or No question asking if the SRS will be accessed outside the United States.</td></tr>
-</tbody>
-</table>
-
-<h3>9.2.4 Manage Roles</h3>
-<p>This section enables the State PDMP Administrator to assign roles that authorize specific users within a healthcare entity to submit prescription data requests. Roles are assigned by selecting the appropriate tags associated with the healthcare entity.</p>
-<p>Clicking on a role changes it to green (active / "Selected"). An off-white color indicates the role is "Authorized" but inactive and cannot initiate a query.</p>
-
-<table>
-<thead><tr><th>Button</th><th>Functionality</th></tr></thead>
-<tbody>
-<tr><td><strong>Assign All</strong></td><td>Automatically selects all displayed roles.</td></tr>
-<tr><td><strong>Clear All</strong></td><td>Automatically deselects all displayed roles.</td></tr>
-<tr><td><strong>Show List</strong></td><td>Displays all available roles in two separate lists: Authorized Roles and Selected Roles.</td></tr>
-<tr><td><strong>Hide List</strong></td><td>Displays all available roles as tags (default view).</td></tr>
-</tbody>
-</table>
-<p>When in the list view, a blue arrow transfers a role from the <em>Authorized Roles</em> list to the <em>Selected Roles</em> list. An orange arrow transfers a role from <em>Selected Roles</em> back to <em>Authorized Roles</em>.</p>
-
-<h3>9.2.5 Manage Facilities</h3>
-<p>This section provides details of the facilities related to this specific healthcare entity.</p>
-
-<h4>9.2.5.1 How to Add a Single Healthcare Facility</h4>
-<ol class="steps-list">
-  <li>Click on the <em>Add Facility</em> button.</li>
-  <li>In the pop-up window, enter the requested information in the appropriate data fields.</li>
-  <li>Click on the <em>Save</em> button to save the populated information.</li>
-</ol>
-
-<table>
-<thead><tr><th>Heading</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Name</strong></td><td>Individual facility's name.</td></tr>
-<tr><td><strong>Facility Type</strong></td><td>EHR or PDS.</td></tr>
-<tr><td><strong>Facility Code</strong></td><td>The HCE code is auto-populated; the facility code is entered as an alphanumeric value.</td></tr>
-<tr><td><strong>First Name</strong></td><td>Contact person's first name at this individual facility.</td></tr>
-<tr><td><strong>Last Name</strong></td><td>Contact person's last name.</td></tr>
-<tr><td><strong>Email</strong></td><td>Contact person's email.</td></tr>
-<tr><td><strong>Phone</strong></td><td>Contact person's phone number.</td></tr>
-<tr><td><strong>Extension</strong></td><td>Contact person's phone extension, if any.</td></tr>
-</tbody>
-</table>
-
-<h4>9.2.5.2 How to Add Multiple Healthcare Facilities</h4>
-<ol class="steps-list">
-  <li>Click on the <em>Add Multiple Facilities</em> button.</li>
-  <li>You will be directed to the <em>Add Facilities</em> screen.</li>
-  <li>Click on the <em>Standardized Facilities Template</em> link to download a template to populate (Excel .xlsx format). The first tab contains columns to enter facility information; the second tab titled <em>Field Definitions</em> provides an abbreviated summary of each field.</li>
-  <li>Populate the template with each facility occupying a single row.</li>
-  <li>Press the <em>Click to select file</em> button to choose the populated template to upload.</li>
-  <li>If all facilities share a single contact person, check the box labeled <em>One contact for all facilities</em>. <em>Note: If contact information is included in both the uploaded file and the UI, the UI entry will override and apply to all created facilities.</em></li>
-  <li>Click the <em>Upload</em> button to import the data from your selected file.</li>
-</ol>
-
-<h3>9.2.6 User Administration</h3>
-<p>This section lists details of the administrator(s) specific to this healthcare facility.</p>
-
-<table>
-<thead><tr><th>Heading</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><strong>Email</strong></td><td>The email address used by the user to log into the RxConsole application.</td></tr>
-<tr><td><strong>Name</strong></td><td>The first and last name of the HCE user.</td></tr>
-<tr><td><strong>Site Name</strong></td><td>The HCE site code.</td></tr>
-<tr><td><strong>Status</strong></td><td>The status of the HCE user account.</td></tr>
-<tr><td><strong>User Type</strong></td><td>The type of account — typically displayed as SUB_ADMIN.</td></tr>
-</tbody>
-</table>
-
-<p>To add a new administrative user for a HCE:</p>
-<ol class="steps-list">
-  <li>Click the <em>Add User</em> button to open a popup window.</li>
-  <li>Enter the requested information into the appropriate data field.</li>
-  <li>Click the <em>Save</em> button to save the information.</li>
-</ol>
-
-<h2>9.3 Open a Healthcare Entity Record</h2>
-<ol class="steps-list">
-  <li>Click on the <em>Healthcare Entities</em> button, located on the left-hand side of the screen.</li>
-  <li>Find the healthcare entity by:
-    <ul>
-      <li>Scrolling through the list on the screen, or</li>
-      <li>Typing the name of the HCE into the <em>Global Filter</em> search bar in the top right.</li>
-    </ul>
-  </li>
-  <li>Select the desired healthcare entity to view further details.</li>
-  <li>To edit a record, make your changes and click the <em>Save</em> button. To exit without saving, click <em>Cancel</em>.</li>
-</ol>
-
-<h2>9.4 Export a List of Your HCEs and Facilities</h2>
-<ol class="steps-list">
-  <li>Click on the <em>Healthcare Entities</em> button, located on the left-hand side of the screen.</li>
-  <li>In the top-right corner, click:
-    <ul>
-      <li><strong>Export HCE's</strong> — Downloads a list of healthcare entities, their HCE code, and their status.</li>
-      <li><strong>Export Facilities</strong> — Downloads a list of Facilities, their site code, and their status.</li>
-    </ul>
-    <em>Note: The HCE and facility lists are downloaded in a zipped folder.</em>
-  </li>
-  <li>Right-click on the zipped folder to view options.</li>
-  <li>Select the "Extract All…" option.</li>
-</ol>
-
+<ul><li>Individual providers licensed to practice healthcare,</li><li>Healthcare organizations employing licensed professionals, and</li><li>eHealth Exchange organizations recognized by the state for providing licensed healthcare services.</li></ul>
+<p>A healthcare entity can only submit patient data requests and receive responses through RxCheck after it has been officially onboarded into the state&#x27;s RxCheck system.</p>
+<p>When a new healthcare entity expresses interest in participating in RxCheck, the State PDMP Administrator can initiate onboarding by creating a new entity site. This is done by clicking the <em>+ Add Site</em> button located in the top right corner of the Healthcare Entities page.</p>
+<p>Administrators can also view and manage existing healthcare entity records associated with their state. The full list of onboarded entities can be accessed by selecting the <em>Healthcare Entities</em> icon from the left-hand navigation panel.</p>
+<p>The screenshot below displays an example list of onboarded healthcare entities within a state&#x27;s PDMP system. The accompanying table provides definitions for each column heading show in the interface.</p>
+<img src="images/image131.png" alt="" loading="lazy">
+<table><tr><th><strong>Heading</strong></th><th><strong>Description</strong></th></tr><tr><td><strong>Name</strong></td><td>The name of the healthcare entity (HCE).</td></tr><tr><td><strong>Code</strong></td><td><p>A six-character code that follows the following format:</p><ul><li>Two letters to represent the state code.</li><li>An underscore (_).</li><li>Three letters to represent a HCE site.</li></ul></td></tr><tr><td><strong>Status</strong></td><td><p>Indicates the current status of an HCE. </p><ul><li>Active- the HCE is currently active.</li><li>Inactive- the HCE is currently inactive.</li><li>Firewall Pending- the HCE is currently active but was recently set up. </li></ul></td></tr><tr><td><strong>Integration Type</strong></td><td><p>Refers to the site type value that was selected when the HCE was created. This value will be displayed as one of the following:</p><ul><li>EHR – Electronic Health Records</li><li>EMR – Electronic Medical Records</li><li>HIE – Health Information Exchange</li><li>PDS – Pharmacy Dispensing System</li></ul></td></tr><tr><td><strong>Vendor</strong></td><td>The integration vendor for the healthcare entity.</td></tr><tr><td><strong>Site Added</strong></td><td>Date and time when the HCE site was created.</td></tr></table>
 <div class="doc-footer-nav">
-  <a class="nav-btn" href="Hub-Audit-Logs.html">← Hub Audit Logs</a>
-  <a class="nav-btn" href="Interstate-Data-Sharing.html">Interstate Data-sharing →</a>
+  <a class="nav-btn nav-btn-prev" href="Using-an-API-for-Logs.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Using an API to Download the Logs</span></span></a>
+  <a class="nav-btn nav-btn-next" href="Add-a-New-Healthcare-Entity-Site.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Add a New Healthcare Entity Site</span></span> <span class="nav-btn-arrow">→</span></a>
 </div>
+<script>
+(function() {
+    function syncFromParent() {
+        try {
+            const t = parent.document.documentElement.getAttribute('data-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+    }
+    syncFromParent();
+    window.addEventListener('message', (e) => {
+        if (e.data && e.data.theme) {
+            document.documentElement.setAttribute('data-theme', e.data.theme);
+        }
+    });
+})();
+</script>
 </body>
 </html>
