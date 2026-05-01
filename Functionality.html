@@ -1036,19 +1036,124 @@ pre code { background: none; border: none; padding: 0; }
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <span>Functionality of the RxConsole Application</span></div>
 <h1>Functionality of the RxConsole Application</h1>
 <p>RxConsole provides PDMP administrators and authorized users with a comprehensive set of tools to manage and monitor prescription data sharing activities within the RxCheck interstate network. The following high-level functionalities are available through the RxConsole interface:</p>
-<table><tr><th><img src="images/image2.png" alt=""></th><th><strong>RxCheck Dashboard Monitoring</strong></th></tr><tr><td></td><td><ul><li>View a summary of all incoming and outgoing prescription requests associated with your PDMP on the RxCheck Dashboard.</li></ul></td></tr><tr><td><img src="images/image3.png" alt=""></td><td><strong>Analytical Insights</strong></td></tr><tr><td></td><td><ul><li>Generate and view anonymized prescription analytics by patient or prescriber, with filtering options by county and ZIP code.</li></ul></td></tr><tr><td><img src="images/image4.png" alt=""></td><td><strong>State Routing Service (SRS) Configuration</strong></td></tr><tr><td></td><td><ul><li>Set up and manage State Routing Service parameters for data transmission and routing.</li><li>Establish heartbeat and health monitoring and notifications for site connectivity and IT diagnostics.</li></ul></td></tr><tr><td><img src="images/image5.png" alt=""></td><td><strong>Hub Audit Logs</strong></td></tr><tr><td></td><td><ul><li>Access, filter, and export comprehensive Hub Audit Logs detailing data transaction activities.</li></ul></td></tr><tr><td><img src="images/image6.png" alt=""></td><td><strong>Health Care Entity (HCE) Management</strong></td></tr><tr><td></td><td><ul><li>Create and manage HCE site profiles.</li><li>Define and manage user roles associated with each HCE.</li><li>Configure and manage HIE subsite facilities under each HCE.</li></ul></td></tr><tr><td><img src="images/image7.png" alt=""></td><td><strong>Interstate Data Sharing Control</strong></td></tr><tr><td></td><td><ul><li>Grant or revoke access to HCE sites for interstate data exchange.</li><li>Manage roles and permissions for interstate sharing.</li></ul></td></tr><tr><td><img src="images/image8.png" alt=""></td><td><strong>Interstate Data Sharing Role Management</strong></td></tr><tr><td></td><td><ul><li>Manage roles and permissions for interstate sharing.</li></ul></td></tr><tr><td><img src="images/image9.png" alt=""></td><td><strong>Integration Request Management</strong></td></tr><tr><td></td><td><ul><li>Review and approve or deny integration requests submitted by HCEs seeking connectivity.</li></ul></td></tr><tr><td><img src="images/image10.png" alt=""></td><td><strong>Interstate Data Sharing Request Management</strong></td></tr><tr><td></td><td><ul><li>Review and approve or deny requests from HCEs to share data across state lines.</li></ul></td></tr><tr><td><img src="images/image11.png" alt=""></td><td><strong>PDMP User Management</strong></td></tr><tr><td></td><td><ul><li>Administer PDMP user accounts and manage user-specific settings.</li></ul></td></tr></table>
-<img src="images/image12.png" alt="" loading="lazy">
-<p><strong>Provider Validation Management</strong></p>
-<ul><li>Configure validation settings for providers using DEA numbers, National Provider Identifiers (NPI), and state license numbers.</li></ul>
-<img src="images/image13.png" alt="" loading="lazy">
-<p><strong>Maintenance Scheduling</strong></p>
-<ul><li>Create, monitor, and track system maintenance events.</li></ul>
-<img src="images/image14.png" alt="" loading="lazy">
-<p><strong>Taxonomy Code Search</strong></p>
-<ul><li>Search and view mappings related to the NCPDP Taxonomy Code.</li></ul>
-<img src="images/image15.png" alt="" loading="lazy">
-<p><strong>System Status Monitoring</strong></p>
-<ul><li>View system information and connectivity status for all integrated PDMP sites.</li></ul>
+<table style="border: none; border-collapse: collapse; width: 100%;">
+    <tbody>
+        <tr>
+            <td style="border: none; vertical-align: top; width: 60px; padding-top: 12px;">
+                <img src="images/image1.png" alt="Dashboard Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; width: 30%; padding-top: 12px;">
+                RxCheck Dashboard Monitoring
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                View a summary of all incoming and outgoing prescription requests associated with your PDMP on the RxCheck Dashboard.
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image2.png" alt="Analytics Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Analytical Insights
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                Generate and view anonymized prescription analytics by patient or prescriber, with filtering options by county and ZIP code.
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image3.png" alt="SRS Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                State Routing Service (SRS) Configuration
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <div style="margin-bottom: 8px;">Set up and manage State Routing Service parameters for data transmission and routing.</div>
+                <div>Establish heartbeat and health monitoring and notifications for site connectivity and IT diagnostics.</div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image4.png" alt="Audit Logs Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Hub Audit Logs
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                Access, filter, and export comprehensive Hub Audit Logs detailing data transaction activities.
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image5.png" alt="HCE Management Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Health Care Entity (HCE) Management
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <div style="margin-bottom: 8px;">Create and manage HCE site profiles.</div>
+                <div style="margin-bottom: 8px;">Define and manage user roles associated with each HCE.</div>
+                <div>Configure and manage HIE subsite facilities under each HCE.</div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image6.png" alt="Data Sharing Control Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Interstate Data Sharing Control
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <div style="margin-bottom: 8px;">Grant or revoke access to HCE sites for interstate data exchange.</div>
+                <div>Manage roles and permissions for interstate sharing.</div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image7.png" alt="Role Management Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Interstate Data Sharing Role Management
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                Manage roles and permissions for interstate sharing.
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image8.png" alt="Integration Request Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Integration Request Management
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                Review and approve or deny integration requests submitted by HCEs seeking connectivity.
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image9.png" alt="Data Sharing Request Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                Interstate Data Sharing Request Management
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                Review and approve or deny requests from HCEs to share data across state lines.
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                <img src="images/image10.png" alt="User Management Icon" style="width: 45px;">
+            </td>
+            <td style="border: none; vertical-align: top; font-weight: 600; padding-top: 12px;">
+                PDMP User Management
+            </td>
+            <td style="border: none; vertical-align: top; padding-top: 12px;">
+                Administer PDMP user accounts and manage user-specific settings.
+            </td>
+        </tr>
+    </tbody>
+</table>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="History-and-Overview.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">History and Overview of the RxConsole Application</span></span></a>
   <a class="nav-btn nav-btn-next" href="RxConsole-Home-Page.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">RxConsole Home Page</span></span> <span class="nav-btn-arrow">→</span></a>
