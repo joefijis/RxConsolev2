@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -1050,9 +1050,38 @@ pre code { background: none; border: none; padding: 0; }
 <h1>Heartbeat Notifications</h1>
 <p>Using the Heartbeat Notifications feature, the PDMP Administrator can subscribe to receive email notifications and text messages about the PDMP and HCE connections. </p>
 <p>To navigate to the Heartbeat notifications, follow the instructions below.</p>
-<table><tr><th><ol class="steps-list"><li><div class="step-content">Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat Notifications</em> option, located on the left-hand side of the screen.</div></li></ol></th><th><img src="images/image106.png" alt=""></th></tr></table>
-<img src="images/image107.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content"><p>Select the desired boxes to subscribe to that notification.</p><ol type="a"><li>If the <em>Email</em> option is checked, the user will receive emails to the mailbox associated with their RxConsole application login.</li><li>If the <em>SMS</em> option is checked, the user will receive text messages on the mobile phone number specified in their RxConsole application profile.</li></ol><div class="note"><strong><em>Note:</em></strong> You will need to email the RxCheck admin to add a phone number to enable the SMS notifications option.</div></div><div class="step-image"><img src="images/image108.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>After making any changes, a user will want to press the <em>Save</em> button to process any changes made to notifications.</p></div><div class="step-image"><img src="images/image87.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat Notifications</em> option, located on the left-hand side of the screen.</p>
+        </div>
+        <div class="step-image">
+            <img src="images/image106.png" alt="">
+            <img src="images/image107.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Select the desired boxes to subscribe to that notification.</p>
+            <ol type="a">
+                <li>If the <em>Email</em> option is checked, the user will receive emails to the mailbox associated with their RxConsole application login.</li>
+                <li>If the <em>SMS</em> option is checked, the user will receive text messages on the mobile phone number specified in their RxConsole application profile.</li>
+            </ol>
+            <div class="note"><strong><em>Note:</em></strong> You will need to email the RxCheck admin to add a phone number to enable the SMS notifications option.</div>
+        </div>
+        <div class="step-image">
+            <img src="images/image108.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>After making any changes, a user will want to press the <em>Save</em> button to process any changes made to notifications.</p>
+        </div>
+        <div class="step-image">
+            <img src="images/image87.png" alt="" loading="lazy">
+        </div>
+    </li>
+</ol>
 <p>The table below explains the different subscription options that a PDMP administrator can subscribe to.</p>
 <table><tr><th><strong>Heading</strong></th><th><strong>Subscription Option</strong></th><th><strong>Description</strong></th></tr><tr><td><strong>PDMP Connection</strong></td><td><strong>Your PDMP SRS</strong></td><td>Receive alerts for connection disruptions that affect your state connection to the Hub.</td></tr><tr><td></td><td><strong>Performance</strong></td><td>Receive alerts for performance degradation in SRS instances affecting your state connection.</td></tr><tr><td></td><td><strong>Partnering PDMP SRS</strong></td><td>Receive alerts for connection disruptions for partnering states connected to yours.</td></tr><tr><td><strong>HCE Connection</strong></td><td><strong>Integration SRS</strong></td><td>Receive alerts for connection disruptions that affect integration connection to the Hub.</td></tr></table>
 <div class="note"><strong>Note:</strong> Notifications are not immediate. A subscribed user will receive an email or SMS notification approximately 15 minutes after the first missed heartbeat is detected.</div>
