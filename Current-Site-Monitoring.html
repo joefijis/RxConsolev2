@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -1048,29 +1048,78 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="Heartbeat-and-Health-Monitoring.html">Heartbeat and Health Monitoring</a> <span class="crumb-sep">›</span> <a href="SRS-Configuration.html">State Routing Service (SRS) Configuration</a> <span class="crumb-sep">›</span> <span>Current Site Monitoring</span></div>
 <h1>Current Site Monitoring</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat &amp; Health Monitoring</em> option, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image91.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>By default, you will be at the current site <em>SRS: Heartbeat and Health Monitoring</em> screen.</p></div></li><li><div class="step-content"><img src="images/image92.png" alt=""></div></li><li><div class="step-content"><p>This screen includes various graphs to show the current status of the SRS. </p><div class="note"><strong><em>Note:</em></strong> The table at the end of this section includes additional information regarding what is monitored in each graph.</div></div></li><li><div class="step-content"><p>A user can click the <em>Refresh</em> button to get the most up to date information regarding their SRS.</p></div><div class="step-image"><img src="images/image93.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>A user can click the <em>Show last 10 Pings</em> button to view a table of the last 10 pings to the SRS. </p><div class="note"><strong><em>Note:</em></strong> The headers in the table are described in the following table.</div></div><div class="step-image"><img src="images/image94.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>State Routing Service</em> button, followed by the <em>Heartbeat &amp; Health Monitoring</em> option, located on the left-hand side of the screen.</p></div>
+        <div class="step-image"><img src="images/image91.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>By default, you will be at the current site <em>SRS: Heartbeat and Health Monitoring</em> screen.</p></div>
+        <div class="step-image"><img src="images/image92.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>This screen includes various graphs to show the current status of the SRS. </p><div class="note"><strong><em>Note:</em></strong> The table at the end of this section includes additional information regarding what is monitored in each graph.</div></div>
+    </li>
+    <li>
+        <div class="step-content"><p>A user can click the <em>Refresh</em> button to get the most up to date information regarding their SRS.</p></div>
+        <div class="step-image"><img src="images/image93.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>A user can click the <em>Show last 10 Pings</em> button to view a table of the last 10 pings to the SRS. </p><div class="note"><strong><em>Note:</em></strong> The headers in the table are described in the following table.</div></div>
+        <div class="step-image"><img src="images/image94.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
 <table><tr><th><strong>Header</strong></th><th><strong>Description</strong></th></tr><tr><td><strong>DeviceID</strong></td><td>An identification code that references the device that pinged the SRS.</td></tr><tr><td><strong>Host</strong></td><td>A reference code to identify the RxConsole state and version that pinged the SRS.</td></tr><tr><td><strong>InstanceID</strong></td><td>Identification of the instance of the SRS that was pinged.</td></tr><tr><td><strong>IP#</strong></td><td>The IP address of the instance of the SRS that was pinged.</td></tr><tr><td><strong>Site Code</strong></td><td>The two letter code that references the state.</td></tr><tr><td><strong>Time Stamp</strong></td><td>The date and time the ping occurred.</td></tr></table>
-<table><tr><th><strong>Graph Title</strong></th><th><strong>X-Axis</strong></th><th><strong>Y-Axis</strong></th><th><strong>Description</strong></th></tr><tr><td><strong>Status over a period of time with Timeline Bar</strong></td><td>Time</td><td>Status—Up/Down</td><td>The status of the SRS over a period of time. </td></tr><tr><td><strong>Instance Status</strong></td><td>Time</td><td>Status—Up/Down</td><td>The status of the SRS over a period of time, allows you to use the dropdown to switch the instance.</td></tr><tr><td><strong>JVM Threads</strong></td><td>Time</td><td>Number of JVM Threads</td><td>Displays the number of active Java Virtual Machine (JVM) threads at regular time intervals. Rising lines may indicate increased load or usage and falling lines may suggest stable or reduced activity. </td></tr></table>
-<p><strong>Graph Title</strong></p>
-<p><strong>X-Axis</strong></p>
-<p><strong>Y-Axis</strong></p>
-<p><strong>Description</strong></p>
-<p><strong>Garbage Collectors</strong></p>
-<p>Time</p>
-<p>Time spent collecting and releasing the memory</p>
-<p>Indicates how much time garbage collection took. Helps to identify memory issues which can impact application responsiveness.</p>
-<p><strong>CPU</strong></p>
-<p>Time</p>
-<p>Percent usage</p>
-<p>The amount of processing power used over time.</p>
-<p><strong>JVM Memory</strong></p>
-<p>Time</p>
-<p>Size of JVM memory</p>
-<p>Helps to detect trends such as memory growth, potential memory leaks, or inefficient memory usage patterns.</p>
-<p><strong>Disk Space Used</strong></p>
-<p>Time</p>
-<p>Size of disk space</p>
-<p>Helps identify storage trends, which may signal the need for a cleanup or capacity planning.</p>
+<table>
+    <tr>
+        <th><strong>Graph Title</strong></th>
+        <th><strong>X-Axis</strong></th>
+        <th><strong>Y-Axis</strong></th>
+        <th><strong>Description</strong></th>
+    </tr>
+    <tr>
+        <td><strong>Status over a period of time with Timeline Bar</strong></td>
+        <td>Time</td>
+        <td>Status—Up/Down</td>
+        <td>The status of the SRS over a period of time. </td>
+    </tr>
+    <tr>
+        <td><strong>Instance Status</strong></td>
+        <td>Time</td>
+        <td>Status—Up/Down</td>
+        <td>The status of the SRS over a period of time, allows you to use the dropdown to switch the instance.</td>
+    </tr>
+    <tr>
+        <td><strong>JVM Threads</strong></td>
+        <td>Time</td>
+        <td>Number of JVM Threads</td>
+        <td>Displays the number of active Java Virtual Machine (JVM) threads at regular time intervals. Rising lines may indicate increased load or usage and falling lines may suggest stable or reduced activity. </td>
+    </tr>
+    <tr>
+        <td><strong>Garbage Collectors</strong></td>
+        <td>Time</td>
+        <td>Time spent collecting and releasing the memory</td>
+        <td>Indicates how much time garbage collection took. Helps to identify memory issues which can impact application responsiveness.</td>
+    </tr>
+    <tr>
+        <td><strong>CPU</strong></td>
+        <td>Time</td>
+        <td>Percent usage</td>
+        <td>The amount of processing power used over time.</td>
+    </tr>
+    <tr>
+        <td><strong>JVM Memory</strong></td>
+        <td>Time</td>
+        <td>Size of JVM memory</td>
+        <td>Helps to detect trends such as memory growth, potential memory leaks, or inefficient memory usage patterns.</td>
+    </tr>
+    <tr>
+        <td><strong>Disk Space Used</strong></td>
+        <td>Time</td>
+        <td>Size of disk space</td>
+        <td>Helps identify storage trends, which may signal the need for a cleanup or capacity planning.</td>
+    </tr>
+</table>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Heartbeat-and-Health-Monitoring.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Heartbeat and Health Monitoring</span></span></a>
   <a class="nav-btn nav-btn-next" href="All-Sites-Monitoring.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">All Sites Monitoring</span></span> <span class="nav-btn-arrow">→</span></a>
