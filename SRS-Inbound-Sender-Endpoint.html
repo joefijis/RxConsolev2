@@ -473,7 +473,8 @@ table {
 th {
     background-color: var(--table-header-bg);
     color: var(--text-primary);
-    font-weight: 600;
+    font-weight: 800;
+    font-size: 15px;
     padding: 11px 16px;
     text-align: left;
     border-bottom: 1px solid var(--border-default);
@@ -1051,20 +1052,76 @@ pre code { background: none; border: none; padding: 0; }
 <p>The SRS Inbound Sender Endpoint configuration enables the State PDMP system to receive incoming queries initiated by other states. To complete this configuration, the State PDMP Administrator must input the required information into the specified data fields within this section.</p>
 <p>The screenshot below illustrates the configuration interface for the Inbound Sender Endpoint. For additional clarity, the following table provides detailed descriptions of each data field shown in the screenshot.</p>
 <img src="images/image82.png" alt="" loading="lazy">
-<table><tr><th><strong>Heading</strong></th><th><strong>Data Field Name</strong></th><th><strong>Description</strong></th></tr><tr><td></td><td><strong>Protocol</strong></td><td>This value can be set to &quot;HTTP&quot; or &quot;HTTPS&quot;.</td></tr><tr><td></td><td><strong>Domain</strong></td><td>The official website address of the PDMP&#x27;s Inbound Service instance.</p><p>This field is optional – if the domain is not provided, the system will automatically take the IP address.</td></tr><tr><td></td><td><strong>Port Number</strong></td><td>Port number where the Inbound Service is configured.</td></tr><tr><td></td><td><strong>IP Address</strong></td><td>IP address where the Inbound SRS is hosted.</td></tr><tr><td></td><td><strong>PMIX2 Inbound URL</strong></td><td><strong><em>This field is auto-populated</em></strong> based on the values selected/entered in the Protocol, Domain, IP address, and Port number fields. It is a fully qualified URL for PMIX2 NIEM4 Service on Inbound.</td></tr><tr><td></td><td><strong>IEPD</strong></td><td><strong><em>This field is auto-populated</em></strong> based on IEPD option selected by Super Administrator at the time of PDMP Site creation. The value indicates the type of PDMP site. This indicates the PMIX version supported by PDMP.</td></tr><tr><td><strong>Rate Limiting</strong></td><td><strong>Rate Limit</strong></td><td>If a value is entered for this field, it indicates the number of Requests to the inbound with respect to the defined time unit.</td></tr><tr><td><strong>Rate Limiting</strong></td><td><strong>Time Unit</strong></td><td>Defines the unit for the value entered in the <em>Rate Limit</em> field. Can be set to Second, Minute, Hour, Day, or Month.</td></tr></table>
-<p><strong>Heading</strong></p>
-<p><strong>Data Field Name</strong></p>
-<p><strong>Description</strong></p>
-<p><strong>Enable Loopback (Same Site Outbound can call same site inbound)</strong></p>
-<p><strong>Enable Loopback</strong></p>
-<p>This is a toggle button. When enabled (blue), it indicates that the users in the PDMP state can make Prescription Data requests to the same PDMP State. </p>
-<p>For example, if it is enabled for the PDMP State of NJ, it will indicate that NJ users can send the Prescription Data Requests to NJ.</p>
-<p>If the box is gray, it is disabled.</p>
-<p><strong>Security Credentials (HTTP Basic Authentication)</strong></p>
-<p><strong>Inbound Username</strong></p>
-<p>A username to authenticate the SRS connection in the RxCheck network.</p>
-<p><strong>Inbound Password</strong></p>
-<p>A password to authenticate the SRS connection in the RxCheck network.</p>
+<table>
+    <tr>
+        <th><strong>Heading</strong></th>
+        <th><strong>Data Field Name</strong></th>
+        <th><strong>Description</strong></th>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>Protocol</strong></td>
+        <td>This value can be set to "HTTP" or "HTTPS".</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>Domain</strong></td>
+        <td>
+            <p>The official website address of the PDMP's Inbound Service instance.</p>
+            <p>This field is optional – if the domain is not provided, the system will automatically take the IP address.</p>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>Port Number</strong></td>
+        <td>Port number where the Inbound Service is configured.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>IP Address</strong></td>
+        <td>IP address where the Inbound SRS is hosted.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>PMIX2 Inbound URL</strong></td>
+        <td><strong><em>This field is auto-populated</em></strong> based on the values selected/entered in the Protocol, Domain, IP address, and Port number fields. It is a fully qualified URL for PMIX2 NIEM4 Service on Inbound.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>IEPD</strong></td>
+        <td><strong><em>This field is auto-populated</em></strong> based on IEPD option selected by Super Administrator at the time of PDMP Site creation. The value indicates the type of PDMP site. This indicates the PMIX version supported by PDMP.</td>
+    </tr>
+    <tr>
+        <td><strong>Rate Limiting</strong></td>
+        <td><strong>Rate Limit</strong></td>
+        <td>If a value is entered for this field, it indicates the number of Requests to the inbound with respect to the defined time unit.</td>
+    </tr>
+    <tr>
+        <td><strong>Rate Limiting</strong></td>
+        <td><strong>Time Unit</strong></td>
+        <td>Defines the unit for the value entered in the <em>Rate Limit</em> field. Can be set to Second, Minute, Hour, Day, or Month.</td>
+    </tr>
+    <tr>
+        <td><strong>Enable Loopback (Same Site Outbound can call same site inbound)</strong></td>
+        <td><strong>Enable Loopback</strong></td>
+        <td>
+            <p>This is a toggle button. When enabled (blue), it indicates that the users in the PDMP state can make Prescription Data requests to the same PDMP State.</p>
+            <p>For example, if it is enabled for the PDMP State of NJ, it will indicate that NJ users can send the Prescription Data Requests to NJ.</p>
+            <p>If the box is gray, it is disabled.</p>
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Security Credentials (HTTP Basic Authentication)</strong></td>
+        <td><strong>Inbound Username</strong></td>
+        <td><p>A username to authenticate the SRS connection in the RxCheck network.</p></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><strong>Inbound Password</strong></td>
+        <td><p>A password to authenticate the SRS connection in the RxCheck network.</p></td>
+    </tr>
+</table>
+
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="RxCheck-Hub-Service-Host-Endpoint.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">RxCheck Hub Service Host Endpoint</span></span></a>
   <a class="nav-btn nav-btn-next" href="Site-PDMP-Application-Endpoint.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Site PDMP Application Endpoint</span></span> <span class="nav-btn-arrow">→</span></a>
