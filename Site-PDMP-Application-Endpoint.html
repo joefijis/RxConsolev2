@@ -1051,7 +1051,60 @@ pre code { background: none; border: none; padding: 0; }
 <p>This section defines the technical parameters of the state&#x27;s PDMP application necessary for message routing and integration. To configure this section, the State PDMP Administrator must enter the required information into the designated data fields.</p>
 <p>The screenshot below demonstrates the configuration interface for this section. For additional clarity, the accompanying table provides descriptions for each data field shown in the screenshot.</p>
 <img src="images/image83.png" alt="" loading="lazy">
-<table><tr><th><strong>Heading</strong></th><th><strong>Data Field Name</strong></th><th><strong>Description</strong></th></tr><tr><td></td><td><strong>Protocol</strong></td><td>This value can be set to &quot;HTTP&quot; or &quot;HTTPS&quot;.</td></tr><tr><td></td><td><strong>Domain</strong></td><td>The website address of the PDMP state.</p><p>This field is optional – if the domain is not provided, the system will automatically take the IP address.</td></tr><tr><td></td><td><strong>Port Number</strong></td><td>Port number where the website is hosted.</td></tr><tr><td><strong>Heading</strong></td><td><strong>Data Field Name</strong></td><td><strong>Description</strong></td></tr><tr><td></td><td><strong>IP Address</strong></td><td>IP address of the state PDMP server where the website is hosted.</td></tr><tr><td></td><td><strong>URL Path</strong></td><td>This is the base URL or path for the PDMP Application endpoint for all the requests. The value for this field is based on the IEPD option selected by Super Administrator at the time of PDMP Site creation.</td></tr><tr><td></td><td><strong>PDMP URL</strong></td><td><strong><em>This field is auto-populated</em></strong> based on the values selected/entered in Protocol, Domain/IP Address, Port Number.</td></tr><tr><td><strong>Security Credentials (HTTP Basic Authentication)</strong></td><td><strong>Inbound Username</strong></td><td>A username and is an optional parameter which enables basic authentication on PDMP Site.</td></tr><tr><td></td><td><strong>Inbound Password</strong></td><td>A password and is an optional parameter which enables basic authentication on PDMP Site.</td></tr></table>
+<table>
+  <thead>
+    <tr>
+      <th><strong>Heading</strong></th>
+      <th><strong>Data Field Name</strong></th>
+      <th><strong>Description</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><strong>Protocol</strong></td>
+      <td>This value can be set to "HTTP" or "HTTPS".</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>Domain</strong></td>
+      <td>
+        The website address of the PDMP state.<br><br>
+        This field is optional – if the domain is not provided, the system will automatically take the IP address.
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>Port Number</strong></td>
+      <td>Port number where the website is hosted.</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>IP Address</strong></td>
+      <td>IP address of the state PDMP server where the website is hosted.</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>URL Path</strong></td>
+      <td>This is the base URL or path for the PDMP Application endpoint for all the requests. The value for this field is based on the IEPD option selected by Super Administrator at the time of PDMP Site creation.</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>PDMP URL</strong></td>
+      <td><strong><em>This field is auto-populated</em></strong> based on the values selected/entered in Protocol, Domain/IP Address, Port Number.</td>
+    </tr>
+    <tr>
+      <td><strong>Security Credentials (HTTP Basic Authentication)</strong></td>
+      <td><strong>Inbound Username</strong></td>
+      <td>A username and is an optional parameter which enables basic authentication on PDMP Site.</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>Inbound Password</strong></td>
+      <td>A password and is an optional parameter which enables basic authentication on PDMP Site.</td>
+    </tr>
+  </tbody>
+</table>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="SRS-Inbound-Sender-Endpoint.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">SRS Inbound Sender Endpoint</span></span></a>
   <a class="nav-btn nav-btn-next" href="SRS-Certificate.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">SRS Certificate</span></span> <span class="nav-btn-arrow">→</span></a>
