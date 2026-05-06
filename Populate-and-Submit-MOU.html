@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,21 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -1048,7 +1063,73 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="MOU-Worksheets.html">MOU Worksheet(s)</a> <span class="crumb-sep">›</span> <a href="Interstate-Data-Sharing.html">Interstate Data-Sharing</a> <span class="crumb-sep">›</span> <span>Populate and Submit the MOU Worksheet</span></div>
 <h1>Populate and Submit the MOU Worksheet</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Interstate Data Sharing</em> button, followed by the <em>MOU Worksheet(s)</em> option, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image186.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>The <em>MOU Worksheet(s)</em> page is displayed.</p></div></li><li><div class="step-content"><img src="images/image187.png" alt=""></div></li><li><div class="step-content"><p>Click on the <em>Fill New Worksheet</em> button (if you have not completed a worksheet yet) or <em>View Saved Worksheet </em>(if you have previously completed a worksheet).</p></div><div class="step-image"><img src="images/image188.png" alt="" loading="lazy"><img src="images/image189.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>On the new <em>MOU Worksheet</em> page, populate the following sections:</p><ul><li>State Administration&#x27;s Information</li><li>User Validation Procedures</li><li>Data Access and Security</li><li>Data Elements for Request Submissions</li><li>Query Response</li><li>Miscellaneous</li></ul><div class="note"><strong>Note:</strong> Fields with a red asterisk ( * ) are required.</div></div></li><li><div class="step-content"><p>Click the <em>Save</em> button to confirm and record your changes to the MOU worksheet.</p></div><div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Alternatively, you can press the <em>Cancel</em> button to discard the changes and return to the previous screen.</p></div><div class="step-image"><img src="images/image190.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>After saving, the <em>View Saved Worksheet </em>button will be displayed.</p></div><div class="step-image"><img src="images/image191.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Click on <em>View Saved Worksheet</em> button to view the saved MOU Worksheet. PDMP Administrators can update the contents and/or share the MOU Worksheet with other state(s).</p></div><div class="step-image"><img src="images/image192.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>To edit the worksheet, click on the <em>Update</em> button. </p></div><div class="step-image"><img src="images/image193.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>To share the worksheet with another state, click on the <em>Share </em>button.</p></div><div class="step-image"><img src="images/image194.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Select a state from the dropdown menu and click the <em>Share Form</em> button to send the form to the selected state.</p></div><div class="step-image"><img src="images/image195.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>The MOU worksheet shared with the potential partnering state is displayed on the MOU Worksheet page with a &quot;Pending&quot;Status.</p></div></li><li><div class="step-content"><img src="images/image196.png" alt=""></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>Interstate Data Sharing</em> button, followed by the <em>MOU Worksheet(s)</em> option, located on the left-hand side of the screen.</p></div>
+        <div class="step-image"><img src="images/image186.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>The <em>MOU Worksheet(s)</em> page is displayed.</p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image187.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content"><p>Click on the <em>Fill New Worksheet</em> button (if you have not completed a worksheet yet) or <em>View Saved Worksheet </em>(if you have previously completed a worksheet).</p></div>
+        <div class="step-image">
+            <img src="images/image188.png" alt="" loading="lazy">
+            <img src="images/image189.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>On the new <em>MOU Worksheet</em> page, populate the following sections:</p>
+            <ul>
+                <li>State Administration&#x27;s Information</li>
+                <li>User Validation Procedures</li>
+                <li>Data Access and Security</li>
+                <li>Data Elements for Request Submissions</li>
+                <li>Query Response</li>
+                <li>Miscellaneous</li>
+            </ul>
+            <div class="note"><strong>Note:</strong> Fields with a red asterisk ( * ) are required.</div>
+        </div>
+    </li>
+    <li>
+        <div class="step-content"><p>Click the <em>Save</em> button to confirm and record your changes to the MOU worksheet.</p></div>
+        <div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Alternatively, you can press the <em>Cancel</em> button to discard the changes and return to the previous screen.</p></div>
+        <div class="step-image"><img src="images/image190.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>After saving, the <em>View Saved Worksheet </em>button will be displayed.</p></div>
+        <div class="step-image"><img src="images/image191.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Click on <em>View Saved Worksheet</em> button to view the saved MOU Worksheet. PDMP Administrators can update the contents and/or share the MOU Worksheet with other state(s).</p></div>
+        <div class="step-image"><img src="images/image192.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>To edit the worksheet, click on the <em>Update</em> button. </p></div>
+        <div class="step-image"><img src="images/image193.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>To share the worksheet with another state, click on the <em>Share </em>button.</p></div>
+        <div class="step-image"><img src="images/image194.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select a state from the dropdown menu and click the <em>Share Form</em> button to send the form to the selected state.</p></div>
+        <div class="step-image"><img src="images/image195.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>The MOU worksheet shared with the potential partnering state is displayed on the MOU Worksheet page with a &quot;Pending&quot;Status.</p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image196.png" alt="" loading="lazy">
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="MOU-Worksheets.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">MOU Worksheet(s)</span></span></a>
   <a class="nav-btn nav-btn-next" href="Review-and-Respond-to-MOU.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Review and Respond to an MOU Worksheet</span></span> <span class="nav-btn-arrow">→</span></a>
