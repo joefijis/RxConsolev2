@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,21 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -1048,7 +1063,57 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="Manage-Facilities.html">Manage Facilities</a> <span class="crumb-sep">›</span> <a href="Breakdown-of-HCE-Site-Details.html">Breakdown of Healthcare Entity Site Details</a> <span class="crumb-sep">›</span> <span>How to Add Multiple Healthcare Facilities</span></div>
 <h1>How to Add Multiple Healthcare Facilities</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Add Multiple Facilities</em> button.</p></div><div class="step-image"><img src="images/image156.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>You will be directed to the <em>Add Facilities</em> screen.</p></div></li><li><div class="step-content"><img src="images/image157.png" alt=""></div></li><li><div class="step-content"><p>Click on the <em>Standardized Facilities Template </em>link to download a template to populate. The template will download in an Excel workbook format (.xlsx). The first tab titled <em>Facilities File Template </em>contains columns to enter the same information available when adding a single facility. A table describing each heading is available in the previous subsection.The second tab titled <em>Field Definitions</em> provides an abbreviated summary of each field, its requirement status, and an example.</p></div><div class="step-image"><img src="images/image158.png" alt="" loading="lazy"><img src="images/image159.png" alt="" loading="lazy"><img src="images/image160.png" alt="" loading="lazy"></div></li><li><div class="step-content"><img src="images/image161.png" alt=""></div></li><li><div class="step-content"><p>Populate the <em>Standardized Facilities Template</em> with each facility occupying a single row.</p></div></li><li><div class="step-content"><p>Press the <em>Click to select file</em> button to choose the populated template to upload into the system.</p></div><div class="step-image"><img src="images/image162.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>If all facilities share a single contact person, you can check the box labeled <em>One contact for all facilities </em>and data fields for that individual person will appear.</p><p>A description of these fields can be found in the table in the previous subsection.</p><div class="note"><strong>Note: </strong>If contact information is included in both the uploaded data file and the UI (via &quot;One contact for all facilities&quot;), the UI entry will override and apply to all created facilities.</div></div><div class="step-image"><img src="images/image163.png" alt="" loading="lazy"></div></li><li><div class="step-content"><img src="images/image164.png" alt=""></div></li><li><div class="step-content"><p>Click the <em>Upload</em> button to import the data populated in the file you selected in step 5.</p></div><div class="step-image"><img src="images/image165.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>The <em>Cancel</em> button will discard any changes made on this screen and return the user to the previous page.</p></div><div class="step-image"><img src="images/image166.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>Add Multiple Facilities</em> button.</p></div>
+        <div class="step-image"><img src="images/image156.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>You will be directed to the <em>Add Facilities</em> screen.</p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image157.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>Standardized Facilities Template </em>link to download a template to populate. The template will download in an Excel workbook format (.xlsx). The first tab titled <em>Facilities File Template </em>contains columns to enter the same information available when adding a single facility. A table describing each heading is available in the previous subsection.The second tab titled <em>Field Definitions</em> provides an abbreviated summary of each field, its requirement status, and an example.</p>
+        </div>
+        <div class="step-image">
+            <img src="images/image158.png" alt="" loading="lazy">
+            <img src="images/image159.png" alt="" loading="lazy">
+            <img src="images/image160.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image161.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content"><p>Populate the <em>Standardized Facilities Template</em> with each facility occupying a single row.</p></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Click to select file</em> button to choose the populated template to upload into the system.</p></div>
+        <div class="step-image"><img src="images/image162.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>If all facilities share a single contact person, you can check the box labeled <em>One contact for all facilities </em>and data fields for that individual person will appear.</p>
+            <p>A description of these fields can be found in the table in the previous subsection.</p>
+            <div class="note"><strong>Note: </strong>If contact information is included in both the uploaded data file and the UI (via "One contact for all facilities"), the UI entry will override and apply to all created facilities.</div>
+        </div>
+        <div class="step-image"><img src="images/image163.png" alt="" loading="lazy"></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image164.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content"><p>Click the <em>Upload</em> button to import the data populated in the file you selected in step 5.</p></div>
+        <div class="step-image"><img src="images/image165.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>The <em>Cancel</em> button will discard any changes made on this screen and return the user to the previous page.</p></div>
+        <div class="step-image"><img src="images/image166.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Add-a-Single-Facility.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">How to Add a Single Healthcare Facility</span></span></a>
   <a class="nav-btn nav-btn-next" href="User-Administration.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">User Administration</span></span> <span class="nav-btn-arrow">→</span></a>
