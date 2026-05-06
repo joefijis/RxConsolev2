@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,46 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -560,19 +600,26 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1048,8 +1095,97 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="User-Management.html">User Management</a> <span class="crumb-sep">›</span> <span>Search for and Update User Information</span></div>
 <h1>Search for and Update User Information</h1>
-<table><tr><th><ol class="steps-list"><li><div class="step-content">Click on the <em>User Management</em> button, located on the left-hand side of the screen.</div></li></ol></th><th><img src="images/image225.png" alt=""></th></tr><tr><td><ol class="steps-list"><li><div class="step-content">Locate the user you are searching for by:</div></li><ol type="a"><li>Scrolling through the list of users displayed on the screen, or</li><li>Searching for a user by typing his / her name into the <em>Filter User</em> search bar in the top right corner of the screen.</li></ol></ol></td></tr><tr><td><img src="images/image226.png" alt=""></td></tr><tr><td><ol class="steps-list"><li><div class="step-content">Select the desired user by clicking on their information to view or modify their existing record.</div></li><ol type="a"><li>If the user type is <strong>System User</strong>, a pop-up screen titled <em>Add/Update User</em> will appear.</li><li>If the user type is <strong>PDMP Admin</strong>, a pop-up notification will appear to inform the user to reach out the RxCheck Administrator.</li></ol></ol></td><td><p>a) </p><img src="images/image227.png" alt=""><p>b) </p><img src="images/image228.png" alt=""></td></tr><tr><td><ol class="steps-list"><li><div class="step-content">For system users, you may edit any information (except the password) displayed in each data field.</div></li></ol><div class="note"><strong><em>Note:</em></strong> If you change any information, remember to click the <em>Save</em> button to record the changes. Alternatively, pressing the <em>X</em> in the top right will discard any changes made and exit the window.</div><div class="note"><strong><em>Note:</em></strong> Refer to the following table for a description of each data field. </div></td><td><img src="images/image227.png" alt=""></td></tr><tr><td><ol class="steps-list"><li><div class="step-content">Verify that the user has been successfully updated by looking for the alert that states, &quot;Selected User Updated Successfully&quot;.</div></li></ol></td><td><img src="images/image229.png" alt=""></td></tr><tr><td><strong>Heading</strong></td><td><strong>Description</strong></td></tr><tr><td><strong>Email</strong></td><td>The contact email for the HCE user and username for RxConsole.</td></tr><tr><td><strong>Password</strong></td><td>The password for the HCE user to access the RxConsole application.</td></tr><tr><td><strong>Site Code</strong></td><td>The site code for the HCE user. This field will be auto-populated.</td></tr><tr><td><strong>First Name</strong></td><td>The HCE user&#x27;s first name.</td></tr><tr><td><strong>Middle Name</strong></td><td>The HCE user&#x27;s middle name.</td></tr><tr><td><strong>Last Name</strong></td><td>The HCE user&#x27;s last name.</td></tr><tr><td><strong>Status</strong></td><td>The status of this HCE user&#x27;s account. Can be set to either <em>Active</em> or <em>Inactive</em>. A lock icon will be displayed if the account is locked out.</td></tr><tr><td><strong>Phone Number</strong></td><td>The HCE user&#x27;s phone number.</td></tr></table>
-<div class="note"><strong>Note: </strong>See the Section titled, <em>User Roles and Privileges in the RxConsole Application</em><em> </em>for more information about the different user roles available.</div>
+<ol class="steps-list">
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>User Management</em> button, located on the left-hand side of the screen.</p>
+        </div>
+        <div class="step-image"><img src="images/image225.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Locate the user you are searching for by:</p>
+            <ol type="a">
+                <li>Scrolling through the list of users displayed on the screen, or</li>
+                <li>Searching for a user by typing his / her name into the <em>Filter User</em> search bar in the top right corner of the screen.</li>
+            </ol>
+        </div>
+        <div class="step-image"><img src="images/image226.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Select the desired user by clicking on their information to view or modify their existing record.</p>
+            <ol type="a">
+                <li>If the user type is <strong>System User</strong>, a pop-up screen titled <em>Add/Update User</em> will appear.</li>
+                <li>If the user type is <strong>PDMP Admin</strong>, a pop-up notification will appear to inform the user to reach out the RxCheck Administrator.</li>
+            </ol>
+        </div>
+        <div class="step-image">
+            <img src="images/image227.png" alt="" loading="lazy">
+            <img src="images/image228.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>For system users, you may edit any information (except the password) displayed in each data field.</p>
+            <div class="note"><strong><em>Note:</em></strong> If you change any information, remember to click the <em>Save</em> button to record the changes. Alternatively, pressing the <em>X</em> in the top right will discard any changes made and exit the window.</div>
+            <div class="note"><strong><em>Note:</em></strong> Refer to the following table for a description of each data field.</div>
+        </div>
+        <div class="step-image"><img src="images/image227.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Verify that the user has been successfully updated by looking for the alert that states, "Selected User Updated Successfully".</p>
+        </div>
+        <div class="step-image"><img src="images/image229.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
+
+<table>
+    <thead>
+        <tr>
+            <th>Heading</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Email</strong></td>
+            <td>The contact email for the HCE user and username for RxConsole.</td>
+        </tr>
+        <tr>
+            <td><strong>Password</strong></td>
+            <td>The password for the HCE user to access the RxConsole application.</td>
+        </tr>
+        <tr>
+            <td><strong>Site Code</strong></td>
+            <td>The site code for the HCE user. This field will be auto-populated.</td>
+        </tr>
+        <tr>
+            <td><strong>First Name</strong></td>
+            <td>The HCE user's first name.</td>
+        </tr>
+        <tr>
+            <td><strong>Middle Name</strong></td>
+            <td>The HCE user's middle name.</td>
+        </tr>
+        <tr>
+            <td><strong>Last Name</strong></td>
+            <td>The HCE user's last name.</td>
+        </tr>
+        <tr>
+            <td><strong>Status</strong></td>
+            <td>The status of this HCE user's account. Can be set to either <em>Active</em> or <em>Inactive</em>. A lock icon will be displayed if the account is locked out.</td>
+        </tr>
+        <tr>
+            <td><strong>Phone Number</strong></td>
+            <td>The HCE user's phone number.</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="note"><strong>Note: </strong>See the Section titled, <em>User Roles and Privileges in the RxConsole Application</em> for more information about the different user roles available.</div>
+
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="User-Management.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">User Management</span></span></a>
   <a class="nav-btn nav-btn-next" href="Adding-Users.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Adding Users</span></span> <span class="nav-btn-arrow">→</span></a>
