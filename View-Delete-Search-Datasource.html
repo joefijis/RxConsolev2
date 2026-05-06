@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,46 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -560,19 +600,26 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1048,7 +1095,35 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="View-and-Add-Datasource.html">View and Add a Datasource for Provider Validation</a> <span class="crumb-sep">›</span> <a href="Provider-Validation.html">Provider Validation</a> <span class="crumb-sep">›</span> <span>View, Delete, and Search an Existing Datasource</span></div>
 <h1>View, Delete, and Search an Existing Datasource</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Follow steps 1, 2, and 4 under the section titled V<em>iew and add a datasource for provider validation</em> in this guide to view an existing datasource.</p></div></li><li><div class="step-content"><p>The new screen will look similar to the <em>Add Datasource</em> screen, but includes a section labeled <em>Search Provider</em>. </p></div></li><li><div class="step-content"><img src="images/image238.png" alt=""></div></li><li><div class="step-content"><p>To see if an existing datasource file contains a provider, you can enter the DEA#, NPI#, SL# or OTHER# in the <em>Search Provider</em> section to see if that provider exists on the datasource you are viewing.</p><ol type="a"><li>If the provider is on the list, you will see their information returned under the <em>Search Provider</em> section.</li><li>If the provider is not on the list, you will see &quot;No Provider found.&quot; Under the <em>Search Provider</em> section.</li></ol><div class="note"><strong><em>Note: </em></strong>The datasource search feature is only available for datasource files and cannot be used on a datasource API.</div></div><div class="step-image"><img src="images/image239.png" alt="" loading="lazy"><img src="images/image240.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content">
+            <p>Follow steps 1, 2, and 4 under the section titled <a href="https://joefijis.github.io/RxConsolev2/View-and-Add-Datasource.html"><em>View and add a datasource for provider validation</em></a> in this guide to view an existing datasource.</p>
+        </div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>The new screen will look similar to the <em>Add Datasource</em> screen, but includes a section labeled <em>Search Provider</em>.</p>
+        </div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image238.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content">
+            <p>To see if an existing datasource file contains a provider, you can enter the DEA#, NPI#, SL# or OTHER# in the <em>Search Provider</em> section to see if that provider exists on the datasource you are viewing.</p>
+            <ol type="a">
+                <li>If the provider is on the list, you will see their information returned under the <em>Search Provider</em> section.</li>
+                <li>If the provider is not on the list, you will see "No Provider found." Under the <em>Search Provider</em> section.</li>
+            </ol>
+            <div class="note"><strong><em>Note: </em></strong>The datasource search feature is only available for datasource files and cannot be used on a datasource API.</div>
+        </div>
+        <div class="step-image">
+            <img src="images/image239.png" alt="" loading="lazy">
+            <img src="images/image240.png" alt="" loading="lazy">
+        </div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="View-and-Add-Datasource.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">View and Add a Datasource for Provider Validation</span></span></a>
   <a class="nav-btn nav-btn-next" href="Create-a-Datasource-File.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Create a Datasource File</span></span> <span class="nav-btn-arrow">→</span></a>
@@ -1087,7 +1162,7 @@ pre code { background: none; border: none; padding: 0; }
 
     (function initTheme() {
         let saved;
-        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        try { localStorage.getItem("theme"); } catch(e) {}
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         applyTheme(saved || (prefersDark ? "dark" : "light"));
     })();
