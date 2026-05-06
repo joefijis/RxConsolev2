@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,21 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -1048,7 +1063,43 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="MOU-Worksheets.html">MOU Worksheet(s)</a> <span class="crumb-sep">›</span> <a href="Interstate-Data-Sharing.html">Interstate Data-Sharing</a> <span class="crumb-sep">›</span> <span>Review and Respond to an MOU Worksheet</span></div>
 <h1>Review and Respond to an MOU Worksheet</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Interstate Data Sharing</em> button, followed by the <em>MOU Worksheet(s)</em> option, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image186.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>The MOU Worksheet(s) page is displayed with the MOU Worksheet record submitted by the PDMP State for Interstate Data Sharing Request.</p></div></li><li><div class="step-content"><img src="images/image197.png" alt=""></div></li><li><div class="step-content"><p>Click on the <em>View Details</em> button to display the MOU Worksheet data submitted by the other PDMP State as view-only data.</p><div class="note"><strong><em>Note:</em></strong> If the state that received the MOU Worksheet from another PDMP State has not filled out their MOU worksheet, they can do so by following the steps in the previous section titled, P<em>opulate and submit the MOU Worksheet</em>.</div></div><div class="step-image"><img src="images/image198.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Click the <em>Cancel</em> button to discard the MOU worksheet data.</p></div><div class="step-image"><img src="images/image190.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Click the <em>Print</em> button to print or save a copy of the MOU Worksheet.</p></div><div class="step-image"><img src="images/image199.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>To agree to the MOU Worksheet, click on the <em>Finalize</em> button.</p></div><div class="step-image"><img src="images/image200.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>The MOU Worksheet record will be displayed with a status of &quot;Finalized&quot; for both PDMP States.</p></div></li><li><div class="step-content"><img src="images/image201.png" alt=""></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>Interstate Data Sharing</em> button, followed by the <em>MOU Worksheet(s)</em> option, located on the left-hand side of the screen.</p></div>
+        <div class="step-image"><img src="images/image186.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>The MOU Worksheet(s) page is displayed with the MOU Worksheet record submitted by the PDMP State for Interstate Data Sharing Request.</p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image197.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>View Details</em> button to display the MOU Worksheet data submitted by the other PDMP State as view-only data.</p>
+            <div class="note"><strong><em>Note:</em></strong> If the state that received the MOU Worksheet from another PDMP State has not filled out their MOU worksheet, they can do so by following the steps in the previous section titled, <a href="https://joefijis.github.io/RxConsolev2/Populate-and-Submit-MOU.html">Populate and submit the MOU Worksheet</a>.</div>
+        </div>
+        <div class="step-image"><img src="images/image198.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Click the <em>Cancel</em> button to discard the MOU worksheet data.</p></div>
+        <div class="step-image"><img src="images/image190.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Click the <em>Print</em> button to print or save a copy of the MOU Worksheet.</p></div>
+        <div class="step-image"><img src="images/image199.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>To agree to the MOU Worksheet, click on the <em>Finalize</em> button.</p></div>
+        <div class="step-image"><img src="images/image200.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>The MOU Worksheet record will be displayed with a status of "Finalized" for both PDMP States.</p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image201.png" alt="" loading="lazy">
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Populate-and-Submit-MOU.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Populate and Submit the MOU Worksheet</span></span></a>
   <a class="nav-btn nav-btn-next" href="Interstate-Role-Management.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Interstate Data-Sharing – Role Management</span></span> <span class="nav-btn-arrow">→</span></a>
