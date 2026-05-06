@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,21 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -1048,7 +1063,41 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="Interstate-Data-Sharing.html">Interstate Data-Sharing</a> <span class="crumb-sep">›</span> <span>Select States for Interstate Data-Sharing</span></div>
 <h1>Select States for Interstate Data-Sharing</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Interstate Data Sharing</em> button, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image178.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Scroll through the <em>Available Sites</em> list and locate the site you would like to add for interstate data-sharing.</p></div></li><li><div class="step-content"><img src="images/image179.png" alt=""></div></li><li><div class="step-content"><p>Click on the blue arrow button aligned with the desired site.</p></div><div class="step-image"><img src="images/image180.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Verify that the site has moved from the <em>Available Sites</em> list on the left to the <em>Selected Sites</em> list on the right.</p><div class="note"><strong><em>Note:</em></strong> Recently moved sites are not listed alphabetically and will instead appear at the bottom of the <em>Selected</em> <em>Sites</em> list.</div></div></li><li><div class="step-content"><img src="images/image181.png" alt=""></div></li><li><div class="step-content"><p>Click the <em>Save</em> button on the right corner of the screen to confirm and record your changes.</p></div><div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div></li><li><div class="step-content"><div class="note"><strong><em>Note:</em></strong> If the change was implemented successfully, an alert will momentarily appear on the right-hand side of the screen with the message, &quot;Alert – Selected Sites Saved&quot;</div></div><div class="step-image"><img src="images/image182.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>Interstate Data Sharing</em> button, located on the left-hand side of the screen.</p></div>
+        <div class="step-image"><img src="images/image178.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Scroll through the <em>Available Sites</em> list and locate the site you would like to add for interstate data-sharing.</p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image179.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content"><p>Click on the blue arrow button aligned with the desired site.</p></div>
+        <div class="step-image"><img src="images/image180.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Verify that the site has moved from the <em>Available Sites</em> list on the left to the <em>Selected Sites</em> list on the right.</p>
+            <div class="note"><strong><em>Note:</em></strong> Recently moved sites are not listed alphabetically and will instead appear at the bottom of the <em>Selected</em> <em>Sites</em> list.</div>
+        </div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image181.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Click the <em>Save</em> button on the right corner of the screen to confirm and record your changes.</p>
+            <div class="note"><strong><em>Note:</em></strong> If the change was implemented successfully, an alert will momentarily appear on the right-hand side of the screen with the message, "Alert – Selected Sites Saved"</div>
+        </div>
+        <div class="step-image">
+            <img src="images/image155.png" alt="" loading="lazy">
+            <img src="images/image182.png" alt="" loading="lazy">
+        </div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Interstate-Data-Sharing.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Interstate Data-Sharing</span></span></a>
   <a class="nav-btn nav-btn-next" href="Deselect-States-for-Data-Sharing.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Deselect States for Interstate Data-Sharing</span></span> <span class="nav-btn-arrow">→</span></a>
