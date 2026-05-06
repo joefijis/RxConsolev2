@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,21 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -1048,7 +1063,41 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="Healthcare-Entities.html">Healthcare Entities</a> <span class="crumb-sep">›</span> <span>Open a Healthcare Entity Record</span></div>
 <h1>Open a Healthcare Entity Record</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Healthcare Entities</em> button, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image132.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Find the healthcare entity using one of two methods:</p><ul><li>Scroll through the list on the screen (may need to navigate to the next screen by using the navigation arrows at the bottom of the list)</li><li>Type the name of the HCE into the search bar labeled <em>Global Filter</em> in the top right.</li></ul></div><div class="step-image"><img src="images/image170.png" alt="" loading="lazy"><img src="images/image171.png" alt="" loading="lazy"></div></li><li><div class="step-content"><img src="images/image172.png" alt=""></div></li><li><div class="step-content"><p>Select the desired healthcare entity to view further details about that facility.</p></div><div class="step-image"><img src="images/image173.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>To edit a record, make your changes and click the <em>Save</em> button to ensure any new information is recorded.To exit without saving, click on the <em>Cancel</em> button.</p></div><div class="step-image"><img src="images/image155.png" alt="" loading="lazy"><img src="images/image174.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>Healthcare Entities</em> button, located on the left-hand side of the screen.</p></div>
+        <div class="step-image"><img src="images/image132.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Find the healthcare entity using one of two methods:</p>
+            <ul>
+                <li>Scroll through the list on the screen (may need to navigate to the next screen by using the navigation arrows at the bottom of the list)</li>
+                <li>Type the name of the HCE into the search bar labeled <em>Global Filter</em> in the top right.</li>
+            </ul>
+        </div>
+        <div class="step-image">
+            <img src="images/image170.png" alt="" loading="lazy">
+            <img src="images/image171.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image172.png" alt="" loading="lazy">
+    </li>
+    <li>
+        <div class="step-content"><p>Select the desired healthcare entity to view further details about that facility.</p></div>
+        <div class="step-image"><img src="images/image173.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>To edit a record, make your changes and click the <em>Save</em> button to ensure any new information is recorded.To exit without saving, click on the <em>Cancel</em> button.</p>
+        </div>
+        <div class="step-image">
+            <img src="images/image155.png" alt="" loading="lazy">
+            <img src="images/image174.png" alt="" loading="lazy">
+        </div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="User-Administration.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">User Administration</span></span></a>
   <a class="nav-btn nav-btn-next" href="Export-HCEs-and-Facilities.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Export a list of your HCE&#x27;s and Facilities</span></span> <span class="nav-btn-arrow">→</span></a>
