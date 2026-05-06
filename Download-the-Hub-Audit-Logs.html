@@ -530,7 +530,8 @@ ol.steps-list .sub-step {
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    margin-top: 6px;
+    margin-top: 12px; /* Increased slightly so it doesn't crowd Step 4 */
+    margin-left: -42px; /* Pulls the step left by exactly the width of the circle (28px) + the gap (14px) */
 }
 ol.steps-list .sub-step::before {
     content: counter(steps);
@@ -1090,9 +1091,9 @@ pre code { background: none; border: none; padding: 0; }
     <li>
         <div class="step-content">
             <p>Right-click on the zipped folder to view options.</p>
-        <div class="step-content">
-            <p>Select the "Extract All…" option.</p>
-        </div>
+            <div class="sub-step">
+                <p>Select the "Extract All…" option.</p>
+            </div>
         </div>
         <div class="step-image"><img src="images/image122.png" alt="" loading="lazy"></div>
     </li>
