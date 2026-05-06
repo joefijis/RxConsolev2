@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,46 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -560,19 +600,26 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1048,12 +1095,45 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="Integration-Requests.html">Integration Requests</a> <span class="crumb-sep">›</span> <span>Search for Integration Requests</span></div>
 <h1>Search for Integration Requests</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>Integration Requests</em> button, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image210.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Locate the integration request you are searching for by either:</p><ul><li>Scrolling through the listed requests, or</li><li>Searching for the facility in the <em>Filter Search</em> bar.</li></ul><div class="note"><strong><em>Note:</em></strong> You can search for information under any of the columns. For example, searching for &quot;Pharmacy&quot; will show all integration requests with the Business Type of Pharmacy.</div></div><div class="step-image"><img src="images/image211.png" alt="" loading="lazy"></div></li><li><div class="step-content"><img src="images/image212.png" alt=""></div></li></ol>
-<ol class="steps-list"><li><div class="step-content">Click on a desired integration request to view further details regarding the request.A request form which contains details regarding the status, healthcare entity, business details, contact information, and other related integration information will be displayed.</div></li></ol>
-<img src="images/image213.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">In addition to viewing additional details, you can also perform the following options:</div></li><ol type="a"><li>Create a new healthcare entity from the information included in the request by clicking the <em>Create HCE</em> button.</li><li>Add a new note to the integration request by typing into the text box labeled <em>Add New Note</em> and then clicking on the <em>Save Note</em> button.</li></ol></ol>
-<p>Return to the integration list by clicking the <em>Back to List</em> button.</p>
-<img src="images/image214.png" alt="" loading="lazy">
+<ol class="steps-list">
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>Integration Requests</em> button, located on the left-hand side of the screen.</p>
+        </div>
+        <div class="step-image"><img src="images/image210.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Locate the integration request you are searching for by either:</p>
+            <ul>
+                <li>Scrolling through the listed requests, or</li>
+                <li>Searching for the facility in the <em>Filter Search</em> bar.</li>
+            </ul>
+            <div class="note"><strong><em>Note:</em></strong> You can search for information under any of the columns. For example, searching for "Pharmacy" will show all integration requests with the Business Type of Pharmacy.</div>
+        </div>
+        <div class="step-image"><img src="images/image211.png" alt="" loading="lazy"></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image212.png" alt="">
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Click on a desired integration request to view further details regarding the request. A request form which contains details regarding the status, healthcare entity, business details, contact information, and other related integration information will be displayed.</p>
+        </div>
+        <div class="step-image"><img src="images/image213.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>In addition to viewing additional details, you can also perform the following options:</p>
+            <ol type="a">
+                <li>Create a new healthcare entity from the information included in the request by clicking the <em>Create HCE</em> button.</li>
+                <li>Add a new note to the integration request by typing into the text box labeled <em>Add New Note</em> and then clicking on the <em>Save Note</em> button.</li>
+                <li>Return to the integration list by clicking the <em>Back to List</em> button.</li>
+            </ol>
+        </div>
+        <div class="step-image"><img src="images/image214.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Integration-Requests.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Integration Requests</span></span></a>
   <a class="nav-btn nav-btn-next" href="Approving-Interstate-Data-Sharing.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Approving Interstate Data-Sharing for Healthcare Entities</span></span> <span class="nav-btn-arrow">→</span></a>
