@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,46 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -560,19 +600,26 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1048,25 +1095,81 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="PDMP-Maintenance-Schedule.html">PDMP Maintenance Schedule</a> <span class="crumb-sep">›</span> <span>Create and Modify a Maintenance Event</span></div>
 <h1>Create and Modify a Maintenance Event</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>PDMP Maintenance Schedule</em> button, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image274.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Click on the <em>Add Maintenance</em> button located on the top right-hand corner of the screen.</p></div><div class="step-image"><img src="images/image275.png" alt="" loading="lazy"></div></li><li><div class="step-content"><div class="note"><strong><em>Note: </em></strong>You can only create a new maintenance event if no other upcoming event is scheduled. If there&#x27;s a conflict, an alert message will appear.</div></div><div class="step-image"><img src="images/image276.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>A pop-up screen titled <em>Maintenance</em> will appear. </p></div></li><li><div class="step-content"><img src="images/image277.png" alt=""></div></li><li><div class="step-content"><p>Select the start date and time by making appropriate selections in the calendar by clicking the blue calendar in the field labeled <em>From Date&amp;Time</em>.</p></div><div class="step-image"><img src="images/image278.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Select the end date and time by making appropriate selections in the calendar by clicking the blue calendar in the field labeled <em>To Date&amp;Time</em>.</p></div><div class="step-image"><img src="images/image279.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Select the reason for the maintenance event by clicking on one of the dropdown options for the field labeled, <em>Reason Type</em>.</p></div><div class="step-image"><img src="images/image280.png" alt="" loading="lazy"></div></li></ol>
-<ol class="steps-list"><li><div class="step-content">Add a note into the text box labeled, <em>Reason Message</em> to add context to the maintenance event.</div></li></ol>
-<img src="images/image281.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">Press the <em>Save</em> button to add the new maintenance event to the maintenance schedule in the RxConsole.</div></li></ol>
-<img src="images/image155.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">Alternatively, you can press the <em>Close</em> button to discard changes and return to the previous screen.</div></li></ol>
-<img src="images/image282.png" alt="" loading="lazy">
-<p>To modify an already existing maintenance event.</p>
-<ol class="steps-list"><li><div class="step-content">Click on an event listed in the <em>Maintenance Schedule</em>. </div></li></ol>
-<img src="images/image283.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">Modify any information in the <em>Maintenance</em> popup similar to if you were adding a new event.</div></li></ol>
-<ol class="steps-list"><li><div class="step-content">Press the <em>Save</em> button to record the changes to the maintenance event in the RxConsole.</div></li></ol>
-<img src="images/image155.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">Alternatively, you can press the <em>Close</em> button to discard changes and return to the previous screen.</div></li></ol>
-<img src="images/image282.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">Press the <em>Complete</em> button to mark the event as completed.</div></li></ol>
-<img src="images/image284.png" alt="" loading="lazy">
-<ol class="steps-list"><li><div class="step-content">Press the <em>Cancel</em> button to cancel the event in the maintenance schedule.</div></li></ol>
-<img src="images/image285.png" alt="" loading="lazy">
+<ol class="steps-list">
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>PDMP Maintenance Schedule</em> button, located on the left-hand side of the screen.</p>
+        </div>
+        <div class="step-image"><img src="images/image274.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Click on the <em>Add Maintenance</em> button located on the top right-hand corner of the screen.</p>
+            <div class="note"><strong><em>Note: </em></strong>You can only create a new maintenance event if no other upcoming event is scheduled. If there's a conflict, an alert message will appear.</div>
+        </div>
+        <div class="step-image">
+            <img src="images/image275.png" alt="" loading="lazy">
+            <img src="images/image276.png" alt="" loading="lazy">
+        </div>
+    </li>
+    <li>
+        <div class="step-content"><p>A pop-up screen titled <em>Maintenance</em> will appear. </p></div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image277.png" alt="">
+    </li>
+    <li>
+        <div class="step-content"><p>Select the start date and time by making appropriate selections in the calendar by clicking the blue calendar in the field labeled <em>From Date&amp;Time</em>.</p></div>
+        <div class="step-image"><img src="images/image278.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select the end date and time by making appropriate selections in the calendar by clicking the blue calendar in the field labeled <em>To Date&amp;Time</em>.</p></div>
+        <div class="step-image"><img src="images/image279.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select the reason for the maintenance event by clicking on one of the dropdown options for the field labeled, <em>Reason Type</em>.</p></div>
+        <div class="step-image"><img src="images/image280.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Add a note into the text box labeled, <em>Reason Message</em> to add context to the maintenance event.</p></div>
+        <div class="step-image"><img src="images/image281.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Save</em> button to add the new maintenance event to the maintenance schedule in the RxConsole.</p></div>
+        <div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Alternatively, you can press the <em>Close</em> button to discard changes and return to the previous screen.</p></div>
+        <div class="step-image"><img src="images/image282.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
+
+<h3>To modify an already existing maintenance event.</h3>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on an event listed in the <em>Maintenance Schedule</em>.</p></div>
+        <div class="step-image"><img src="images/image283.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Modify any information in the <em>Maintenance</em> popup similar to if you were adding a new event.</p></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Save</em> button to record the changes to the maintenance event in the RxConsole.</p></div>
+        <div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Alternatively, you can press the <em>Close</em> button to discard changes and return to the previous screen.</p></div>
+        <div class="step-image"><img src="images/image282.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Complete</em> button to mark the event as completed.</p></div>
+        <div class="step-image"><img src="images/image284.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Cancel</em> button to cancel the event in the maintenance schedule.</p></div>
+        <div class="step-image"><img src="images/image285.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="PDMP-Maintenance-Schedule.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">PDMP Maintenance Schedule</span></span></a>
   <a class="nav-btn nav-btn-next" href="NCPDP-Taxonomy-Code-Mapping.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">NCPDP Taxonomy Code Mapping</span></span> <span class="nav-btn-arrow">→</span></a>
@@ -1105,7 +1208,7 @@ pre code { background: none; border: none; padding: 0; }
 
     (function initTheme() {
         let saved;
-        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        try { localStorage.getItem("theme"); } catch(e) {}
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         applyTheme(saved || (prefersDark ? "dark" : "light"));
     })();
