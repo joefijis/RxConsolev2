@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connected PDMP Sites · RxConsole User Guide</title>
+    <title>NCPDP Taxonomy Code Mapping · RxConsole User Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,46 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -560,19 +600,26 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1042,16 +1089,33 @@ pre code { background: none; border: none; padding: 0; }
                 <div class="breadcrumbs" style="margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 14px;">
                     <a href="Introduction.html" style="color: #0052cc; text-decoration: none;">Home</a> 
                     <span style="margin: 0 8px; color: #888;">›</span> 
-                    <span style="color: var(--text-main, #333); font-weight: 500;">Connected PDMP Sites · RxConsole User Guide</span>
+                    <span style="color: var(--text-main, #333); font-weight: 500;">Search for an NCPDP Taxonomy Code · RxConsole User Guide</span>
                 </div>
                 
             
-<div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="System-Information.html">System Information</a> <span class="crumb-sep">›</span> <span>Connected PDMP Sites</span></div>
-<h1>Connected PDMP Sites</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Click on the <em>System Information </em>button, located on the left-hand side of the screen.</p></div><div class="step-image"><img src="images/image293.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>A map of <em>Connected PDMP Sites</em> is displayed. Proceed to click on a state for additional information or zoom in on a region.</p><p><strong><em>Notes:</em></strong> See the <em>System Information</em> section above for more information.</p></div></li><li><div class="step-content"><img src="images/image294.png" alt=""></div></li></ol>
+<div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="NCPDP-Taxonomy-Code-Mapping.html">NCPDP Taxonomy Code Mapping</a> <span class="crumb-sep">›</span> <span>Search for an NCPDP Taxonomy Code</span></div>
+<h1>Search for an NCPDP Taxonomy Code</h1>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Click on the <em>NCPDP Taxonomy Code Mapping </em>button, located on the left-hand side of the screen.</p></div>
+        <div class="step-image"><img src="images/image287.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content">
+            <p>Locate the code mapping you are searching for by either:</p>
+            <ol type="a">
+                <li>Scrolling through the list of codes displayed on the screen and sifting through the pages by clicking the arrows under the <em>Code Mapping</em> table.</li>
+                <li>Locate the mapping directly by entering the taxonomy code, description, or PMIX role into the search box labeled, <em>Filter Mapping </em>in the top right corner of the screen.</li>
+            </ol>
+        </div>
+    </li>
+    <li class="non-step-image">
+        <img src="images/image288.png" alt="">
+    </li>
+</ol>
 <div class="doc-footer-nav">
-  <a class="nav-btn nav-btn-prev" href="System-Information.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">System Information</span></span></a>
-  <a class="nav-btn nav-btn-next" href="System-Notifications.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">System Notifications</span></span> <span class="nav-btn-arrow">→</span></a>
+  <a class="nav-btn nav-btn-prev" href="NCPDP-Taxonomy-Code-Mapping.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">NCPDP Taxonomy Code Mapping</span></span></a>
+  <a class="nav-btn nav-btn-next" href="System-Information.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">System Information</span></span> <span class="nav-btn-arrow">→</span></a>
 </div>
 
 
@@ -1087,7 +1151,7 @@ pre code { background: none; border: none; padding: 0; }
 
     (function initTheme() {
         let saved;
-        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        try { localStorage.getItem("theme"); } catch(e) {}
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         applyTheme(saved || (prefersDark ? "dark" : "light"));
     })();
