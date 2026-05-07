@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -523,6 +523,46 @@ ol.steps-list > li::before {
     flex-shrink: 0;
     margin-top: 2px;
 }
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
 ol.steps-list .step-content {
     flex: 1;
     min-width: 0;
@@ -560,19 +600,26 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1048,7 +1095,43 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="View-and-Add-Datasource.html">View and Add a Datasource for Provider Validation</a> <span class="crumb-sep">›</span> <a href="Provider-Validation.html">Provider Validation</a> <span class="crumb-sep">›</span> <span>Add a Datasource API</span></div>
 <h1>Add a Datasource API</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Follow steps 1-3 under the section titled V<em>iew and add a datasource for provider validation</em> in this guide.</p></div></li><li><div class="step-content"><p>Select the &quot;API&quot; option under the <em>Datasource Type</em> dropdown.</p></div><div class="step-image"><img src="images/image254.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Enter the API URL into the field labeled <em>API URL</em>.</p></div><div class="step-image"><img src="images/image255.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Select the appropriate authorization type using the <em>Auth Type</em> dropdown. </p></div><div class="step-image"><img src="images/image256.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>For BASIC authorization, enter the username and password.</p></div></li><li><div class="step-content"><img src="images/image257.png" alt=""></div></li><li><div class="step-content"><p>For OAUTH2 authorization, enter the Client ID, Client Secret, and Auth URL into their respective fields.</p></div></li><li><div class="step-content"><img src="images/image258.png" alt=""></div></li><li><div class="step-content"><p>Press the <em>Save</em> button on the right corner of the screen to add your datasource API to the RxConsole for your state. </p></div><div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Alternatively, if you do not wish to add an API you can press the <em>Cancel</em> button to discard changes and return to the previous screen.</p></div><div class="step-image"><img src="images/image251.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Verify the datasource API was successfully added by looking for the Alert that states, &quot;Datasource Created&quot;.You will also return to the Datasource screen and should see your datasource in the <em>List of Datasources</em>.</p></div><div class="step-image"><img src="images/image259.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Follow steps 1-3 under the section titled <a href="https://joefijis.github.io/RxConsolev2/View-and-Add-Datasource.html"><em>View and add a datasource for provider validation</em></a> in this guide.</p></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select the "API" option under the <em>Datasource Type</em> dropdown.</p></div>
+        <div class="step-image"><img src="images/image254.png" alt="" loading="lazy"></div>
+    </li>
+    <li class="non-step-image">
+        <div class="step-content"><p>Enter the API URL into the field labeled <em>API URL</em>.</p></div>
+        <div class="step-image"><img src="images/image255.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select the appropriate authorization type using the <em>Auth Type</em> dropdown.</p></div>
+        <div class="step-image"><img src="images/image256.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>For BASIC authorization, enter the username and password.</p></div>
+        <div class="step-image"><img src="images/image257.png" alt=""></div>
+    </li>
+    <li>
+        <div class="step-content"><p>For OAUTH2 authorization, enter the Client ID, Client Secret, and Auth URL into their respective fields.</p></div>
+        <div class="step-image"><img src="images/image258.png" alt=""></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Save</em> button on the right corner of the screen to add your datasource API to the RxConsole for your state. </p></div>
+        <div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Alternatively, if you do not wish to add an API you can press the <em>Cancel</em> button to discard changes and return to the previous screen.</p></div>
+        <div class="step-image"><img src="images/image251.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Verify the datasource API was successfully added by looking for the Alert that states, "Datasource Created". You will also return to the Datasource screen and should see your datasource in the <em>List of Datasources</em>.</p></div>
+        <div class="step-image"><img src="images/image259.png" alt="" loading="lazy"></div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Add-a-New-Datasource-File.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Add a New Datasource File</span></span></a>
   <a class="nav-btn nav-btn-next" href="Configure-Provider-Validation.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Configure Provider Validation Options</span></span> <span class="nav-btn-arrow">→</span></a>
@@ -1087,7 +1170,7 @@ pre code { background: none; border: none; padding: 0; }
 
     (function initTheme() {
         let saved;
-        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        try { localStorage.getItem("theme"); } catch(e) {}
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         applyTheme(saved || (prefersDark ? "dark" : "light"));
     })();
