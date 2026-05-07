@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -560,19 +560,65 @@ ol.steps-list .step-image:has(img + img) img {
     max-height: 80px;
     margin-top: 0;
 }
-ol.steps-list ul {
-    list-style: disc;
+
+/* ============ SUB-STEPS ============ */
+ol.steps-list .sub-step {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 12px;
+    margin-left: -42px;
+}
+ol.steps-list .sub-step::before {
+    content: counter(steps);
+    background: var(--step-circle);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Modifier class to remove step styling and counting */
+ol.steps-list > li.non-step-image {
+    counter-increment: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+ol.steps-list > li.non-step-image::before {
+    content: none;
+    display: none;
+}
+
+/* Update to allow normal nested list styles without inheriting step blue boxes */
+ol.steps-list ul, ol.steps-list ol {
     padding-left: 22px;
     margin: 6px 0;
 }
-ol.steps-list ul li {
+ol.steps-list ul {
+    list-style: disc;
+}
+ol.steps-list ol {
+    list-style: lower-alpha;
+}
+ol.steps-list ul li, ol.steps-list ol li {
     margin-bottom: 4px;
     background: none;
     border: none;
     padding: 0;
     display: list-item;
 }
-ol.steps-list ul li::before { display: none; }
+ol.steps-list ul li::before, ol.steps-list ol li::before { display: none; }
 
 /* ============ CODE ============ */
 code {
@@ -1048,14 +1094,18 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <span>NCPDP Taxonomy Code Mapping</span></div>
 <h1>NCPDP Taxonomy Code Mapping</h1>
-<p>Taxonomy codes are 10-character alphanumeric identifiers used to classify healthcare providers and organizations based on the primary services they offer. These codes are assigned at both the individual and organization provider levels are used to represent the provider&#x27;s type, classification, and specialization for claim-level identification.</p>
+<p>Taxonomy codes are 10-character alphanumeric identifiers used to classify healthcare providers and organizations based on the primary services they offer. These codes are assigned at both the individual and organization provider levels are used to represent the provider's type, classification, and specialization for claim-level identification.</p>
 <p>The taxonomy code structure consists of three hierarchical levels:</p>
-<ol class="steps-list"><li><div class="step-content">Provider Type</div></li><li><div class="step-content">Classification</div></li><li><div class="step-content">Specialization</div></li></ol>
-<p>Each successive level adds greater specificity. All taxonomy codes are 10 characters long and end with the letter &quot;X&quot;. The first four characters represent the Level 2 Classification, while the middle 5 characters vary depending on the Level 3 Specialization.</p>
+<ol>
+    <li>Provider Type</li>
+    <li>Classification</li>
+    <li>Specialization</li>
+</ol>
+<p>Each successive level adds greater specificity. All taxonomy codes are 10 characters long and end with the letter "X". The first four characters represent the Level 2 Classification, while the middle 5 characters vary depending on the Level 3 Specialization.</p>
 <p>Within the RxCheck application, the roles configured in the <em>Interstate Data Sharing</em> and <em>Role Management</em> sections are derived from the NCPDP Taxonomy Code Mapping list. State PDMP Administrators can browse the complete list or search for specific codes or roles as needed. </p>
 <p>The screenshot below shows a sample page from the NCPDP Taxonomy Code Mapping list. The accompanying table provides detailed descriptions for each column heading displayed in the screenshot.</p>
 <img src="images/image286.png" alt="" loading="lazy">
-<table><tr><th><strong>Heading</strong></th><th><strong>Description</strong></th></tr><tr><td><strong>Taxonomy Code</strong></td><td>Administrative codes set for identifying the provider type and area of specialization for health care providers.</p><p>They consist of ten alphanumeric characters always terminating with the letter &quot;X.&quot;</td></tr><tr><td><strong>Description</strong></td><td>A brief description of the Healthcare Professional Role displayed for that taxonomy code.</td></tr><tr><td><strong>PMIX Role</strong></td><td>The PMIX role that the corresponding taxonomy code is mapped to.</td></tr><tr><td><strong>PDMP</strong></td><td>The PDMP state for which the taxonomy code was created.</td></tr><tr><td><strong>Source</strong></td><td>Defines the origin of the taxonomy code.</td></tr></table>
+<table><tr><th><strong>Heading</strong></th><th><strong>Description</strong></th></tr><tr><td><strong>Taxonomy Code</strong></td><td>Administrative codes set for identifying the provider type and area of specialization for health care providers.</p><p>They consist of ten alphanumeric characters always terminating with the letter "X."</td></tr><tr><td><strong>Description</strong></td><td>A brief description of the Healthcare Professional Role displayed for that taxonomy code.</td></tr><tr><td><strong>PMIX Role</strong></td><td>The PMIX role that the corresponding taxonomy code is mapped to.</td></tr><tr><td><strong>PDMP</strong></td><td>The PDMP state for which the taxonomy code was created.</td></tr><tr><td><strong>Source</strong></td><td>Defines the origin of the taxonomy code.</td></tr></table>
 <p>The following section contains step-by-step instructions on how to search for a NCPDP code in the RxConsole application. For additional clarity, each step is accompanied by a corresponding image or screenshot that depicts the action described.</p>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Create-and-Modify-Maintenance-Event.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Create and Modify a Maintenance Event</span></span></a>
@@ -1095,7 +1145,7 @@ pre code { background: none; border: none; padding: 0; }
 
     (function initTheme() {
         let saved;
-        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        try { localStorage.getItem("theme"); } catch(e) {}
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         applyTheme(saved || (prefersDark ? "dark" : "light"));
     })();
