@@ -296,7 +296,7 @@
             .theme-toggle-label { display: none; }
             .theme-toggle-wrap { padding: 6px 10px; gap: 6px; }
         }
-    
+        
         /* PAGE SPECIFIC STYLES BELOW */
         
 :root {
@@ -1048,7 +1048,57 @@ pre code { background: none; border: none; padding: 0; }
             
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="View-and-Add-Datasource.html">View and Add a Datasource for Provider Validation</a> <span class="crumb-sep">›</span> <a href="Provider-Validation.html">Provider Validation</a> <span class="crumb-sep">›</span> <span>Add a New Datasource File</span></div>
 <h1>Add a New Datasource File</h1>
-<ol class="steps-list"><li><div class="step-content"><p>Follow steps 1-3 under the section titled V<em>iew and add a datasource for provider validation</em> in this guide.</p></div></li><li><div class="step-content"><p>Select the &quot;File&quot; option under the <em>Datasource Type</em> dropdown.</p><div class="note"><strong><em>Note: </em></strong>Selecting the <em>File</em> option, allows a PDMP administrator to upload a .csv (CSV) or .xlsx (Excel workbook) .</div></div><div class="step-image"><img src="images/image246.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Enter a name for your datasource file in the text field labeled, <em>Datasource Name</em>. </p><div class="note"><strong><em>Note:</em></strong> The name does not need to match your datasource file. The name in this field can be up to 15 alphanumeric characters (Spaces and special characters are not allowed).</div></div><div class="step-image"><img src="images/image247.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Press the <em>Select File</em> button under the <em>Data Upload</em> section. </p><ol type="a"><li>Find your datasource file using the system dialog window.</li></ol></div><div class="step-image"><img src="images/image248.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Select your import type:</p><ol type="a"><li>Full – will import the entire datasource file under the name you entered in step 3.</li><li>Delta – this is only available when viewing a previous datasource (see previous section titled, V<em>iew and add a datasource for provider validation</em> for instructions to view a previous datasource).</li></ol></div><div class="step-image"><img src="images/image249.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Check the fields that are present in your datasource file. If you did not include a field, you can leave box unchecked.</p><ol type="a"><li>After checking the box, you will need to set the sequence. This refers to the order of the columns in your datasource file. </li></ol><div class="note"><strong><em>Note:</em></strong> Column A is sequence &quot;0&quot;, Column B is sequence &quot;1&quot;, etc.</div><p><strong><em>Example:</em></strong> Using step 3 from the previous subsection, you can see how the sequence is populated in the screenshot for this step.</p></div><div class="step-image"><img src="images/image250.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Press the <em>Save</em> button on the right corner of the screen to add your datasource file to the RxConsole for your state. </p></div><div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Alternatively, if you do not wish to add your data source you can press the <em>Cancel</em> button to discard changes and return to the previous screen.</p></div><div class="step-image"><img src="images/image251.png" alt="" loading="lazy"></div></li><li><div class="step-content"><p>Verify your datasource file was successfully added by looking for the Alert that states, &quot;Provider Data is Uploaded&quot;You will also return to the Datasource screen and should see your datasource in the <em>List of Datasources</em>. </p></div><div class="step-image"><img src="images/image252.png" alt="" loading="lazy"><img src="images/image253.png" alt="" loading="lazy"></div></li></ol>
+<ol class="steps-list">
+    <li>
+        <div class="step-content"><p>Follow steps 1-3 under the section titled <a href="https://joefijis.github.io/RxConsolev2/View-and-Add-Datasource.html"><em>View and add a datasource for provider validation</em></a> in this guide.</p></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select the "File" option under the <em>Datasource Type</em> dropdown.</p><div class="note"><strong><em>Note: </em></strong>Selecting the <em>File</em> option, allows a PDMP administrator to upload a .csv (CSV) or .xlsx (Excel workbook) .</div></div>
+        <div class="step-image"><img src="images/image246.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Enter a name for your datasource file in the text field labeled, <em>Datasource Name</em>. </p><div class="note"><strong><em>Note:</em></strong> The name does not need to match your datasource file. The name in this field can be up to 15 alphanumeric characters (Spaces and special characters are not allowed).</div></div>
+        <div class="step-image"><img src="images/image247.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Select File</em> button under the <em>Data Upload</em> section. </p>
+            <ol type="a"><li>Find your datasource file using the system dialog window.</li></ol>
+        </div>
+        <div class="step-image"><img src="images/image248.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Select your import type:</p>
+            <ol type="a">
+                <li>Full – will import the entire datasource file under the name you entered in step 3.</li>
+                <li>Delta – this is only available when viewing a previous datasource (see previous section titled, <a href="https://joefijis.github.io/RxConsolev2/View-and-Add-Datasource.html"><em>View and add a datasource for provider validation</em></a> for instructions to view a previous datasource).</li>
+            </ol>
+        </div>
+        <div class="step-image"><img src="images/image249.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Check the fields that are present in your datasource file. If you did not include a field, you can leave box unchecked.</p>
+            <ol type="a"><li>After checking the box, you will need to set the sequence. This refers to the order of the columns in your datasource file. </li></ol>
+            <div class="note"><strong><em>Note:</em></strong> Column A is sequence "0", Column B is sequence "1", etc.</div>
+            <p><strong><em>Example:</em></strong> Using step 3 from the previous subsection, you can see how the sequence is populated in the screenshot for this step.</p>
+        </div>
+        <div class="step-image"><img src="images/image250.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Press the <em>Save</em> button on the right corner of the screen to add your datasource file to the RxConsole for your state. </p></div>
+        <div class="step-image"><img src="images/image155.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Alternatively, if you do not wish to add your data source you can press the <em>Cancel</em> button to discard changes and return to the previous screen.</p></div>
+        <div class="step-image"><img src="images/image251.png" alt="" loading="lazy"></div>
+    </li>
+    <li>
+        <div class="step-content"><p>Verify your datasource file was successfully added by looking for the Alert that states, "Provider Data is Uploaded"You will also return to the Datasource screen and should see your datasource in the <em>List of Datasources</em>. </p></div>
+        <div class="step-image">
+            <img src="images/image252.png" alt="" loading="lazy">
+            <img src="images/image253.png" alt="" loading="lazy">
+        </div>
+    </li>
+</ol>
 <div class="doc-footer-nav">
   <a class="nav-btn nav-btn-prev" href="Create-a-Datasource-File.html"><span class="nav-btn-arrow">←</span> <span class="nav-btn-content"><span class="nav-btn-label">Previous</span><span class="nav-btn-title">Create a Datasource File</span></span></a>
   <a class="nav-btn nav-btn-next" href="Add-a-Datasource-API.html"><span class="nav-btn-content"><span class="nav-btn-label">Next</span><span class="nav-btn-title">Add a Datasource API</span></span> <span class="nav-btn-arrow">→</span></a>
@@ -1087,7 +1137,7 @@ pre code { background: none; border: none; padding: 0; }
 
     (function initTheme() {
         let saved;
-        try { saved = localStorage.getItem("theme"); } catch(e) {}
+        try { localStorage.getItem("theme"); } catch(e) {}
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         applyTheme(saved || (prefersDark ? "dark" : "light"));
     })();
