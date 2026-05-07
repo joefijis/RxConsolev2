@@ -318,7 +318,8 @@
     --warning-text: #5d1a0d;
     --info-bg: #e7f0fe;
     --info-border: #0052cc;
-    --table-header-bg: #f4f6fa;
+    --table-header-bg: #0052cc;
+    --table-header-text: #ffffff;
     --table-alt-bg: #fafbfc;
     --code-bg: #f4f5f7;
     --step-bg: #f0f6ff;
@@ -344,7 +345,8 @@
     --warning-text: #ffb39e;
     --info-bg: #1a2b4d;
     --info-border: #4c9aff;
-    --table-header-bg: #1c2128;
+    --table-header-bg: #2d4a8a;
+    --table-header-text: #ffffff;
     --table-alt-bg: #161b22;
     --code-bg: #1c2128;
     --step-bg: #0f1f35;
@@ -471,13 +473,19 @@ table {
     box-shadow: 0 0 0 1px var(--border-subtle);
 }
 th {
-    background-color: var(--table-header-bg);
-    color: var(--text-primary);
+    background-color: var(--table-header-bg) !important;
+    color: #ffffff !important;
     font-weight: 600;
-    padding: 11px 16px;
+    padding: 12px 16px;
     text-align: left;
-    border-bottom: 1px solid var(--border-default);
+    border-bottom: 2px solid var(--border-default);
     vertical-align: top;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+th *, th strong, th b, th em, th span, th a, th p {
+    color: #ffffff !important;
 }
 td {
     padding: 10px 16px;
@@ -489,7 +497,79 @@ tr:last-child td { border-bottom: none; }
 tr:nth-child(even) td { background-color: var(--table-alt-bg); }
 table img { max-width: 200px; }
 
-/* ============ STEPS LIST ============ */
+
+/* === FULL-CONTENT SEARCH DROPDOWN === */
+.search-container { position: relative; margin-bottom: 18px; }
+#search-results {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0; right: 0;
+    background: var(--bg-elevated, #ffffff);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    max-height: 60vh;
+    overflow-y: auto;
+    z-index: 50;
+    display: none;
+}
+#search-results.open { display: block; }
+.search-result-item {
+    display: block;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover,
+.search-result-item.active {
+    background: var(--hover-bg);
+}
+.search-result-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+.search-result-snippet {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.search-result-item mark {
+    background: var(--primary-soft);
+    color: var(--primary);
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+.search-no-results {
+    padding: 16px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+}
+.search-results-header {
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    background: var(--bg-app);
+    border-bottom: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+}
+        /* ============ STEPS LIST ============ */
 ol.steps-list {
     list-style: none;
     padding: 0;
@@ -738,7 +818,10 @@ pre code { background: none; border: none; padding: 0; }
             width: 100% !important;
             max-width: 100% !important;
             margin: 0 !important;
-            padding: 0 !important;
+            padding-top: var(--header-height) !important;
+            padding-right: 0 !important;
+            padding-bottom: 0 !important;
+            padding-left: 0 !important;
         }
 
         #main-content {
@@ -815,6 +898,7 @@ pre code { background: none; border: none; padding: 0; }
             text-decoration: none;
         }
     </style>
+    <script src="search-index.js"></script>
 </head>
 <body>
     <header>
@@ -854,7 +938,8 @@ pre code { background: none; border: none; padding: 0; }
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" class="search-box" id="docSearch" placeholder="Search documentation..." onkeyup="filterDocs()">
+            <input type="text" class="search-box" id="docSearch" placeholder="Search the guide…  (press / to focus)" onkeyup="filterDocs()">
+            <div id="search-results"></div>
         </div>
 
         <div id="nav-content">
@@ -1085,14 +1170,6 @@ pre code { background: none; border: none; padding: 0; }
         </div>
     </nav>
         <main id="main-content">
-            
-                <div class="breadcrumbs" style="margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 14px;">
-                    <a href="Introduction.html" style="color: #0052cc; text-decoration: none;">Home</a> 
-                    <span style="margin: 0 8px; color: #888;">›</span> 
-                    <span style="color: var(--text-main, #333); font-weight: 500;">Search for an NCPDP Taxonomy Code · RxConsole User Guide</span>
-                </div>
-                
-            
 <div class="breadcrumbs"><a href="index.html">Home</a> <span class="crumb-sep">›</span> <a href="NCPDP-Taxonomy-Code-Mapping.html">NCPDP Taxonomy Code Mapping</a> <span class="crumb-sep">›</span> <span>Search for an NCPDP Taxonomy Code</span></div>
 <h1>Search for an NCPDP Taxonomy Code</h1>
 <ol class="steps-list">
@@ -1225,20 +1302,102 @@ pre code { background: none; border: none; padding: 0; }
         });
     });
 
-    function filterDocs() {
-        const input = document.getElementById('docSearch').value.toLowerCase().trim();
+    /* ============ SEARCH (nav filter + full content search) ============ */
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+            '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        })[c]);
+    }
+    // Highlight `term` inside `text` (case-insensitive) using string scanning to
+    // avoid any regex-escape headaches with user-typed input.
+    function highlightTerm(text, term) {
+        if (!term) return escapeHtml(text);
+        const tLower = text.toLowerCase();
+        const qLower = term.toLowerCase();
+        let out = '';
+        let i = 0;
+        while (i < text.length) {
+            const idx = tLower.indexOf(qLower, i);
+            if (idx === -1) {
+                out += escapeHtml(text.slice(i));
+                break;
+            }
+            out += escapeHtml(text.slice(i, idx));
+            out += '<mark>' + escapeHtml(text.slice(idx, idx + term.length)) + '</mark>';
+            i = idx + term.length;
+        }
+        return out;
+    }
+    function buildSnippet(body, term, len = 140) {
+        if (!body) return '';
+        const lower = body.toLowerCase();
+        const idx = lower.indexOf(term.toLowerCase());
+        let start, snippet;
+        if (idx === -1) {
+            snippet = body.slice(0, len);
+        } else {
+            start = Math.max(0, idx - Math.floor(len / 3));
+            snippet = body.slice(start, start + len);
+            if (start > 0) snippet = '…' + snippet;
+        }
+        if (snippet.length >= len) snippet += '…';
+        return highlightTerm(snippet, term);
+    }
+    function searchContent(term) {
+        const idx = window.SEARCH_INDEX || [];
+        const q = term.toLowerCase();
+        const scored = [];
+        for (const page of idx) {
+            const titleLower = page.title.toLowerCase();
+            const headingsLower = (page.headings || []).join(' ').toLowerCase();
+            const bodyLower = page.body.toLowerCase();
+            let score = 0;
+            if (titleLower.includes(q)) score += 100;
+            if (headingsLower.includes(q)) score += 30;
+            if (bodyLower.includes(q)) score += 10;
+            // Bonus for word-start matches in title (cheap check, no regex)
+            const titleStart = (' ' + titleLower).indexOf(' ' + q);
+            if (titleStart !== -1) score += 25;
+            if (score > 0) scored.push({ page, score });
+        }
+        scored.sort((a, b) => b.score - a.score);
+        return scored.slice(0, 20);
+    }
+    function renderSearchResults(term) {
+        const container = document.getElementById('search-results');
+        if (!container) return;
+        if (!term) {
+            container.classList.remove('open');
+            container.innerHTML = '';
+            return;
+        }
+        const results = searchContent(term);
+        if (results.length === 0) {
+            container.innerHTML = '<div class="search-no-results">No results for "' + escapeHtml(term) + '"</div>';
+            container.classList.add('open');
+            return;
+        }
+        let html = '<div class="search-results-header">' + results.length + ' result' + (results.length === 1 ? '' : 's') + '</div>';
+        for (const { page } of results) {
+            html += '<a class="search-result-item" href="' + page.file + '">' +
+                '<div class="search-result-title">' + highlightTerm(page.title, term) + '</div>' +
+                '<div class="search-result-snippet">' + buildSnippet(page.body, term) + '</div>' +
+            '</a>';
+        }
+        container.innerHTML = html;
+        container.classList.add('open');
+    }
+    function filterNavOnly(term) {
         const folders = document.querySelectorAll('.folder');
         const lists = document.querySelectorAll('.file-list');
         const folderLinks = document.querySelectorAll('a.folder-link');
-
-        if (!input) {
+        if (!term) {
             document.querySelectorAll('.file-list li').forEach(li => li.style.display = '');
             folders.forEach(f => f.style.display = '');
             highlightCurrent();
             folderLinks.forEach(a => a.style.display = '');
             return;
         }
-
         folders.forEach((folder, i) => {
             const list = lists[i];
             const links = list.querySelectorAll('li');
@@ -1246,7 +1405,7 @@ pre code { background: none; border: none; padding: 0; }
             links.forEach(li => {
                 const txt = li.innerText.toLowerCase();
                 const folderText = folder.innerText.toLowerCase();
-                const match = txt.includes(input) || folderText.includes(input);
+                const match = txt.includes(term) || folderText.includes(term);
                 li.style.display = match ? '' : 'none';
                 if (match) any = true;
             });
@@ -1254,12 +1413,187 @@ pre code { background: none; border: none; padding: 0; }
             list.classList.toggle('open', any);
             folder.classList.toggle('active', any);
         });
-
         folderLinks.forEach(a => {
             const txt = a.innerText.toLowerCase();
-            a.style.display = txt.includes(input) ? '' : 'none';
+            a.style.display = txt.includes(term) ? '' : 'none';
         });
     }
+    /* ============ SEARCH (nav filter + full content search) ============ */
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+            '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        })[c]);
+    }
+    // Highlight `term` inside `text` (case-insensitive) using string scanning to
+    // avoid any regex-escape headaches with user-typed input.
+    function highlightTerm(text, term) {
+        if (!term) return escapeHtml(text);
+        const tLower = text.toLowerCase();
+        const qLower = term.toLowerCase();
+        let out = '';
+        let i = 0;
+        while (i < text.length) {
+            const idx = tLower.indexOf(qLower, i);
+            if (idx === -1) {
+                out += escapeHtml(text.slice(i));
+                break;
+            }
+            out += escapeHtml(text.slice(i, idx));
+            out += '<mark>' + escapeHtml(text.slice(idx, idx + term.length)) + '</mark>';
+            i = idx + term.length;
+        }
+        return out;
+    }
+    function buildSnippet(body, term, len = 140) {
+        if (!body) return '';
+        const lower = body.toLowerCase();
+        const idx = lower.indexOf(term.toLowerCase());
+        let start, snippet;
+        if (idx === -1) {
+            snippet = body.slice(0, len);
+        } else {
+            start = Math.max(0, idx - Math.floor(len / 3));
+            snippet = body.slice(start, start + len);
+            if (start > 0) snippet = '…' + snippet;
+        }
+        if (snippet.length >= len) snippet += '…';
+        return highlightTerm(snippet, term);
+    }
+    function searchContent(term) {
+        const idx = window.SEARCH_INDEX || [];
+        const q = term.toLowerCase();
+        const scored = [];
+        for (const page of idx) {
+            const titleLower = page.title.toLowerCase();
+            const headingsLower = (page.headings || []).join(' ').toLowerCase();
+            const bodyLower = page.body.toLowerCase();
+            let score = 0;
+            if (titleLower.includes(q)) score += 100;
+            if (headingsLower.includes(q)) score += 30;
+            if (bodyLower.includes(q)) score += 10;
+            // Bonus for word-start matches in title (cheap check, no regex)
+            const titleStart = (' ' + titleLower).indexOf(' ' + q);
+            if (titleStart !== -1) score += 25;
+            if (score > 0) scored.push({ page, score });
+        }
+        scored.sort((a, b) => b.score - a.score);
+        return scored.slice(0, 20);
+    }
+    function renderSearchResults(term) {
+        const container = document.getElementById('search-results');
+        if (!container) return;
+        if (!term) {
+            container.classList.remove('open');
+            container.innerHTML = '';
+            return;
+        }
+        const results = searchContent(term);
+        if (results.length === 0) {
+            container.innerHTML = '<div class="search-no-results">No results for "' + escapeHtml(term) + '"</div>';
+            container.classList.add('open');
+            return;
+        }
+        let html = '<div class="search-results-header">' + results.length + ' result' + (results.length === 1 ? '' : 's') + '</div>';
+        for (const { page } of results) {
+            html += '<a class="search-result-item" href="' + page.file + '">' +
+                '<div class="search-result-title">' + highlightTerm(page.title, term) + '</div>' +
+                '<div class="search-result-snippet">' + buildSnippet(page.body, term) + '</div>' +
+            '</a>';
+        }
+        container.innerHTML = html;
+        container.classList.add('open');
+    }
+    function filterNavOnly(term) {
+        const folders = document.querySelectorAll('.folder');
+        const lists = document.querySelectorAll('.file-list');
+        const folderLinks = document.querySelectorAll('a.folder-link');
+        if (!term) {
+            document.querySelectorAll('.file-list li').forEach(li => li.style.display = '');
+            folders.forEach(f => f.style.display = '');
+            highlightCurrent();
+            folderLinks.forEach(a => a.style.display = '');
+            return;
+        }
+        folders.forEach((folder, i) => {
+            const list = lists[i];
+            const links = list.querySelectorAll('li');
+            let any = false;
+            links.forEach(li => {
+                const txt = li.innerText.toLowerCase();
+                const folderText = folder.innerText.toLowerCase();
+                const match = txt.includes(term) || folderText.includes(term);
+                li.style.display = match ? '' : 'none';
+                if (match) any = true;
+            });
+            folder.style.display = any ? '' : 'none';
+            list.classList.toggle('open', any);
+            folder.classList.toggle('active', any);
+        });
+        folderLinks.forEach(a => {
+            const txt = a.innerText.toLowerCase();
+            a.style.display = txt.includes(term) ? '' : 'none';
+        });
+    }
+    function filterDocs() {
+        const raw = document.getElementById('docSearch').value.trim();
+        const term = raw.toLowerCase();
+        // Filter the nav as before
+        filterNavOnly(term);
+        // And show full-content results dropdown
+        renderSearchResults(raw);
+    }
+    // Close results when clicking outside or pressing Escape
+    document.addEventListener('click', function(e) {
+        const container = document.getElementById('search-results');
+        const box = document.getElementById('docSearch');
+        if (!container || !box) return;
+        if (!container.contains(e.target) && e.target !== box) {
+            container.classList.remove('open');
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        const box = document.getElementById('docSearch');
+        const container = document.getElementById('search-results');
+        if (!box || !container) return;
+        // '/' to focus search
+        if (e.key === '/' && document.activeElement !== box && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const tag = (document.activeElement && document.activeElement.tagName) || '';
+            if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+                e.preventDefault();
+                box.focus();
+            }
+        }
+        if (e.key === 'Escape' && container.classList.contains('open')) {
+            container.classList.remove('open');
+            box.blur();
+        }
+    });
+    // Close results when clicking outside or pressing Escape
+    document.addEventListener('click', function(e) {
+        const container = document.getElementById('search-results');
+        const box = document.getElementById('docSearch');
+        if (!container || !box) return;
+        if (!container.contains(e.target) && e.target !== box) {
+            container.classList.remove('open');
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        const box = document.getElementById('docSearch');
+        const container = document.getElementById('search-results');
+        if (!box || !container) return;
+        // '/' to focus search
+        if (e.key === '/' && document.activeElement !== box && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const tag = (document.activeElement && document.activeElement.tagName) || '';
+            if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+                e.preventDefault();
+                box.focus();
+            }
+        }
+        if (e.key === 'Escape' && container.classList.contains('open')) {
+            container.classList.remove('open');
+            box.blur();
+        }
+    });
 </script>
 
 </body>
